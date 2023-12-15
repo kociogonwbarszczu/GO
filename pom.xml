@@ -40,7 +40,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>ProstyProgram</mainClass>
+                    <mainClass>GO</mainClass>
                 </configuration>
             </plugin>
         </plugins>
