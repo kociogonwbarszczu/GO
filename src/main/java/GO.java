@@ -8,13 +8,13 @@ public class GO {
 
     public static void main(String[] args) {
         Frame frame = new Frame();
-        frame.firstFrame();
+        frame.menuFrame();
         try (ServerSocket serverSocket = new ServerSocket(666)){
             System.out.println("Starting server on port 666");
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("New player connected");
+                System.out.println("Player one connected");
 
                 new MultiThread(socket).start();
             }

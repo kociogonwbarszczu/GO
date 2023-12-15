@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Frame extends JFrame {
 
-    public void firstFrame() {
+    public void menuFrame() {
         JTextArea textArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);

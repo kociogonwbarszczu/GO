@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-class MultiThread extends Thread implements Runnable {
+class MultiThread extends Thread {
 
     public static int PLAYER1_WON = 1;
     public static int PLAYER2_WON = 2;
@@ -21,17 +21,13 @@ class MultiThread extends Thread implements Runnable {
             InputStream input = socket.getInputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(input));
 
-            //Inicjalizacja  wysylania do socketa
             OutputStream output = socket.getOutputStream();
             PrintWriter out = new PrintWriter(output, true);
 
             String line;
             do {
-                // Odbieranie od socketa
                 line = in.readLine();
-                // Wypisywanie na serwerze
                 System.out.println(line);
-                // Wysylanie do socketa
                 out.println("-> ("+line+")");
 
             } while (!line.equals("bye"));
