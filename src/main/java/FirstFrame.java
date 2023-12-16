@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FirstFrame extends JFrame {
     FirstFrame() {
@@ -9,8 +11,9 @@ public class FirstFrame extends JFrame {
         //title
         setTitle("GO");
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        //main components panel
+        JPanel componentsPanel = new JPanel();
+        componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.PAGE_AXIS));
 
         //label
         JLabel titleLabel = new JLabel("GO");
@@ -19,23 +22,33 @@ public class FirstFrame extends JFrame {
         //buttons
         JButton buttonNewGame = new JButton("NEW GAME");
         buttonNewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonNewGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SecondFrame();
+            }
+        });
 
         JButton buttonLoadGame = new JButton("LOAD GAME");
         buttonLoadGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonLoadGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoadGameFrame();
+            }
+        });
 
-        panel.add(Box.createVerticalGlue());
-        panel.add(titleLabel);
-        panel.add(Box.createVerticalStrut(20));
-        panel.add(buttonNewGame);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(buttonLoadGame);
-        panel.add(Box.createVerticalGlue());
+        componentsPanel.add(Box.createVerticalGlue());
+        componentsPanel.add(titleLabel);
+        componentsPanel.add(Box.createVerticalStrut(20));
+        componentsPanel.add(buttonNewGame);
+        componentsPanel.add(Box.createVerticalStrut(10));
+        componentsPanel.add(buttonLoadGame);
+        componentsPanel.add(Box.createVerticalGlue());
 
         // Center the panel on the frame
         setLayout(new BorderLayout());
-        add(Box.createHorizontalGlue(), BorderLayout.WEST);
-        add(panel, BorderLayout.CENTER);
-        add(Box.createHorizontalGlue(), BorderLayout.EAST);
+        add(componentsPanel, BorderLayout.CENTER);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the frame on the screen
