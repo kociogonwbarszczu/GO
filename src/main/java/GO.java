@@ -7,8 +7,6 @@ public class GO {
     public static final int PLAYER2 = 2;
 
     public static void main(String[] args) {
-        //Frame frame = new Frame();
-        //frame.firstFrame();
         new FirstFrame();
 
         try (ServerSocket serverSocket = new ServerSocket(666)){
