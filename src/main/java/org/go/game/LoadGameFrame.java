@@ -1,13 +1,15 @@
+package org.go.game;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LoadGameFrame extends JFrame {
-    LoadGameFrame() {
+    public LoadGameFrame() {
         //size
         setSize(700, 600);
 
         //title
-        setTitle("GO");
+        setTitle("org.go.game.ClientServer.GO");
 
         //main components panel
         JPanel componentsPanel = new JPanel();

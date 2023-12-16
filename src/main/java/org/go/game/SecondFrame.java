@@ -1,3 +1,5 @@
+package org.go.game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,12 +8,12 @@ import java.awt.event.ActionListener;
 public class SecondFrame extends JFrame {
     public static int gameMode = -1; // 0 - 2 player game, 1 - game with bot
     public int boardSize = 19; // possible sizes - 19, 13, 9
-    SecondFrame() {
+    public SecondFrame() {
         //size
         setSize(700, 600);
 
         //title
-        setTitle("GO");
+        setTitle("org.go.game.ClientServer.GO");
 
         //main components panel
         JPanel componentsPanel = new JPanel();

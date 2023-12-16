@@ -1,3 +1,5 @@
+package org.go.game.ClientServer;
+
 import java.io.*;
 import java.net.*;
 

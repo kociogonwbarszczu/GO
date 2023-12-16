@@ -1,22 +1,24 @@
+package org.go.game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FirstFrame extends JFrame {
-    FirstFrame() {
+    public FirstFrame() {
         //size
         setSize(700, 600);
 
         //title
-        setTitle("GO");
+        setTitle("org.go.game.ClientServer.GO");
 
         //main components panel
         JPanel componentsPanel = new JPanel();
         componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.PAGE_AXIS));
 
         //label
-        JLabel titleLabel = new JLabel("GO");
+        JLabel titleLabel = new JLabel("org.go.game.ClientServer.GO");
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //buttons

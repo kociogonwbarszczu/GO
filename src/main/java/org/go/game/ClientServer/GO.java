@@ -1,4 +1,8 @@
-import javax.swing.*;
+package org.go.game.ClientServer;
+
+import org.go.game.FirstFrame;
+import org.go.game.SecondFrame;
+
 import java.io.*;
 import java.net.*;
 

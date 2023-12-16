@@ -40,7 +40,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>GO</mainClass>
+                    <mainClass>org.go.game.ClientServer.GO</mainClass>
                 </configuration>
             </plugin>
         </plugins>

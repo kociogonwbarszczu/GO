@@ -1,3 +1,5 @@
+package org.go.game.ClientServer;
+
 import javafx.scene.control.Cell;
 
 import java.awt.*;
