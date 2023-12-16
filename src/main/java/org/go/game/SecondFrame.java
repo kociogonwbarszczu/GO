@@ -6,8 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SecondFrame extends JFrame {
-    public static int gameMode = -1; // 0 - 2 player game, 1 - game with bot
-    public int boardSize = 19; // possible sizes - 19, 13, 9
+    public static int gameMode = -1; // -1 - 2 player game, 1 - game with bot
+    public static int boardSize = 19; // possible sizes - 19, 13, 9
     public SecondFrame() {
         //size
         setSize(700, 600);
@@ -85,6 +85,13 @@ public class SecondFrame extends JFrame {
         //button start
         JButton startButton = new JButton("start game");
 
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameFrame();
+            }
+        });
+
         //board size buttons panel
         JPanel startButtonPanel = new JPanel();
         startButtonPanel.setLayout(new BoxLayout(startButtonPanel, BoxLayout.X_AXIS));
@@ -111,5 +118,9 @@ public class SecondFrame extends JFrame {
 
     public static int getGameMode() {
         return gameMode;
+    }
+
+    public static int getBoardSize() {
+        return boardSize;
     }
 }
