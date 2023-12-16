@@ -24,7 +24,6 @@ public class Client {
         connectToServer();
     }
 
-
     private static void connectToServer() {
 
         try  {

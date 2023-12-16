@@ -3,7 +3,7 @@ import java.io.*;
 import java.net.*;
 
 public class GO {
-    public int numberOfPlayers = 0;
+    public int gameMode = -1;
     private boolean waiting = true;
     public NewGame currentGame;
 
@@ -22,11 +22,11 @@ public class GO {
                 System.out.println("Player one connected.");
                 new FirstFrame();
                 waitForAmountOfPlayer();
-                System.out.println(numberOfPlayers);
+                System.out.println(gameMode);
 
                 // adding second player
                 Socket secondPlayer;
-                if (numberOfPlayers == 2) {
+                if (gameMode == 0) {
                     System.out.println("Waiting for second player...");
                     secondPlayer = serverSocket.accept();
                     System.out.println("Player second connected.");
@@ -51,8 +51,8 @@ public class GO {
 
         while (waiting) {
             Thread.sleep(10);
-            numberOfPlayers = 2;
-            if (numberOfPlayers > 0) {
+            gameMode = SecondFrame.getGameMode();
+            if (gameMode >= 0) {
                 waiting = false;
             }
         }

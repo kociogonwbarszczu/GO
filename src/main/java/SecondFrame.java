@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SecondFrame extends JFrame {
-    public int gameMode = 0; // 0 - 2 player game, 1 - game with bot
+    public static int gameMode = -1; // 0 - 2 player game, 1 - game with bot
     public int boardSize = 19; // possible sizes - 19, 13, 9
     SecondFrame() {
         //size
@@ -105,5 +105,9 @@ public class SecondFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
+    }
+
+    public static int getGameMode() {
+        return gameMode;
     }
 }
