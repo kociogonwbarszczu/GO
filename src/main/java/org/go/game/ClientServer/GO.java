@@ -38,7 +38,7 @@ public class GO {
                     secondPlayer = serverSocket.accept();
                     System.out.println("Bot connected.");
                 }
-
+                System.out.println("ok");
                 initializeGame(firstPlayer, secondPlayer);
             }
 
@@ -56,7 +56,7 @@ public class GO {
         while (waiting) {
             Thread.sleep(10);
             gameMode = SecondFrame.getGameMode();
-            if (gameMode >= 0) {
+            if (gameMode > -1) {
                 waiting = false;
             }
         }
