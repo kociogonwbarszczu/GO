@@ -1,43 +1,64 @@
 package org.go.game.ClientServer;
 
+import org.go.game.SecondFrame;
+
 import java.io.*;
 import java.net.*;
 
-class NewGame extends Thread {
+class NewGame implements Runnable {
 
     public static int PLAYER1_WON = 1;
     public static int PLAYER2_WON = 2;
-    public static int DRAW = 3;
-    public static int CONTINUE = 4;
+    public static int CONTINUE = 3;
 
-    //sockets
+    private int boardSize = SecondFrame.getBoardSize();
+    private char[][] board = new char[boardSize][boardSize];
+
     private Socket firstPlayer;
     private Socket secondPlayer;
 
     public NewGame(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
+
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++){
+                board[i][j] = ' ';
+            }
+        }
     }
     @Override
     public void run() {
         try {
-            InputStream input = firstPlayer.getInputStream();
-            BufferedReader in = new BufferedReader(new InputStreamReader(input));
+            DataInputStream inputFirstPlayer = new DataInputStream(firstPlayer.getInputStream());
+            DataOutputStream outputFirstPlayer = new DataOutputStream(firstPlayer.getOutputStream());
+            DataInputStream inputSecondPlayer = new DataInputStream(secondPlayer.getInputStream());
+            DataOutputStream outputSecondPlayer = new DataOutputStream(secondPlayer.getOutputStream());
 
-            OutputStream output = firstPlayer.getOutputStream();
-            PrintWriter out = new PrintWriter(output, true);
+            // starting game
+            while (true) {
+                int row = inputFirstPlayer.readInt();
+                int column = inputFirstPlayer.readInt();
+                board[row][column] = 'B';
 
-            String line;
-            do {
-                line = in.readLine();
-                System.out.println(line);
-                out.println("-> ("+line+")");
+                outputSecondPlayer.writeInt(CONTINUE);
+                sendMove(outputSecondPlayer, row, column);
 
-            } while (!line.equals("bye"));
+                row = inputSecondPlayer.readInt();
+                column = inputSecondPlayer.readInt();
+                board[row][column] = 'W';
 
-            firstPlayer.close();
+                outputFirstPlayer.writeInt(CONTINUE);
+                sendMove(outputFirstPlayer, row, column);
+            }
+
         } catch (IOException ex) {
             System.err.println("ex");
         }
+    }
+
+    private void sendMove(DataOutputStream out, int row, int column) throws IOException {
+        out.writeInt(row);
+        out.writeInt(column);
     }
 }
