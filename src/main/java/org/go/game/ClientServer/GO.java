@@ -28,17 +28,16 @@ public class GO {
                 waitForAmountOfPlayer();
                 System.out.println(gameMode);
 
-                // adding second player
-                Socket secondPlayer;
+                // adding second player or bot
+                Socket secondPlayer = null;
                 if (gameMode == 0) {
                     System.out.println("Waiting for second player...");
                     secondPlayer = serverSocket.accept();
                     System.out.println("Player second connected.");
                 } else {
-                    secondPlayer = serverSocket.accept();
                     System.out.println("Bot connected.");
                 }
-                System.out.println("ok");
+
                 initializeGame(firstPlayer, secondPlayer);
             }
 
