@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-class MultiThread extends Thread {
+class NewGame extends Thread {
 
     public static int PLAYER1_WON = 1;
     public static int PLAYER2_WON = 2;
@@ -9,19 +9,20 @@ class MultiThread extends Thread {
     public static int CONTINUE = 4;
 
     //sockets
-    private Socket socket;
+    private Socket firstPlayer;
     private Socket secondPlayer;
 
-    public MultiThread(Socket socket) {
-        this.socket = socket;
+    public NewGame(Socket firstPlayer, Socket secondPlayer) {
+        this.firstPlayer = firstPlayer;
+        this.secondPlayer = secondPlayer;
     }
     @Override
     public void run() {
         try {
-            InputStream input = socket.getInputStream();
+            InputStream input = firstPlayer.getInputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(input));
 
-            OutputStream output = socket.getOutputStream();
+            OutputStream output = firstPlayer.getOutputStream();
             PrintWriter out = new PrintWriter(output, true);
 
             String line;
@@ -32,7 +33,7 @@ class MultiThread extends Thread {
 
             } while (!line.equals("bye"));
 
-            socket.close();
+            firstPlayer.close();
         } catch (IOException ex) {
             System.err.println("ex");
         }
