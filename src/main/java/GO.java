@@ -7,14 +7,16 @@ public class GO {
     public static final int PLAYER2 = 2;
 
     public static void main(String[] args) {
-        Frame frame = new Frame();
-        frame.menuFrame();
+        //Frame frame = new Frame();
+        //frame.firstFrame();
+        new FirstFrame();
+
         try (ServerSocket serverSocket = new ServerSocket(666)){
             System.out.println("Starting server on port 666");
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Player one connected");
+                System.out.println("New player connected");
 
                 new MultiThread(socket).start();
             }
