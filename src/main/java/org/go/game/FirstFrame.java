@@ -11,14 +11,14 @@ public class FirstFrame extends JFrame {
         setSize(700, 600);
 
         //title
-        setTitle("org.go.game.ClientServer.GO");
+        setTitle("GO");
 
         //main components panel
         JPanel componentsPanel = new JPanel();
         componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.PAGE_AXIS));
 
         //label
-        JLabel titleLabel = new JLabel("org.go.game.ClientServer.GO");
+        JLabel titleLabel = new JLabel("GO");
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //buttons

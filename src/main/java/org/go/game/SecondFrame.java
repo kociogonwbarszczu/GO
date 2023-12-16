@@ -13,7 +13,7 @@ public class SecondFrame extends JFrame {
         setSize(700, 600);
 
         //title
-        setTitle("org.go.game.ClientServer.GO");
+        setTitle("GO");
 
         //main components panel
         JPanel componentsPanel = new JPanel();
