@@ -1,6 +1,7 @@
 package org.go.game.ClientServer;
 
 import org.go.game.FirstFrame;
+import org.go.game.GameFrame;
 import org.go.game.SecondFrame;
 
 import java.io.*;
@@ -12,7 +13,7 @@ public class GO {
     public NewGame currentGame;
 
     public static void main(String[] args) {
-        GO display = new GO();
+        new GO();
     }
 
     public GO() {
@@ -23,22 +24,24 @@ public class GO {
             while (true) {
                 // connect first player
                 Socket firstPlayer = serverSocket.accept();
+                new DataOutputStream(firstPlayer.getOutputStream()).writeInt(1);
                 System.out.println("Player one connected.");
                 new FirstFrame();
                 waitForAmountOfPlayer();
                 System.out.println(gameMode);
 
-                // adding second player
-                Socket secondPlayer;
+                // adding second player or bot
+                Socket secondPlayer = null;
                 if (gameMode == 0) {
                     System.out.println("Waiting for second player...");
                     secondPlayer = serverSocket.accept();
+                    new DataOutputStream(secondPlayer.getOutputStream()).writeInt(2);
+                    new GameFrame();
                     System.out.println("Player second connected.");
                 } else {
-                    secondPlayer = serverSocket.accept();
                     System.out.println("Bot connected.");
                 }
-                System.out.println("ok");
+
                 initializeGame(firstPlayer, secondPlayer);
             }
 
