@@ -1,4 +1,4 @@
-package org.go.game;
+package go.game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +89,7 @@ public class SecondFrame extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new GameFrame();
+                new GameFrame();
                 setStartGame(true);
             }
         });

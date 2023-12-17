@@ -1,4 +1,4 @@
-package org.go.game.ClientServer;
+package go.game.ClientServer;
 
 import java.net.*;
 import java.io.*;
