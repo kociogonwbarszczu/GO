@@ -89,8 +89,8 @@ public class SecondFrame extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new GameFrame();
-                //startGame = true;
+                //new GameFrame();
+                setStartGame(true);
             }
         });
 
@@ -124,6 +124,10 @@ public class SecondFrame extends JFrame {
 
     public static int getBoardSize() {
         return boardSize;
+    }
+
+    public static void setStartGame(boolean value) {
+        startGame = value;
     }
 
     public static boolean getStartGame() {

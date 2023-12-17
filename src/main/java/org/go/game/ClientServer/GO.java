@@ -9,8 +9,11 @@ import java.net.*;
 
 public class GO {
     public int gameMode = -1;
-    private boolean waiting = true;
     public NewGame currentGame;
+    public static boolean startGame = false;
+    public int boardSize;
+    boolean player1Joined = false;
+    boolean player2Joined = false;
 
     public static void main(String[] args) {
         new GO();
@@ -22,27 +25,42 @@ public class GO {
             System.out.println("Starting server on port 666.");
 
             while (true) {
+                System.out.println("Waiting to join player.");
                 // connect first player
                 Socket firstPlayer = serverSocket.accept();
                 new DataOutputStream(firstPlayer.getOutputStream()).writeInt(1);
                 System.out.println("Player one connected.");
-                new FirstFrame();
-                waitForAmountOfPlayer();
-                System.out.println(gameMode);
+                FirstFrame firstFrame = new FirstFrame();
 
-                // adding second player or bot
-                Socket secondPlayer = null;
-                if (gameMode == 0) {
-                    System.out.println("Waiting for second player...");
-                    secondPlayer = serverSocket.accept();
-                    new DataOutputStream(secondPlayer.getOutputStream()).writeInt(2);
-                    new GameFrame();
-                    System.out.println("Player second connected.");
-                } else {
-                    System.out.println("Bot connected.");
+                waitForNewOrLoadGame(firstFrame);
+
+                if (firstFrame.getNewGame()) {
+                    SecondFrame secondFrame = new SecondFrame();
+
+                    waitForStartGame();
+                    // adding second player or bot
+
+                    gameMode = SecondFrame.getGameMode();
+                    boardSize = SecondFrame.getBoardSize();
+                    System.out.println(gameMode);
+                    System.out.println(boardSize);
+                    if (gameMode == 0) {
+                        System.out.println("Waiting for second player...");
+                        Socket secondPlayer = serverSocket.accept();
+                        new DataOutputStream(secondPlayer.getOutputStream()).writeInt(2);
+                        player2Joined = true;
+                        System.out.println("Player second connected.");
+
+                        GameFrame gameFrame1 = new GameFrame();
+                        GameFrame gameFrame2 = new GameFrame();
+
+                        initializeGame(firstPlayer, secondPlayer, gameFrame1, gameFrame2);
+                    } else {
+                        System.out.println("Bot connected.");
+                        initalizeGameWithBot();
+                    }
                 }
 
-                initializeGame(firstPlayer, secondPlayer);
             }
 
         } catch (IOException ex) {
@@ -53,26 +71,42 @@ public class GO {
         }
     }
 
-    private void waitForAmountOfPlayer() throws InterruptedException {
+    private void waitForStartGame() throws InterruptedException {
         System.out.println("Player one is setting mode of games...");
 
-        while (waiting) {
+        while (!(SecondFrame.getStartGame())){
             Thread.sleep(10);
-            gameMode = SecondFrame.getGameMode();
-            if (gameMode > -1) {
-                waiting = false;
-            }
         }
-
-        System.out.println("Chosen amount of players");
-        waiting = true;
+        startGame = true;
     }
 
-    private void initializeGame (Socket firstPlayerSocket, Socket secondePlayerSocket) {
-        System.out.println("Starting game.");
-        currentGame = new NewGame(firstPlayerSocket, secondePlayerSocket);
+    private static boolean getStartGame() {
+        return startGame;
+    }
+
+    private void waitForNewOrLoadGame(FirstFrame firstFrame) throws InterruptedException {
+        while (!(firstFrame.getNewGame() || firstFrame.getLoadGame())){
+            Thread.sleep(10);
+        }
+    }
+
+
+    private void initializeGame (Socket firstPlayerSocket, Socket secondPlayerSocket, GameFrame gameFrame1, GameFrame gameFrame2) throws InterruptedException {
+        System.out.println("Waiting for both players to join...");
+
+        while (!(player2Joined)) {
+            Thread.sleep(10);
+        }
+
+        System.out.println("Both players joined. Starting game.");
+        currentGame = new NewGame(firstPlayerSocket, secondPlayerSocket, gameFrame1, gameFrame2);
 
         Thread thread = new Thread(currentGame);
         thread.start();
+        startGame = false;
+    }
+
+    private void initalizeGameWithBot() {
+        FirstFrame.startGame = true;
     }
 }

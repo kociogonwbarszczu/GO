@@ -1,16 +1,16 @@
 package org.go.game.ClientServer;
 
-import org.go.game.GameFrame;
 import org.go.game.SecondFrame;
 
 import java.net.*;
 import java.io.*;
 
-public class Client implements Runnable{
-    public static boolean startGame = false;
+public class Client implements Runnable {
+
+    private boolean startGame = false;
     private boolean myTurn = false;
-    private static int boardSize = SecondFrame.getBoardSize();
-    public static char[][] board = new char[boardSize][boardSize];
+    private static int boardSize = 9;
+    public static char[][] board;
 
     private int rowSelected;
     private int columnSelected;
@@ -27,17 +27,13 @@ public class Client implements Runnable{
         Client display = new Client();
         display.connectToServer();
 
-        display.simulateMoves();
-
-        for (int i = 0; i < display.boardSize; i++) {
-            for (int j = 0; j < display.boardSize; j++){
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++){
                 board[i][j] = ' ';
             }
         }
-    }
 
-    public static void showGameFrame() {
-        new GameFrame();
+        display.simulateMoves();
     }
 
     private void connectToServer() {
@@ -76,11 +72,12 @@ public class Client implements Runnable{
                     System.out.println("Your move.");
                     waitForMove();
                     sendMove();
-                    recieveInfoFromServer();
-                }
-                else {
+                    receiveInfoFromServer();
+                } else {
                     System.out.println("Waiting for the opponent's move.");
-                    recieveInfoFromServer();
+                    receiveInfoFromServer();
+                    waitForMove();
+                    sendMove();
                 }
             }
         } catch (IOException e) {
@@ -108,10 +105,11 @@ public class Client implements Runnable{
         board[row][column] = otherColor;
     }
 
-    private void recieveInfoFromServer() throws IOException {
+    private void receiveInfoFromServer() throws IOException {
         recieveMove();
         myTurn = true;
     }
+
     private void simulateMoves() {
         // Simulate player 1 making a move
         rowSelected = 0;
@@ -122,6 +120,17 @@ public class Client implements Runnable{
         // Simulate player 2 making a move
         rowSelected = 1;
         columnSelected = 1;
+        waiting = false;
+        myTurn = false;
+
+        rowSelected = 2;
+        columnSelected = 2;
+        waiting = false;
+        myTurn = false;
+
+        // Simulate player 2 making a move
+        rowSelected = 3;
+        columnSelected = 3;
         waiting = false;
         myTurn = false;
     }

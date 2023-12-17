@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FirstFrame extends JFrame {
+    public boolean newGame = false;
+    public boolean loadGame = false;
+    public static boolean startGame = false;
     public FirstFrame() {
         //size
         setSize(700, 600);
@@ -27,7 +30,7 @@ public class FirstFrame extends JFrame {
         buttonNewGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SecondFrame();
+                newGame = true;
             }
         });
 
@@ -36,6 +39,7 @@ public class FirstFrame extends JFrame {
         buttonLoadGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                loadGame = true;
                 new LoadGameFrame();
             }
         });
@@ -55,5 +59,13 @@ public class FirstFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
+    }
+
+    public boolean getNewGame() {
+        return newGame;
+    }
+
+    public boolean getLoadGame() {
+        return loadGame;
     }
 }
