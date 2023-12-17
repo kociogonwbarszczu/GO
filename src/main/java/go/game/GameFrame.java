@@ -25,7 +25,12 @@ public class GameFrame extends JFrame {
         setSize(700, 600);
 
         // title
-        setTitle("GO");
+        if(playerColor == Color.BLACK){
+            setTitle("GO - player 1");
+        }
+        else{
+            setTitle("GO - player 2");
+        }
 
         // create elements map
         elements = new HashMap<>();
