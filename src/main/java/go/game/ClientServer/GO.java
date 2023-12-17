@@ -23,7 +23,6 @@ public class GO {
         // starting new server
         try (ServerSocket serverSocket = new ServerSocket(666)){
             System.out.println("Starting server on port 666.");
-            new GameFrame();
 
             while (true) {
                 System.out.println("Waiting to join player.");
