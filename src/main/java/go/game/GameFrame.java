@@ -17,9 +17,10 @@ public class GameFrame extends JFrame {
     private JTextPane textPane;
     private int boardSize = SecondFrame.getBoardSize();
     private int cellSize = Board.getCellSize();
-    private Color playerColor = Color.BLACK;
+    private Color playerColor;
 
-    public GameFrame() {
+    public GameFrame(Color color) {
+        playerColor = color;
         // size
         setSize(700, 600);
 

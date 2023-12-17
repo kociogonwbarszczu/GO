@@ -4,6 +4,7 @@ import go.game.FirstFrame;
 import go.game.GameFrame;
 import go.game.SecondFrame;
 
+import java.awt.*;
 import java.io.*;
 import java.net.*;
 
@@ -51,8 +52,8 @@ public class GO {
                         player2Joined = true;
                         System.out.println("Player second connected.");
 
-                        GameFrame gameFrame1 = new GameFrame();
-                        GameFrame gameFrame2 = new GameFrame();
+                        GameFrame gameFrame1 = new GameFrame(Color.BLACK);
+                        GameFrame gameFrame2 = new GameFrame(Color.WHITE);
 
                         initializeGame(firstPlayer, secondPlayer, gameFrame1, gameFrame2);
                     } else {
