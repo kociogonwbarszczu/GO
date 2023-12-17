@@ -2,10 +2,12 @@ package go.game.ClientServer;
 
 import java.net.*;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Client implements Runnable {
-
+    public static final int PLAYER1 = 1;
+    public static final int PLAYER2 = 2;
     private boolean startGame = false;
     private boolean myTurn = false;
     private static int boardSize = 9;
@@ -53,33 +55,34 @@ public class Client implements Runnable {
     public void run() {
         try {
             int player = fromServer.readInt();
+            System.out.println(player);
 
-            if (player == 1) {
+            if (player == PLAYER1) {
                 myColor = 'B';
                 otherColor = 'W';
+                System.out.println("Your move.");
 
                 myTurn = true;
-            } else if (player == 2) {
+            } else if (player == PLAYER2) {
                 myColor = 'W';
                 otherColor = 'B';
+                System.out.println("Waiting for the opponent's move");
             }
 
             while (continueToPlay) {
                 if (myTurn) {
-                    System.out.println("Your move.");
                     waitForMove();
                     sendMove();
                     receiveInfoFromServer();
+                    System.out.println(Arrays.deepToString(board));
                 } else {
-                    System.out.println("Waiting for the opponent's move.");
                     receiveInfoFromServer();
+                    System.out.println(Arrays.deepToString(board));
                     waitForMove();
                     sendMove();
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -92,6 +95,7 @@ public class Client implements Runnable {
 
         System.out.println("Enter column (0-" + (boardSize - 1) + "): ");
         columnSelected = scanner.nextInt();
+        System.out.println("Waiting for opponent's move.");
         myTurn = false;
         //while (waiting) {
         //    Thread.sleep(100);
@@ -112,6 +116,7 @@ public class Client implements Runnable {
 
     private void receiveInfoFromServer() throws IOException {
         receiveMove();
+        System.out.println("Your move.");
         myTurn = true;
     }
 }
