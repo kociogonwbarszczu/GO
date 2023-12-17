@@ -1,6 +1,6 @@
-package org.go.game.drawing;
+package go.game.drawing;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 public interface DrawableElement {
     void draw(Graphics g);

@@ -1,4 +1,4 @@
-package org.go.game;
+package go.game;
 
 import javax.swing.*;
 import java.awt.*;
