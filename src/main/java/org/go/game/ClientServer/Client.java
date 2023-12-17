@@ -1,16 +1,15 @@
 package org.go.game.ClientServer;
 
-import org.go.game.SecondFrame;
-
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
 public class Client implements Runnable {
 
     private boolean startGame = false;
     private boolean myTurn = false;
     private static int boardSize = 9;
-    public static char[][] board;
+    public static char[][] board = new char[9][9];
 
     private int rowSelected;
     private int columnSelected;
@@ -32,8 +31,6 @@ public class Client implements Runnable {
                 board[i][j] = ' ';
             }
         }
-
-        display.simulateMoves();
     }
 
     private void connectToServer() {
@@ -88,10 +85,18 @@ public class Client implements Runnable {
     }
 
     private void waitForMove() throws InterruptedException {
-        while (waiting) {
-            Thread.sleep(100);
-        }
-        waiting = true;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter row (0-" + (boardSize - 1) + "): ");
+        rowSelected = scanner.nextInt();
+
+        System.out.println("Enter column (0-" + (boardSize - 1) + "): ");
+        columnSelected = scanner.nextInt();
+        myTurn = false;
+        //while (waiting) {
+        //    Thread.sleep(100);
+        //}
+        //waiting = true;
     }
 
     private void sendMove() throws IOException {
@@ -99,39 +104,14 @@ public class Client implements Runnable {
         toServer.writeInt(columnSelected);
     }
 
-    private void recieveMove() throws IOException {
+    private void receiveMove() throws IOException {
         int row = fromServer.readInt();
         int column = fromServer.readInt();
         board[row][column] = otherColor;
     }
 
     private void receiveInfoFromServer() throws IOException {
-        recieveMove();
+        receiveMove();
         myTurn = true;
-    }
-
-    private void simulateMoves() {
-        // Simulate player 1 making a move
-        rowSelected = 0;
-        columnSelected = 0;
-        waiting = false;
-        myTurn = false;
-
-        // Simulate player 2 making a move
-        rowSelected = 1;
-        columnSelected = 1;
-        waiting = false;
-        myTurn = false;
-
-        rowSelected = 2;
-        columnSelected = 2;
-        waiting = false;
-        myTurn = false;
-
-        // Simulate player 2 making a move
-        rowSelected = 3;
-        columnSelected = 3;
-        waiting = false;
-        myTurn = false;
     }
 }
