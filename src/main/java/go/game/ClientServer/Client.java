@@ -19,7 +19,6 @@ public class Client implements Runnable {
     private DataInputStream fromServer;
     private DataOutputStream toServer;
 
-    private boolean waiting = true;
     private boolean continueToPlay = true;
     public char myColor = ' ';
     public char otherColor = ' ';
@@ -97,10 +96,6 @@ public class Client implements Runnable {
         columnSelected = scanner.nextInt();
         System.out.println("Waiting for opponent's move.");
         myTurn = false;
-        //while (waiting) {
-        //    Thread.sleep(100);
-        //}
-        //waiting = true;
     }
 
     private void sendMove() throws IOException {

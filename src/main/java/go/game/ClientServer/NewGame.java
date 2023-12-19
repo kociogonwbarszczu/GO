@@ -12,6 +12,7 @@ class NewGame implements Runnable {
     public static int PLAYER2_WON = 2;
     public static int CONTINUE = 3;
 
+    //poprawa
     private int boardSize = SecondFrame.getBoardSize();
     private char[][] board = new char[boardSize][boardSize];
 
