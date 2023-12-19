@@ -1,12 +1,12 @@
 package go.game.ClientServer;
 
 import go.game.GameFrame;
+import go.game.SecondFrame;
 
 import java.awt.*;
 import java.net.*;
 import java.io.*;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Client implements Runnable {
     public static final int PLAYER1 = 1;
@@ -18,8 +18,6 @@ public class Client implements Runnable {
 
     private int rowSelected;
     private int columnSelected;
-
-    private boolean moveWasMade = false;
 
     private DataInputStream fromServer;
     private DataOutputStream toServer;

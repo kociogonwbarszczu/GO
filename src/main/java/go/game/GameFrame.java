@@ -72,7 +72,6 @@ public class GameFrame extends JFrame {
                     setMove(true);
                     client.updateMove(rowSelected, columnSelected);
 
-
                     // Aktualizacja tekstu w JTextPane
                     String currentText = textPane.getText();
                     String newText = currentText + String.format("Stone added at coordinates (%d, %d)\n", x, y);
