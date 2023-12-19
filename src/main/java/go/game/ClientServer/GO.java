@@ -25,23 +25,24 @@ public class GO {
             System.out.println("Starting server on port 666.");
 
             while (true) {
-                System.out.println("Waiting to join player.");
-                // connect first player
-                Socket firstPlayer = serverSocket.accept();
-                new DataOutputStream(firstPlayer.getOutputStream()).writeInt(1);
-                System.out.println("Player one connected.");
                 FirstFrame firstFrame = new FirstFrame();
-
                 waitForNewOrLoadGame(firstFrame);
 
                 if (firstFrame.getNewGame()) {
                     SecondFrame secondFrame = new SecondFrame();
-
                     waitForStartGame();
-                    // adding second player or bot
 
                     gameMode = SecondFrame.getGameMode();
                     boardSize = SecondFrame.getBoardSize();
+
+                    // connect first player
+                    System.out.println("Waiting to join player.");
+                    Socket firstPlayer = serverSocket.accept();
+                    new DataOutputStream(firstPlayer.getOutputStream()).writeInt(1);
+                    System.out.println("Player one connected.");
+
+                    // adding second player or bot
+
                     System.out.println(boardSize);
                     if (gameMode == 0) {
                         System.out.println("Waiting for second player...");
@@ -80,7 +81,7 @@ public class GO {
         startGame = true;
     }
 
-    private static boolean getStartGame() {
+    static boolean getStartGame() {
         return startGame;
     }
 
