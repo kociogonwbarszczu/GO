@@ -50,10 +50,7 @@ public class GO {
                         player2Joined = true;
                         System.out.println("Player second connected.");
 
-                        GameFrame gameFrame1 = new GameFrame(Color.BLACK);
-                        GameFrame gameFrame2 = new GameFrame(Color.WHITE);
-
-                        initializeGame(firstPlayer, secondPlayer, gameFrame1, gameFrame2);
+                        initializeGame(firstPlayer, secondPlayer);
                     } else {
                         System.out.println("Bot connected.");
                         initalizeGameWithBot();
@@ -87,13 +84,13 @@ public class GO {
         return startGame;
     }
 
-    private void initializeGame (Socket firstPlayerSocket, Socket secondPlayerSocket, GameFrame gameFrame1, GameFrame gameFrame2) throws InterruptedException {
+    private void initializeGame (Socket firstPlayerSocket, Socket secondPlayerSocket) throws InterruptedException {
         while (!(player2Joined)) {
             Thread.sleep(10);
         }
 
         System.out.println("Both players joined. Starting game.");
-        currentGame = new NewGame(firstPlayerSocket, secondPlayerSocket, gameFrame1, gameFrame2);
+        currentGame = new NewGame(firstPlayerSocket, secondPlayerSocket);
 
         Thread thread = new Thread(currentGame);
         thread.start();

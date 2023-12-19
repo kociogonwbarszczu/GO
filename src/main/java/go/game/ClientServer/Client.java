@@ -1,5 +1,8 @@
 package go.game.ClientServer;
 
+import go.game.GameFrame;
+
+import java.awt.*;
 import java.net.*;
 import java.io.*;
 import java.util.Arrays;
@@ -16,16 +19,20 @@ public class Client implements Runnable {
     private int rowSelected;
     private int columnSelected;
 
+    private boolean moveWasMade = false;
+
     private DataInputStream fromServer;
     private DataOutputStream toServer;
 
     private boolean continueToPlay = true;
     public char myColor = ' ';
     public char otherColor = ' ';
+    private static Client client;
+    private GameFrame gameFrame;
 
     public static void main(String[] args) {
-        Client display = new Client();
-        display.connectToServer();
+        client = new Client();
+        client.connectToServer();
 
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++){
@@ -59,12 +66,14 @@ public class Client implements Runnable {
             if (player == PLAYER1) {
                 myColor = 'B';
                 otherColor = 'W';
-                System.out.println("Your move. ok");
+                gameFrame = new GameFrame(Color.BLACK, client);
+                System.out.println("Your move.");
 
                 myTurn = true;
             } else if (player == PLAYER2) {
                 myColor = 'W';
                 otherColor = 'B';
+                gameFrame = new GameFrame(Color.WHITE, client);
                 System.out.println("Waiting for the opponent's move");
             }
 
@@ -87,13 +96,13 @@ public class Client implements Runnable {
     }
 
     private void waitForMove() throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
+        while (!gameFrame.getMove()) {
+            Thread.sleep(100);
+        }
+        gameFrame.setMove(false);
+        System.out.println(columnSelected);
+        System.out.println(rowSelected);
 
-        System.out.println("Enter row (0-" + (boardSize - 1) + "): ");
-        rowSelected = scanner.nextInt();
-
-        System.out.println("Enter column (0-" + (boardSize - 1) + "): ");
-        columnSelected = scanner.nextInt();
         System.out.println("Waiting for opponent's move.");
         myTurn = false;
     }
@@ -113,5 +122,11 @@ public class Client implements Runnable {
         receiveMove();
         System.out.println("Your move.");
         myTurn = true;
+        updateMove(rowSelected, columnSelected);
+    }
+
+    public void updateMove(int x, int y) {
+        columnSelected = x;
+        rowSelected = y;
     }
 }

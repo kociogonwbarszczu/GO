@@ -1,5 +1,6 @@
 package go.game;
 
+import go.game.ClientServer.Client;
 import go.game.drawing.Board;
 import go.game.drawing.Stone;
 import go.game.drawing.DrawableElement;
@@ -18,8 +19,11 @@ public class GameFrame extends JFrame {
     private int boardSize = SecondFrame.getBoardSize();
     private int cellSize = Board.getCellSize();
     private Color playerColor;
+    public int rowSelected = -1;
+    public int columnSelected = -1;
+    private static boolean sendMove = false;
 
-    public GameFrame(Color color) {
+    public GameFrame(Color color, Client client) {
         playerColor = color;
         // size
         setSize(700, 600);
@@ -62,6 +66,13 @@ public class GameFrame extends JFrame {
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
 
+                    //adding coordinates to client
+                    setRowSelected(x);
+                    setColumnSelected(y);
+                    setMove(true);
+                    client.updateMove(rowSelected, columnSelected);
+
+
                     // Aktualizacja tekstu w JTextPane
                     String currentText = textPane.getText();
                     String newText = currentText + String.format("Stone added at coordinates (%d, %d)\n", x, y);
@@ -69,6 +80,10 @@ public class GameFrame extends JFrame {
 
                     // Odświeżenie widoku
                     drawingPanel.repaint();
+
+                    //setMove(false);
+                    setRowSelected(-1);
+                    setColumnSelected(-1);
                 }
             }
         });
@@ -99,5 +114,27 @@ public class GameFrame extends JFrame {
                 g.translate(-x, -y);
             }
         }
+    }
+
+    public void setMove(boolean b) {
+        sendMove = b;
+    }
+
+    public boolean getMove() {
+        return sendMove;
+    }
+
+    private void setRowSelected(int x) {
+        rowSelected = x;
+    }
+    private void setColumnSelected(int y) {
+        columnSelected = y;
+    }
+    public int getRowSelected() {
+        return rowSelected;
+    }
+
+    public int getColumnSelected() {
+        return columnSelected;
     }
 }
