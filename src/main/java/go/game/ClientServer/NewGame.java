@@ -19,14 +19,10 @@ class NewGame implements Runnable {
     private Socket firstPlayer;
     private Socket secondPlayer;
 
-    private GameFrame gameFrame1;
-    private GameFrame gameFrame2;
 
-    public NewGame(Socket firstPlayer, Socket secondPlayer, GameFrame gameFrame1, GameFrame gameFrame2) {
+    public NewGame(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
-        this.gameFrame1 = gameFrame1;
-        this.gameFrame2 = gameFrame2;
 
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++){
