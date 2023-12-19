@@ -15,14 +15,26 @@ public class GameFrame extends JFrame {
 
     private Map<Point, DrawableElement> elements;
     private JTextPane textPane;
-    private int boardSize = SecondFrame.getBoardSize();
-    private int cellSize = Board.getCellSize();
+    /*private static int boardSize = SecondFrame.getBoardSize();
+    private int cellSize = Board.getCellSize();*/
+    private int boardSize;
+    private int cellSize;
     private Color playerColor;
+    private final int exitBarHeight = 37;
+
+    //int gameFrameHeight = Board.getGameFrameHeight();
+    //int gameFrameWidth = Board.getGameFrameWidth();
 
     public GameFrame(Color color) {
         playerColor = color;
+
         // size
-        setSize(700, 600);
+        boardSize = SecondFrame.getBoardSize();
+        cellSize = Board.getCellSize();
+
+        int width = boardSize*cellSize*2;
+        int height = boardSize*cellSize+exitBarHeight;
+        setSize(width, height);
 
         // title
         if(playerColor == Color.BLACK){
@@ -91,8 +103,8 @@ public class GameFrame extends JFrame {
                 Point position = entry.getKey();
                 DrawableElement element = entry.getValue();
 
-                int x = position.x * 30; // assuming cell size is 30
-                int y = position.y * 30;
+                int x = position.x * cellSize;
+                int y = position.y * cellSize;
 
                 g.translate(x, y);
                 element.draw(g);
