@@ -60,13 +60,13 @@ public class Client implements Runnable {
             if (player == PLAYER1) {
                 myColor = 'B';
                 otherColor = 'W';
-                System.out.println("Your move. ok");
+                System.out.println("Your move.");
 
                 myTurn = true;
             } else if (player == PLAYER2) {
                 myColor = 'W';
                 otherColor = 'B';
-                System.out.println("Waiting for the opponent's move");
+                System.out.println("Waiting for the opponent's move.");
             }
 
             while (continueToPlay) {
