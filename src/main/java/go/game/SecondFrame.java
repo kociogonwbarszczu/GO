@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 public class SecondFrame extends JFrame {
     public static int gameMode = -1; // 0 - 2 player game, 1 - game with bot
     public static int boardSize = 19; // possible sizes - 19, 13, 9
+    private boolean setBoardSize = false;
+    public boolean setGameMode = false;
     public static boolean startGame = false;
     public SecondFrame() {
         //size
@@ -28,12 +30,14 @@ public class SecondFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameMode = 0;
+                setGameMode = true;
             }
         });
         buttonGameWithBot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameMode = 1;
+                setGameMode = true;
             }
         });
 
@@ -55,6 +59,7 @@ public class SecondFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boardSize = 19;
+                setBoardSize = true;
             }
         });
 
@@ -62,6 +67,7 @@ public class SecondFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boardSize = 13;
+                setBoardSize = true;
             }
         });
 
@@ -69,6 +75,7 @@ public class SecondFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boardSize = 9;
+                setBoardSize = true;
             }
         });
 
@@ -86,19 +93,33 @@ public class SecondFrame extends JFrame {
         //button start
         JButton startButton = new JButton("start game");
 
+        JLabel errorLabel = new JLabel("");
+
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setStartGame(true);
+                if (setBoardSize && setGameMode) {
+                    setStartGame(true);
+                    errorLabel.setText("Waiting for second player.");
+                } else {
+                    errorLabel.setText("You have to choose game mode and board size!");
+                }
             }
         });
 
-        //board size buttons panel
+        //start button panel
         JPanel startButtonPanel = new JPanel();
         startButtonPanel.setLayout(new BoxLayout(startButtonPanel, BoxLayout.X_AXIS));
 
-        //adding board size buttons to panel
+        //adding start button to panel
         startButtonPanel.add(startButton);
+
+        //error label panel
+        JPanel errorLabelPanel = new JPanel();
+        errorLabelPanel.setLayout(new BoxLayout(errorLabelPanel, BoxLayout.X_AXIS));
+
+        //adding start button to panel
+        errorLabelPanel.add(errorLabel);
 
         componentsPanel.add(Box.createVerticalGlue());
         componentsPanel.add(modeButtonsPanel);
@@ -106,6 +127,8 @@ public class SecondFrame extends JFrame {
         componentsPanel.add(boardSizeButtonsPanel);
         componentsPanel.add(Box.createVerticalStrut(10));
         componentsPanel.add(startButtonPanel);
+        componentsPanel.add(Box.createVerticalStrut(10));
+        componentsPanel.add(errorLabelPanel);
         componentsPanel.add(Box.createVerticalGlue());
 
         // Center the panel on the frame

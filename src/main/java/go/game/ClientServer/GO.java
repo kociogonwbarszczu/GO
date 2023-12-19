@@ -13,7 +13,6 @@ public class GO {
     public NewGame currentGame;
     public static boolean startGame = false;
     public int boardSize;
-    boolean player1Joined = false;
     boolean player2Joined = false;
 
     public static void main(String[] args) {
@@ -43,7 +42,6 @@ public class GO {
 
                     gameMode = SecondFrame.getGameMode();
                     boardSize = SecondFrame.getBoardSize();
-                    System.out.println(gameMode);
                     System.out.println(boardSize);
                     if (gameMode == 0) {
                         System.out.println("Waiting for second player...");
@@ -66,12 +64,16 @@ public class GO {
 
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
-            ex.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private void waitForNewOrLoadGame(FirstFrame firstFrame) throws InterruptedException {
+        while (!(firstFrame.getNewGame() || firstFrame.getLoadGame())){
+            Thread.sleep(10);
+        }
+    }
     private void waitForStartGame() throws InterruptedException {
         System.out.println("Player one is setting mode of games...");
 
@@ -85,16 +87,7 @@ public class GO {
         return startGame;
     }
 
-    private void waitForNewOrLoadGame(FirstFrame firstFrame) throws InterruptedException {
-        while (!(firstFrame.getNewGame() || firstFrame.getLoadGame())){
-            Thread.sleep(10);
-        }
-    }
-
-
     private void initializeGame (Socket firstPlayerSocket, Socket secondPlayerSocket, GameFrame gameFrame1, GameFrame gameFrame2) throws InterruptedException {
-        System.out.println("Waiting for both players to join...");
-
         while (!(player2Joined)) {
             Thread.sleep(10);
         }
