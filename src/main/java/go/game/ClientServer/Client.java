@@ -74,10 +74,10 @@ public class Client implements Runnable {
                     waitForMove();
                     sendMove();
                     receiveInfoFromServer();
-                    System.out.println(Arrays.deepToString(board));
+                    //System.out.println(Arrays.deepToString(board));
                 } else {
                     receiveInfoFromServer();
-                    System.out.println(Arrays.deepToString(board));
+                    //System.out.println(Arrays.deepToString(board));
                     waitForMove();
                     sendMove();
                 }
