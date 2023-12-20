@@ -126,14 +126,8 @@ public class GameFrame extends JFrame {
     private void setRowSelected(int x) {
         rowSelected = x;
     }
+
     private void setColumnSelected(int y) {
         columnSelected = y;
-    }
-    public int getRowSelected() {
-        return rowSelected;
-    }
-
-    public int getColumnSelected() {
-        return columnSelected;
     }
 }

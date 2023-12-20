@@ -100,7 +100,7 @@ public class SecondFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (setBoardSize && setGameMode) {
                     setStartGame(true);
-                    errorLabel.setText("Waiting for second player.");
+                    errorLabel.setText("Waiting for players to join.");
                 } else {
                     errorLabel.setText("You have to choose game mode and board size!");
                 }
