@@ -13,8 +13,8 @@ public class Client implements Runnable {
     public static final int PLAYER2 = 2;
     private boolean startGame = false;
     private boolean myTurn = false;
-    private static int boardSize = 9;
-    public static char[][] board = new char[9][9];
+    private static final int boardSize = SecondFrame.getBoardSize();
+    public static char[][] board = new char[boardSize][boardSize];
 
     private int rowSelected;
     private int columnSelected;
