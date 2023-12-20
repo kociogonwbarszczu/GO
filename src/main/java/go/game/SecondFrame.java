@@ -93,7 +93,7 @@ public class SecondFrame extends JFrame {
         //button start
         JButton startButton = new JButton("start game");
 
-        JLabel errorLabel = new JLabel("");
+        JLabel errorLabel = new JLabel(" ");
 
         startButton.addActionListener(new ActionListener() {
             @Override
