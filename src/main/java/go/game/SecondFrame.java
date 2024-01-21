@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class SecondFrame extends JFrame {
     public static int gameMode = -1; // 0 - 2 player game, 1 - game with bot
-    public static int boardSize = 19; // possible sizes - 19, 13, 9
+    public static int boardSize = 19;
     private boolean setBoardSize = false;
     public boolean setGameMode = false;
     public static boolean startGame = false;
@@ -98,11 +98,11 @@ public class SecondFrame extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (setBoardSize && setGameMode) {
+                if (setGameMode) {
                     setStartGame(true);
                     errorLabel.setText("Waiting for players to join.");
                 } else {
-                    errorLabel.setText("You have to choose game mode and board size!");
+                    errorLabel.setText("You have to choose game mode!");
                 }
             }
         });
@@ -142,10 +142,6 @@ public class SecondFrame extends JFrame {
 
     public static int getGameMode() {
         return gameMode;
-    }
-
-    public static int getBoardSize() {
-        return boardSize;
     }
 
     public static void setStartGame(boolean value) {

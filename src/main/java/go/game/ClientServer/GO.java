@@ -12,7 +12,7 @@ public class GO {
     public int gameMode = -1;
     public NewGame currentGame;
     public static boolean startGame = false;
-    public int boardSize;
+    public int boardSize = 19;
     boolean player2Joined = false;
 
     public static void main(String[] args) {
@@ -33,7 +33,6 @@ public class GO {
                     waitForStartGame();
 
                     gameMode = SecondFrame.getGameMode();
-                    boardSize = SecondFrame.getBoardSize();
 
                     // connect first player
                     System.out.println("Waiting to join player.");
@@ -69,14 +68,14 @@ public class GO {
 
     private void waitForNewOrLoadGame(FirstFrame firstFrame) throws InterruptedException {
         while (!(firstFrame.getNewGame() || firstFrame.getLoadGame())){
-            Thread.sleep(10);
+            Thread.sleep(100);
         }
     }
     private void waitForStartGame() throws InterruptedException {
         System.out.println("Player one is setting mode of games...");
 
         while (!(SecondFrame.getStartGame())){
-            Thread.sleep(10);
+            Thread.sleep(100);
         }
         startGame = true;
     }
@@ -87,7 +86,7 @@ public class GO {
 
     private void initializeGame (Socket firstPlayerSocket, Socket secondPlayerSocket) throws InterruptedException {
         while (!(player2Joined)) {
-            Thread.sleep(10);
+            Thread.sleep(100);
         }
 
         System.out.println("Both players joined. Starting game.");

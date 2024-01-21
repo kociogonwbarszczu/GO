@@ -1,7 +1,6 @@
 package go.game.ClientServer;
 
 import go.game.GameFrame;
-import go.game.SecondFrame;
 
 import java.awt.*;
 import java.net.*;
@@ -13,7 +12,7 @@ public class Client implements Runnable {
     public static final int PLAYER2 = 2;
     private boolean startGame = false;
     private boolean myTurn = false;
-    private static final int boardSize = SecondFrame.getBoardSize();
+    private static final int boardSize = 19;
     public static char[][] board = new char[boardSize][boardSize];
 
     private int rowSelected;
@@ -100,6 +99,8 @@ public class Client implements Runnable {
         gameFrame.setMove(false);
         System.out.println(columnSelected);
         System.out.println(rowSelected);
+
+        board[rowSelected][columnSelected] = myColor;
 
         System.out.println("Waiting for opponent's move.");
         myTurn = false;

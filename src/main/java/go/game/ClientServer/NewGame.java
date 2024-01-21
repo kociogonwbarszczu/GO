@@ -13,7 +13,7 @@ class NewGame implements Runnable {
     public static int CONTINUE = 3;
 
     //poprawa
-    private int boardSize = SecondFrame.getBoardSize();
+    private int boardSize = 19;
     private char[][] board = new char[boardSize][boardSize];
 
     private Socket firstPlayer;
@@ -43,14 +43,14 @@ class NewGame implements Runnable {
                 int column = inputFirstPlayer.readInt();
                 board[row][column] = 'B';
 
-                outputSecondPlayer.writeInt(CONTINUE);
+                //outputSecondPlayer.writeInt(CONTINUE);
                 sendMove(outputSecondPlayer, row, column);
 
                 row = inputSecondPlayer.readInt();
                 column = inputSecondPlayer.readInt();
                 board[row][column] = 'W';
 
-                outputFirstPlayer.writeInt(CONTINUE);
+                //outputFirstPlayer.writeInt(CONTINUE);
                 sendMove(outputFirstPlayer, row, column);
 
                 System.out.println(Arrays.deepToString(board));

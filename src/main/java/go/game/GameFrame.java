@@ -16,7 +16,7 @@ public class GameFrame extends JFrame {
 
     private Map<Point, DrawableElement> elements;
     private JTextPane textPane;
-    private int boardSize = SecondFrame.getBoardSize();
+    private int boardSize = 19;
     private int cellSize = Board.getCellSize();
     private Color playerColor;
     public int rowSelected = -1;
