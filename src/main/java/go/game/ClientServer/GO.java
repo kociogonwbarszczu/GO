@@ -56,7 +56,6 @@ public class GO {
                         initalizeGameWithBot();
                     }
                 }
-
             }
 
         } catch (IOException ex) {
