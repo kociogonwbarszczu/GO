@@ -2,7 +2,6 @@ package go.game.ClientServer;
 
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class Logic {
     private static final int boardSize = 19;
@@ -17,7 +16,6 @@ public class Logic {
         if (color == Color.BLACK) board[x][y] = 'B';
         else board[x][y] = 'W';
     }
-
     public static boolean countBreath(char[][] board){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++) {

@@ -62,14 +62,14 @@ public class Client implements Runnable {
                 myColor = 'B';
                 otherColor = 'W';
                 gameFrame = new GameFrame(Color.BLACK, client);
-                System.out.println("Your move.");
+                //System.out.println("Your move.");
 
                 myTurn = true;
             } else if (player == PLAYER2) {
                 myColor = 'W';
                 otherColor = 'B';
                 gameFrame = new GameFrame(Color.WHITE, client);
-                System.out.println("Waiting for the opponent's move");
+                //System.out.println("Waiting for the opponent's move");
             }
 
             while (continueToPlay) {
@@ -93,10 +93,10 @@ public class Client implements Runnable {
             Thread.sleep(100);
         }
         gameFrame.setMove(false);
-        System.out.println(columnSelected);
-        System.out.println(rowSelected);
+        //System.out.println(columnSelected);
+        //System.out.println(rowSelected);
 
-        System.out.println("Waiting for opponent's move.");
+        //System.out.println("Waiting for opponent's move.");
         myTurn = false;
     }
 
@@ -117,7 +117,7 @@ public class Client implements Runnable {
 
     private void receiveInfoFromServer() throws IOException {
         receiveMove();
-        System.out.println("Your move.");
+        //System.out.println("Your move.");
         myTurn = true;
         updateMove(rowSelected, columnSelected);
     }
