@@ -79,10 +79,6 @@ public class GO {
         startGame = true;
     }
 
-    static boolean getStartGame() {
-        return startGame;
-    }
-
     private void initializeGame (Socket firstPlayerSocket, Socket secondPlayerSocket) throws InterruptedException {
         while (!(player2Joined)) {
             Thread.sleep(100);
