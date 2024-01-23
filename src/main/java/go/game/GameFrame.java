@@ -1,6 +1,7 @@
 package go.game;
 
 import go.game.ClientServer.Client;
+import go.game.ClientServer.NewGame;
 import go.game.drawing.Board;
 import go.game.drawing.Stone;
 import go.game.drawing.DrawableElement;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +31,7 @@ public class GameFrame extends JFrame {
     public GameFrame(Color color, Client client) {
         playerColor = color;
         // size
-        setSize(800, 600);
+        setSize(700, 600);
 
         // title
         if(playerColor == Color.BLACK){
@@ -49,28 +51,13 @@ public class GameFrame extends JFrame {
         DrawingPanel drawingPanel = new DrawingPanel();
         add(drawingPanel, BorderLayout.CENTER);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        add(panel, BorderLayout.EAST);
-
-        JButton skipButton = new JButton("skip your move");
-        JButton surrenderButton = new JButton("surrender");
-
-        text = new JTextPane();
-        text.setText(" ");
-        text.setEditable(false);
-
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(skipButton);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(surrenderButton);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(text);
         // Create the JTextPane and add it to the right side
+        textPane = new JTextPane();
+        textPane.setEditable(false);
 
         // Set up a JScrollPane for the JTextPane (optional)
-        /*JScrollPane scrollPane = new JScrollPane(text);
-        add(scrollPane, BorderLayout.EAST);*/
+        JScrollPane scrollPane = new JScrollPane(textPane);
+        add(scrollPane, BorderLayout.EAST);
 
         // Add a mouse listener to the drawing panel
         drawingPanel.addMouseListener(new MouseAdapter() {
@@ -91,9 +78,9 @@ public class GameFrame extends JFrame {
                     client.updateMove(rowSelected, columnSelected);
 
                     // Aktualizacja tekstu w JTextPane
-                    String currentText = text.getText();
-                    String newText = currentText + String.format("Stone added at coordinates (%d, %d)\nOpponent's turn.\n\n", x, y);
-                    text.setText(newText);
+                    String currentText = textPane.getText();
+                    String newText = currentText + String.format("Stone added at coordinates (%d, %d)\n", x, y);
+                    textPane.setText(newText);
 
                     // Odświeżenie widoku
                     drawingPanel.repaint();
@@ -151,8 +138,5 @@ public class GameFrame extends JFrame {
 
     public static void addOpponentsMove(int x, int y, Color playerColor) {
         elements.put(new Point(x, y), Stone.addStone(playerColor));
-        String currentText = text.getText();
-        String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
-        text.setText(newText);
     }
 }

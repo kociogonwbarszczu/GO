@@ -7,14 +7,14 @@ import java.io.*;
 import java.net.*;
 import java.util.Arrays;
 
-class NewGame implements Runnable {
+public class NewGame implements Runnable {
     public static int PLAYER1_WON = 1;
     public static int PLAYER2_WON = 2;
     public static int CONTINUE = 3;
 
     //poprawa
-    private int boardSize = 19;
-    private char[][] board = new char[boardSize][boardSize];
+    private static int boardSize = 19;
+    private static char[][] board = new char[boardSize][boardSize];
 
     private Socket firstPlayer;
     private Socket secondPlayer;
@@ -67,9 +67,5 @@ class NewGame implements Runnable {
     private void sendMove(DataOutputStream out, int row, int column) throws IOException {
         out.writeInt(row);
         out.writeInt(column);
-    }
-
-    public char[][] getBoard() {
-        return board;
     }
 }
