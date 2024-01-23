@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class GameFrame extends JFrame {
 
-    private Map<Point, DrawableElement> elements;
+    private static Map<Point, DrawableElement> elements;
     private JTextPane textPane;
     private int boardSize = 19;
     private int cellSize = Board.getCellSize();
@@ -132,5 +132,9 @@ public class GameFrame extends JFrame {
 
     private void setColumnSelected(int y) {
         columnSelected = y;
+    }
+
+    public static void addOpponentsMove(int x, int y, Color playerColor) {
+        elements.put(new Point(x, y), Stone.addStone(playerColor));
     }
 }

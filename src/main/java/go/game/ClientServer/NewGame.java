@@ -68,4 +68,8 @@ class NewGame implements Runnable {
         out.writeInt(row);
         out.writeInt(column);
     }
+
+    public char[][] getBoard() {
+        return board;
+    }
 }

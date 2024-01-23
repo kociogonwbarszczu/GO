@@ -100,7 +100,7 @@ public class Client implements Runnable {
         System.out.println(columnSelected);
         System.out.println(rowSelected);
 
-        board[rowSelected][columnSelected] = myColor;
+        //board[rowSelected][columnSelected] = myColor;
 
         System.out.println("Waiting for opponent's move.");
         myTurn = false;
@@ -112,9 +112,14 @@ public class Client implements Runnable {
     }
 
     private void receiveMove() throws IOException {
+        Color color;
         int row = fromServer.readInt();
         int column = fromServer.readInt();
-        board[row][column] = otherColor;
+        if (otherColor == 'B') color = Color.BLACK;
+        else color = Color.WHITE;
+        GameFrame.addOpponentsMove(column, row, color);
+        gameFrame.repaint();
+        //board[row][column] = otherColor;
     }
 
     private void receiveInfoFromServer() throws IOException {
