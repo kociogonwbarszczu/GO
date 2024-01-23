@@ -13,8 +13,8 @@ class NewGame implements Runnable {
     public static int CONTINUE = 3;
 
     //poprawa
-    private int boardSize = 19;
-    private char[][] board = new char[boardSize][boardSize];
+    private static int boardSize = 19;
+    private static char[][] board = new char[boardSize][boardSize];
 
     private Socket firstPlayer;
     private Socket secondPlayer;
@@ -69,7 +69,7 @@ class NewGame implements Runnable {
         out.writeInt(column);
     }
 
-    public char[][] getBoard() {
+    public static char[][] getBoard() {
         return board;
     }
 }
