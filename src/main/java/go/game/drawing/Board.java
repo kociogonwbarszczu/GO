@@ -33,9 +33,5 @@ public class Board implements DrawableElement {
             }
         }
     }
-
-    public static int getCellSize(){
-        return cellSize;
-    }
 }
 
