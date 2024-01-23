@@ -5,7 +5,6 @@ import go.game.GameFrame;
 import java.awt.*;
 import java.net.*;
 import java.io.*;
-import java.util.Arrays;
 
 public class Client implements Runnable {
     public static final int PLAYER1 = 1;
@@ -78,10 +77,8 @@ public class Client implements Runnable {
                     waitForMove();
                     sendMove();
                     receiveInfoFromServer();
-                    //System.out.println(Arrays.deepToString(board));
                 } else {
                     receiveInfoFromServer();
-                    //System.out.println(Arrays.deepToString(board));
                     waitForMove();
                     sendMove();
                 }
@@ -98,8 +95,6 @@ public class Client implements Runnable {
         gameFrame.setMove(false);
         System.out.println(columnSelected);
         System.out.println(rowSelected);
-
-        //board[rowSelected][columnSelected] = myColor;
 
         System.out.println("Waiting for opponent's move.");
         myTurn = false;
@@ -118,7 +113,6 @@ public class Client implements Runnable {
         else color = Color.WHITE;
         GameFrame.addOpponentsMove(column, row, color);
         gameFrame.repaint();
-        //board[row][column] = otherColor;
     }
 
     private void receiveInfoFromServer() throws IOException {

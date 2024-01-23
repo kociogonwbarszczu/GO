@@ -1,6 +1,8 @@
 package go.game;
 
 import go.game.ClientServer.Client;
+import go.game.ClientServer.Logic;
+import go.game.ClientServer.NewGame;
 import go.game.drawing.Board;
 import go.game.drawing.Stone;
 import go.game.drawing.DrawableElement;
@@ -17,15 +19,14 @@ public class GameFrame extends JFrame {
 
     private static Map<Point, DrawableElement> elements;
     private static JTextPane text;
-    private int boardSize = 19;
+    private static int boardSize = 19;
     private int cellSize = 30;
     private Color playerColor;
     public int rowSelected = -1;
     public int columnSelected = -1;
     private static boolean sendMove = false;
 
-    private static char[][] currentBoard = new char[19][19];
-    private static char[][] serverBoard = new char[19][19];
+    private static char[][] currentBoard = new char[boardSize][boardSize];
 
     public GameFrame(Color color, Client client) {
         playerColor = color;
@@ -81,9 +82,10 @@ public class GameFrame extends JFrame {
                 int x = e.getX() / cellSize;
                 int y = e.getY() / cellSize;
 
-                if((x < boardSize) && (y < boardSize)){
+                if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y)){
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
+                    Logic.updateBoard(x, y, color);
 
                     //adding coordinates to client
                     setRowSelected(x);
@@ -153,6 +155,7 @@ public class GameFrame extends JFrame {
 
     public static void addOpponentsMove(int x, int y, Color playerColor) {
         elements.put(new Point(x, y), Stone.addStone(playerColor));
+        Logic.updateBoard(x, y, playerColor);
         String currentText = text.getText();
         String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
         text.setText(newText);

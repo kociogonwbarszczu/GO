@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Arrays;
 
-class NewGame implements Runnable {
+public class NewGame implements Runnable {
     public static int PLAYER1_WON = 1;
     public static int PLAYER2_WON = 2;
     public static int CONTINUE = 3;
@@ -66,9 +66,5 @@ class NewGame implements Runnable {
     private void sendMove(DataOutputStream out, int row, int column) throws IOException {
         out.writeInt(row);
         out.writeInt(column);
-    }
-
-    public static char[][] getBoard() {
-        return board;
     }
 }
