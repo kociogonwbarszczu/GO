@@ -23,6 +23,9 @@ public class GameFrame extends JFrame {
     public int columnSelected = -1;
     private static boolean sendMove = false;
 
+    private static char[][] currentBoard = new char[19][19];
+    private static char[][] serverBoard = new char[19][19];
+
     public GameFrame(Color color, Client client) {
         playerColor = color;
         // size
