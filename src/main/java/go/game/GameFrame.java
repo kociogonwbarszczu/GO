@@ -17,15 +17,16 @@ import java.util.Map;
 public class GameFrame extends JFrame {
 
     private static Map<Point, DrawableElement> elements;
-    private JTextPane textPane;
+    private static JTextPane text;
     private int boardSize = 19;
-    private int cellSize = Board.getCellSize();
+    private int cellSize = 30;
     private Color playerColor;
     public int rowSelected = -1;
     public int columnSelected = -1;
     private static boolean sendMove = false;
 
     private static char[][] currentBoard = new char[19][19];
+    private static char[][] serverBoard = new char[19][19];
 
     public GameFrame(Color color, Client client) {
         playerColor = color;
@@ -66,13 +67,9 @@ public class GameFrame extends JFrame {
                 int x = e.getX() / cellSize;
                 int y = e.getY() / cellSize;
 
-
-                if((x < boardSize) && (y < boardSize) && ifAlreadyOccupied(x, y)){
+                if((x < boardSize) && (y < boardSize)){
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
-
-                    if (playerColor == Color.BLACK) currentBoard[x][y] = 'B';
-                    else currentBoard[x][y] = 'W';
 
                     //adding coordinates to client
                     setRowSelected(x);
@@ -139,14 +136,7 @@ public class GameFrame extends JFrame {
         columnSelected = y;
     }
 
-    private boolean ifAlreadyOccupied(int x, int y) {
-        return !(currentBoard[x][y] == 'W' || currentBoard[x][y] == 'B');
-    }
-
     public static void addOpponentsMove(int x, int y, Color playerColor) {
         elements.put(new Point(x, y), Stone.addStone(playerColor));
-        if (playerColor == Color.BLACK) currentBoard[x][y] = 'B';
-        else currentBoard[x][y] = 'W';
     }
-
 }

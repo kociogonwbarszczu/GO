@@ -9,7 +9,6 @@ public class Board implements DrawableElement {
     private static int boardSize = 19;
     private static int cellSize = 30;
 
-
     @Override
     public void draw(Graphics g) {
 
@@ -33,10 +32,6 @@ public class Board implements DrawableElement {
                 g.drawRect(x, y, cellSize, cellSize);
             }
         }
-    }
-
-    public static int getCellSize(){
-        return cellSize;
     }
 }
 
