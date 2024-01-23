@@ -1,6 +1,7 @@
 package go.game;
 
 import go.game.ClientServer.Client;
+import go.game.ClientServer.NewGame;
 import go.game.drawing.Board;
 import go.game.drawing.Stone;
 import go.game.drawing.DrawableElement;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +26,6 @@ public class GameFrame extends JFrame {
     private static boolean sendMove = false;
 
     private static char[][] currentBoard = new char[19][19];
-    private static char[][] serverBoard = new char[19][19];
 
     public GameFrame(Color color, Client client) {
         playerColor = color;
@@ -65,9 +66,13 @@ public class GameFrame extends JFrame {
                 int x = e.getX() / cellSize;
                 int y = e.getY() / cellSize;
 
-                if((x < boardSize) && (y < boardSize)){
+
+                if((x < boardSize) && (y < boardSize) && ifAlreadyOccupied(x, y)){
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
+
+                    if (playerColor == Color.BLACK) currentBoard[x][y] = 'B';
+                    else currentBoard[x][y] = 'W';
 
                     //adding coordinates to client
                     setRowSelected(x);
@@ -134,7 +139,14 @@ public class GameFrame extends JFrame {
         columnSelected = y;
     }
 
+    private boolean ifAlreadyOccupied(int x, int y) {
+        return !(currentBoard[x][y] == 'W' || currentBoard[x][y] == 'B');
+    }
+
     public static void addOpponentsMove(int x, int y, Color playerColor) {
         elements.put(new Point(x, y), Stone.addStone(playerColor));
+        if (playerColor == Color.BLACK) currentBoard[x][y] = 'B';
+        else currentBoard[x][y] = 'W';
     }
+
 }
