@@ -12,7 +12,6 @@ class NewGame implements Runnable {
     public static int PLAYER2_WON = 2;
     public static int CONTINUE = 3;
 
-    //poprawa
     private static int boardSize = 19;
     private static char[][] board = new char[boardSize][boardSize];
 

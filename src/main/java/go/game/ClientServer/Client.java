@@ -10,7 +10,6 @@ import java.util.Arrays;
 public class Client implements Runnable {
     public static final int PLAYER1 = 1;
     public static final int PLAYER2 = 2;
-    private boolean startGame = false;
     private boolean myTurn = false;
     private static final int boardSize = 19;
     public static char[][] board = new char[boardSize][boardSize];
@@ -79,10 +78,10 @@ public class Client implements Runnable {
                     waitForMove();
                     sendMove();
                     receiveInfoFromServer();
-                    System.out.println(Arrays.deepToString(board));
+                    //System.out.println(Arrays.deepToString(board));
                 } else {
                     receiveInfoFromServer();
-                    System.out.println(Arrays.deepToString(board));
+                    //System.out.println(Arrays.deepToString(board));
                     waitForMove();
                     sendMove();
                 }

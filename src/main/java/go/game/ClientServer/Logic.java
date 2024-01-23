@@ -12,5 +12,4 @@ public class Logic {
         return false;
     }
 
-
 }

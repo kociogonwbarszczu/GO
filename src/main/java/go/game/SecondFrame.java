@@ -50,50 +50,13 @@ public class SecondFrame extends JFrame {
         modeButtonsPanel.add(Box.createHorizontalStrut(10));
         modeButtonsPanel.add(buttonGameWithBot);
 
-        //board size buttons
-        JButton button19 = new JButton("19 X 19");
-        JButton button13 = new JButton("13 X 13");
-        JButton button9 = new JButton("9 X 9");
-
-        button19.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boardSize = 19;
-                setBoardSize = true;
-            }
-        });
-
-        button13.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boardSize = 13;
-                setBoardSize = true;
-            }
-        });
-
-        button9.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boardSize = 9;
-                setBoardSize = true;
-            }
-        });
-
-        //board size buttons panel
-        JPanel boardSizeButtonsPanel = new JPanel();
-        boardSizeButtonsPanel.setLayout(new BoxLayout(boardSizeButtonsPanel, BoxLayout.X_AXIS));
-
-        //adding board size buttons to panel
-        boardSizeButtonsPanel.add(button19);
-        boardSizeButtonsPanel.add(Box.createHorizontalStrut(10));
-        boardSizeButtonsPanel.add(button13);
-        boardSizeButtonsPanel.add(Box.createHorizontalStrut(10));
-        boardSizeButtonsPanel.add(button9);
+        boardSize = 19;
+        setBoardSize = true;
 
         //button start
         JButton startButton = new JButton("start game");
 
-        JLabel errorLabel = new JLabel("");
+        JLabel errorLabel = new JLabel(" ");
 
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -123,8 +86,6 @@ public class SecondFrame extends JFrame {
 
         componentsPanel.add(Box.createVerticalGlue());
         componentsPanel.add(modeButtonsPanel);
-        componentsPanel.add(Box.createVerticalStrut(10));
-        componentsPanel.add(boardSizeButtonsPanel);
         componentsPanel.add(Box.createVerticalStrut(10));
         componentsPanel.add(startButtonPanel);
         componentsPanel.add(Box.createVerticalStrut(10));
