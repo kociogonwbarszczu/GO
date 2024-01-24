@@ -5,7 +5,6 @@ import go.game.GameFrame;
 import java.awt.*;
 import java.net.*;
 import java.io.*;
-import java.util.Arrays;
 
 public class Client implements Runnable {
     public static final int PLAYER1 = 1;
@@ -63,14 +62,14 @@ public class Client implements Runnable {
                 myColor = 'B';
                 otherColor = 'W';
                 gameFrame = new GameFrame(Color.BLACK, client);
-                System.out.println("Your move.");
+                //System.out.println("Your move.");
 
                 myTurn = true;
             } else if (player == PLAYER2) {
                 myColor = 'W';
                 otherColor = 'B';
                 gameFrame = new GameFrame(Color.WHITE, client);
-                System.out.println("Waiting for the opponent's move");
+                //System.out.println("Waiting for the opponent's move");
             }
 
             while (continueToPlay) {
@@ -78,10 +77,8 @@ public class Client implements Runnable {
                     waitForMove();
                     sendMove();
                     receiveInfoFromServer();
-                    //System.out.println(Arrays.deepToString(board));
                 } else {
                     receiveInfoFromServer();
-                    //System.out.println(Arrays.deepToString(board));
                     waitForMove();
                     sendMove();
                 }
@@ -96,12 +93,10 @@ public class Client implements Runnable {
             Thread.sleep(100);
         }
         gameFrame.setMove(false);
-        System.out.println(columnSelected);
-        System.out.println(rowSelected);
+        //System.out.println(columnSelected);
+        //System.out.println(rowSelected);
 
-        //board[rowSelected][columnSelected] = myColor;
-
-        System.out.println("Waiting for opponent's move.");
+        //System.out.println("Waiting for opponent's move.");
         myTurn = false;
     }
 
@@ -118,12 +113,11 @@ public class Client implements Runnable {
         else color = Color.WHITE;
         GameFrame.addOpponentsMove(column, row, color);
         gameFrame.repaint();
-        //board[row][column] = otherColor;
     }
 
     private void receiveInfoFromServer() throws IOException {
         receiveMove();
-        System.out.println("Your move.");
+        //System.out.println("Your move.");
         myTurn = true;
         updateMove(rowSelected, columnSelected);
     }
