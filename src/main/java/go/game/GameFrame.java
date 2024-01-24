@@ -30,7 +30,7 @@ public class GameFrame extends JFrame {
     public GameFrame(Color color, Client client) {
         playerColor = color;
         // size
-        setSize(800, 600);
+        setSize(815, 607);
 
         // title
         if(playerColor == Color.BLACK){
@@ -55,23 +55,36 @@ public class GameFrame extends JFrame {
         add(panel, BorderLayout.EAST);
 
         JButton skipButton = new JButton("skip your move");
-        JButton surrenderButton = new JButton("surrender");
+
+        JButton surrenderButton = new JButton("   surrender  ");
+
 
         text = new JTextPane();
-        text.setText(" ");
+        text.setText("GO game started                                  \n");
         text.setEditable(false);
 
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        buttonPanel.add(Box.createVerticalStrut(10));
+        buttonPanel.add(skipButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
+        buttonPanel.add(surrenderButton);
+
+
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.PAGE_AXIS));
+        textPanel.add(text);
+
+        panel.add(buttonPanel, BorderLayout.CENTER);
         panel.add(Box.createVerticalStrut(10));
-        panel.add(skipButton);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(surrenderButton);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(text);
+        panel.add(textPanel);
         // Create the JTextPane and add it to the right side
 
         // Set up a JScrollPane for the JTextPane (optional)
-        /*JScrollPane scrollPane = new JScrollPane(text);
-        add(scrollPane, BorderLayout.EAST);*/
+        JScrollPane scrollPane = new JScrollPane(text);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        textPanel.add(scrollPane, BorderLayout.EAST);
 
         // Add a mouse listener to the drawing panel
         drawingPanel.addMouseListener(new MouseAdapter() {
@@ -107,7 +120,17 @@ public class GameFrame extends JFrame {
             }
         });
 
-        setLocationRelativeTo(null);
+        int xPosition = 0;
+        if(playerColor == Color.BLACK){
+            xPosition = 0;
+        }
+        else {
+            xPosition = 700;
+        }
+
+        int yPosition = 100;
+        setLocation(xPosition, yPosition);
+        //setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
