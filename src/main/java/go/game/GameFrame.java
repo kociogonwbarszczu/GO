@@ -64,8 +64,8 @@ public class GameFrame extends JFrame {
         skipButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setRowSelected(20);
-                setColumnSelected(20);
+                setRowSelected(-1);
+                setColumnSelected(-1);
                 setMove(true);
                 client.updateMove(rowSelected, columnSelected);
                 yourTurn = false;

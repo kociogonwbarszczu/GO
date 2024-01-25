@@ -106,7 +106,7 @@ public class Client implements Runnable {
         int row = fromServer.readInt();
         int column = fromServer.readInt();
 
-        if (row != 20 && column != 20) {
+        if (row != -1 && column != -1) {
             Color color = (otherColor == 'B') ? Color.BLACK : Color.WHITE;
             GameFrame.addOpponentsMove(column, row, color);
             gameFrame.repaint();
