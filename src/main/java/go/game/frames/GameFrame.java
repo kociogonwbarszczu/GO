@@ -6,6 +6,7 @@ import go.game.ClientServer.NewGame;
 import go.game.drawing.Board;
 import go.game.drawing.Stone;
 import go.game.drawing.DrawableElement;
+import go.game.frames.style.MyButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +30,7 @@ public class GameFrame extends JFrame {
     private static boolean sendMove = false;
     private static boolean yourTurn;
     private static boolean skip = false;
+    private int gameId = 1;
 
 
     public GameFrame(Color color, Client client) {
@@ -60,7 +62,10 @@ public class GameFrame extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         add(panel, BorderLayout.EAST);
 
-        JButton skipButton = new JButton("skip your move");
+        JLabel gameIdLabel = new JLabel("game id: " + gameId);
+        gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        MyButton skipButton = new MyButton("skip your move");
         skipButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,19 +75,26 @@ public class GameFrame extends JFrame {
                 client.updateMove(rowSelected, columnSelected);
                 yourTurn = false;
                 String currentText = text.getText();
-                String newText = currentText + String.format("You skipped move.\nOpponent's turn.\n\n");
+                String newText = currentText + "You skipped move.\nOpponent's turn.\n\n";
                 text.setText(newText);
             }
         });
 
-        JButton surrenderButton = new JButton("surrender");
+        skipButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        MyButton surrenderButton = new MyButton("surrender");
         surrenderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 client.surrenderPlayer(playerColor);
                 new GameOverFrame(playerColor);
+                new AfterSkipFrame();
             }
         });
+
+        surrenderButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         text = new JTextPane();
         text.setText("GO game started                                  \n");        //do not touch the spaces
@@ -92,6 +104,8 @@ public class GameFrame extends JFrame {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         buttonPanel.add(Box.createVerticalStrut(10));
+        buttonPanel.add(gameIdLabel);
+        buttonPanel.add(Box.createVerticalStrut(5));
         buttonPanel.add(skipButton);
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(surrenderButton);
@@ -160,6 +174,7 @@ public class GameFrame extends JFrame {
         //setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+        setResizable(false);
     }
 
     private class DrawingPanel extends JPanel {
@@ -204,7 +219,7 @@ public class GameFrame extends JFrame {
     public static void setYourTurn() {
         yourTurn = true;
         String currentText = text.getText();
-        String newText = currentText + String.format("Opponent skipped move.\nYour turn\n\n");
+        String newText = currentText + "Opponent skipped move.\nYour turn\n\n";
         text.setText(newText);
     }
 

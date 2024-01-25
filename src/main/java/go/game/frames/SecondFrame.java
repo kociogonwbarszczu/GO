@@ -1,5 +1,7 @@
 package go.game.frames;
 
+import go.game.frames.style.MyButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,9 +25,9 @@ public class SecondFrame extends JFrame {
         componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.PAGE_AXIS));
 
         //game mode buttons
-        JButton button2PlayerGame = new JButton("2 PLAYER GAME");
+        MyButton button2PlayerGame = new MyButton("2 PLAYER GAME");
 
-        JButton buttonGameWithBot = new JButton("GAME WITH BOT");
+        MyButton buttonGameWithBot = new MyButton("GAME WITH BOT");
         button2PlayerGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +56,7 @@ public class SecondFrame extends JFrame {
         setBoardSize = true;
 
         //button start
-        JButton startButton = new JButton("start game");
+        MyButton startButton = new MyButton("start game");
 
         JLabel errorLabel = new JLabel(" ");
 
@@ -99,6 +101,7 @@ public class SecondFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
+        setResizable(false);
     }
 
     public static int getGameMode() {

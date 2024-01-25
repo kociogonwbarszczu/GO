@@ -1,5 +1,7 @@
 package go.game.frames;
 
+import go.game.frames.style.MyButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +28,7 @@ public class FirstFrame extends JFrame {
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //buttons
-        JButton buttonNewGame = new JButton("NEW GAME");
+        MyButton buttonNewGame = new MyButton("NEW GAME");
         buttonNewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonNewGame.addActionListener(new ActionListener() {
             @Override
@@ -35,7 +37,7 @@ public class FirstFrame extends JFrame {
             }
         });
 
-        JButton buttonLoadGame = new JButton("LOAD GAME");
+        MyButton buttonLoadGame = new MyButton("LOAD GAME");
         buttonLoadGame.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonLoadGame.addActionListener(new ActionListener() {
             @Override
@@ -60,6 +62,7 @@ public class FirstFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
+        setResizable(false);
     }
 
     public boolean getNewGame() {

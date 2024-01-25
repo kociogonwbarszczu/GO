@@ -30,5 +30,6 @@ public class LoadGameFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
+        setResizable(false);
     }
 }

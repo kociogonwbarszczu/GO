@@ -1,21 +1,15 @@
 package go.game.frames;
 
+import go.game.frames.style.MyButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameOverFrame extends JFrame {
+public class AfterSkipFrame extends JFrame {
 
-    public GameOverFrame(Color color) {
-        String whoWon;
-
-        if(color == Color.BLACK){
-            whoWon = "White won!";
-        }
-        else {
-            whoWon = "Black won!";
-        }
+    public AfterSkipFrame() {
 
         //size
         setSize(500, 400);
@@ -27,20 +21,20 @@ public class GameOverFrame extends JFrame {
         JPanel componentsPanel = new JPanel();
         componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.PAGE_AXIS));
 
-        //label
-        JLabel gameOverLabel = new JLabel("GAME OVER");
-        gameOverLabel.setFont(new Font(gameOverLabel.getFont().getName(), Font.BOLD, 50));
-        gameOverLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //resume game button
+        MyButton resumeGameButton = new MyButton("resume game");
+        resumeGameButton.setFont(new Font(resumeGameButton.getFont().getName(), Font.BOLD, 15));
+        resumeGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //label
-        JLabel whoWonLabel = new JLabel(whoWon);
-        whoWonLabel.setFont(new Font(gameOverLabel.getFont().getName(), Font.ITALIC, 40));
-        whoWonLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //end game button
+        MyButton endGameButton = new MyButton("end game");
+        endGameButton.setFont(new Font(endGameButton.getFont().getName(), Font.BOLD, 15));
+        endGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         componentsPanel.add(Box.createVerticalGlue());
-        componentsPanel.add(gameOverLabel);
+        componentsPanel.add(resumeGameButton);
         componentsPanel.add(Box.createVerticalStrut(20));
-        componentsPanel.add(whoWonLabel);
+        componentsPanel.add(endGameButton);
         componentsPanel.add(Box.createVerticalGlue());
 
         // Center the panel on the frame
