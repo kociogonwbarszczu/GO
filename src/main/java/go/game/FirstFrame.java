@@ -9,6 +9,7 @@ public class FirstFrame extends JFrame {
     public boolean newGame = false;
     public boolean loadGame = false;
     public static boolean startGame = false;
+    public static boolean close = false;
     public FirstFrame() {
         //size
         setSize(700, 600);

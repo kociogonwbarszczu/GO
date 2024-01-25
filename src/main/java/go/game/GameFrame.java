@@ -74,7 +74,7 @@ public class GameFrame extends JFrame {
         JButton surrenderButton = new JButton("surrender");
 
         text = new JTextPane();
-        text.setText("GO game started                                  \n");
+        text.setText("GO game started                                  \n");        //do not touch the spaces
         text.setEditable(false);
 
         JPanel buttonPanel = new JPanel();

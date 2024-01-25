@@ -30,6 +30,7 @@ public class GO {
 
                 if (firstFrame.getNewGame()) {
                     SecondFrame secondFrame = new SecondFrame();
+                    firstFrame.dispose();
                     waitForStartGame();
 
                     gameMode = SecondFrame.getGameMode();
@@ -51,9 +52,11 @@ public class GO {
                         System.out.println("Player second connected.");
 
                         initializeGame(firstPlayer, secondPlayer);
+                        secondFrame.dispose();
                     } else {
                         System.out.println("Bot connected.");
                         initalizeGameWithBot();
+                        secondFrame.dispose();
                     }
                 }
             }
