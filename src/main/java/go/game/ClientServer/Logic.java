@@ -5,26 +5,46 @@ import java.awt.*;
 
 public class Logic {
     private static final int boardSize = 19;
-    public static char[][] board = new char[boardSize][boardSize];
+    public static int[][] board = new int[boardSize][boardSize];
 
-    public static boolean ifAlreadyOccupied(int x, int y) {
-        System.out.println(board[x][y]);
-        return !(board[x][y] == 'W' || board[x][y] == 'B');
-    }
+    private static LogicStrategy logicStrategy;
 
-    public static void updateBoard(int x, int y, Color color){
-        if (color == Color.BLACK) board[x][y] = 'B';
-        else board[x][y] = 'W';
-    }
-    public static int countBreath(char[][] board){
-        for (int i = 0; i < 19; i++){
-            for (int j = 0; j < 19; j++) {
+    public Logic(LogicStrategy logicStrategy) {
+        this.logicStrategy = logicStrategy;
 
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++){
+                board[i][j] = ' ';
             }
         }
-        return 0;
     }
 
+    // Metoda do ustawiania strategii
+    public void setLogicStrategy(LogicStrategy logicStrategy) {
+        this.logicStrategy = logicStrategy;
+    }
 
+    public int countBreath(int column, int row) {
+        return logicStrategy.countBreath(board, column, row);
+    }
 
+    public static boolean ifAlreadyOccupied(int x, int y) {
+        return logicStrategy.ifAlreadyOccupied(board, x, y);
+    }
+
+    public static void updateBoard(int x, int y, Color color) {
+        logicStrategy.updateBoard(board, x, y, color);
+    }
+
+    public static void counter() {
+        for (int i = 0; i < 19; i++) {
+            for (int j = 0; j < 19; j++) {
+                // countBreath(j, i);
+            }
+        }
+    }
+
+    public char getElement(int x, int y) {
+        return (char) logicStrategy.getElement(board, x, y);
+    }
 }

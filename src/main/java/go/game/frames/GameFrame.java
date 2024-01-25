@@ -1,6 +1,7 @@
 package go.game.frames;
 
 import go.game.ClientServer.Client;
+import go.game.ClientServer.DefaultLogicStrategy;
 import go.game.ClientServer.Logic;
 import go.game.ClientServer.NewGame;
 import go.game.drawing.Board;
@@ -31,6 +32,7 @@ public class GameFrame extends JFrame {
     private static boolean yourTurn;
     private static boolean skip = false;
     private int gameId = 1;
+    static Logic logic = new Logic(new DefaultLogicStrategy());
 
 
     public GameFrame(Color color, Client client) {
@@ -136,7 +138,7 @@ public class GameFrame extends JFrame {
                 if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn){
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
-                    Logic.updateBoard(x, y, color);
+                    logic.updateBoard(x, y, color);
 
                     //adding coordinates to client
                     setRowSelected(x);
@@ -147,7 +149,7 @@ public class GameFrame extends JFrame {
 
                     // Aktualizacja tekstu w JTextPane
                     String currentText = text.getText();
-                    String newText = currentText + String.format("Stone added at coordinates (%d, %d)\nOpponent's turn.\n\n", x, y);
+                    String newText = currentText + String.format("Stone added at coordinates (%d, %d)\nOpponent's turn.\n\n", x, y) + String.format("Breath: %d", logic.countBreath(x, y));
                     text.setText(newText);
 
 
@@ -225,10 +227,11 @@ public class GameFrame extends JFrame {
 
     public static void addOpponentsMove(int x, int y, Color playerColor) {
         elements.put(new Point(x, y), Stone.addStone(playerColor));
-        Logic.updateBoard(x, y, playerColor);
+        logic.updateBoard(x, y, playerColor);
         yourTurn = true;
         String currentText = text.getText();
         String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
+
         text.setText(newText);
     }
 }
