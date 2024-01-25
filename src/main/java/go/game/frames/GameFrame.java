@@ -152,7 +152,6 @@ public class GameFrame extends JFrame {
                     String newText = currentText + String.format("Stone added at coordinates (%d, %d)\nOpponent's turn.\n\n", x, y) + String.format("Breath: %d", logic.countBreath(x, y));
                     text.setText(newText);
 
-
                     // Odświeżenie widoku
                     drawingPanel.repaint();
 

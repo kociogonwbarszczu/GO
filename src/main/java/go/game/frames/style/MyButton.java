@@ -30,7 +30,6 @@ public class MyButton extends JButton {
             public void mouseExited(MouseEvent me) {
                 setBackground(color);
                 over = false;
-
             }
 
             @Override

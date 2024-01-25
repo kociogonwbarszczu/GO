@@ -6,7 +6,6 @@ import java.awt.*;
 public class Logic {
     private static final int boardSize = 19;
     public static int[][] board = new int[boardSize][boardSize];
-
     private static LogicStrategy logicStrategy;
 
     public Logic(LogicStrategy logicStrategy) {

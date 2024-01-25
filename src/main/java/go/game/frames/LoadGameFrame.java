@@ -32,4 +32,5 @@ public class LoadGameFrame extends JFrame {
         setVisible(true);
         setResizable(false);
     }
+
 }

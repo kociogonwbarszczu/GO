@@ -55,5 +55,4 @@ public class DefaultLogicStrategy implements  LogicStrategy{
     public char getElement(int[][] board, int x, int y) {
         return (char) board[x][y];
     }
-
 }

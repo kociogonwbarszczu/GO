@@ -3,7 +3,6 @@ package go.game.drawing;
 import java.awt.*;
 
 public class Stone implements DrawableElement {
-
     private Color color;
 
     private Stone(Color color) {

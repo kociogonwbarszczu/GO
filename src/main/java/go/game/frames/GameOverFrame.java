@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameOverFrame extends JFrame {
-
     public GameOverFrame(Color color) {
         String whoWon;
 

@@ -15,7 +15,6 @@ public class NewGame implements Runnable {
     private Socket firstPlayer;
     private Socket secondPlayer;
 
-
     public NewGame(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;

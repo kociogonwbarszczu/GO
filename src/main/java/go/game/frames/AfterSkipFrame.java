@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AfterSkipFrame extends JFrame {
-
     public AfterSkipFrame() {
 
         //size

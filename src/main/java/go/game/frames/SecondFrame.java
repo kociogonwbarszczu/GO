@@ -13,6 +13,7 @@ public class SecondFrame extends JFrame {
     private boolean setBoardSize = false;
     public boolean setGameMode = false;
     public static boolean startGame = false;
+
     public SecondFrame() {
         //size
         setSize(700, 600);

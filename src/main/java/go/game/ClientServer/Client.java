@@ -129,4 +129,5 @@ public class Client implements Runnable {
         continueToPlay = false;
         System.out.println(color);
     }
+
 }

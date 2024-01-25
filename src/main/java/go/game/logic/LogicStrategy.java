@@ -7,4 +7,5 @@ public interface LogicStrategy {
     boolean ifAlreadyOccupied(int[][] board, int x, int y);
     void updateBoard(int[][] board, int x, int y, Color color);
     char getElement(int[][] board, int x, int y);
+
 }

@@ -16,7 +16,6 @@ public class GO {
     public static void main(String[] args) {
         new GO();
     }
-
     public GO() {
         // starting new server
         try (ServerSocket serverSocket = new ServerSocket(666)){

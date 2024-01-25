@@ -72,4 +72,5 @@ public class FirstFrame extends JFrame {
     public boolean getLoadGame() {
         return loadGame;
     }
+
 }

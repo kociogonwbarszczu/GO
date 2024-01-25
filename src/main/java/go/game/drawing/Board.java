@@ -3,7 +3,6 @@ package go.game.drawing;
 import java.awt.*;
 
 public class Board implements DrawableElement {
-
     private static int boardSize = 19;
     private static int cellSize = 30;
 
