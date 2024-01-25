@@ -1,9 +1,8 @@
 package go.game.frames;
 
 import go.game.ClientServer.Client;
-import go.game.ClientServer.DefaultLogicStrategy;
-import go.game.ClientServer.Logic;
-import go.game.ClientServer.NewGame;
+import go.game.logic.DefaultLogicStrategy;
+import go.game.logic.Logic;
 import go.game.drawing.Board;
 import go.game.drawing.Stone;
 import go.game.drawing.DrawableElement;
@@ -15,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,11 +58,11 @@ public class GameFrame extends JFrame {
         DrawingPanel drawingPanel = new DrawingPanel();
         add(drawingPanel, BorderLayout.CENTER);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        add(panel, BorderLayout.EAST);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        add(mainPanel, BorderLayout.EAST);
 
-        JLabel gameIdLabel = new JLabel("game id: " + gameId);
+        JLabel gameIdLabel = new JLabel("GAME ID: " + gameId);
         gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         MyButton skipButton = new MyButton("skip your move");
@@ -105,8 +103,10 @@ public class GameFrame extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        buttonPanel.add(Box.createVerticalStrut(10));
-        buttonPanel.add(gameIdLabel);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(gameIdLabel);
+        //buttonPanel.add(Box.createVerticalStrut(10));
+        //buttonPanel.add(gameIdLabel);
         buttonPanel.add(Box.createVerticalStrut(5));
         buttonPanel.add(skipButton);
         buttonPanel.add(Box.createVerticalStrut(10));
@@ -117,9 +117,9 @@ public class GameFrame extends JFrame {
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.PAGE_AXIS));
         textPanel.add(text);
 
-        panel.add(buttonPanel, BorderLayout.CENTER);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(textPanel);
+        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(textPanel);
         // Create the JTextPane and add it to the right side
 
         // Set up a JScrollPane for the JTextPane (optional)

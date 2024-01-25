@@ -1,4 +1,4 @@
-package go.game.ClientServer;
+package go.game.logic;
 
 
 import java.awt.*;
