@@ -1,24 +1,40 @@
 package go.game.ClientServer;
 
 import java.awt.*;
+import java.util.Stack;
 
 public class DefaultLogicStrategy implements  LogicStrategy{
     @Override
     public int countBreath(int[][] board, int column, int row) {
         char element = getElement(board, column, row);
         int breath = 0;
+        boolean[][] visited = new boolean[board.length][board[0].length]; // tablica do śledzenia odwiedzonych pól
+        Stack<int[]> stack = new Stack<>(); // śledzenie współrzędnych do odwiedzenia
+        stack.push(new int[]{column, row}); // dodanie na stos początkowych współrzędnych
 
-        // górne pole
-        breath += checkBreathForStone(board, column, row - 1, element);
+        // dopóki stos nie jest pusty
+        while (!stack.isEmpty()) {
+            int[] currentPosition = stack.pop(); // wierzchołek stosu
+            int currentColumn = currentPosition[0];
+            int currentRow = currentPosition[1];
 
-        // dolne pole
-        breath += checkBreathForStone(board, column, row + 1, element);
+            if (currentColumn < 0 || currentColumn >= 19 || currentRow < 0 || currentRow >= 19 || visited[currentColumn][currentRow]) {
+                continue;
+            }
 
-        // lewe pole
-        breath += checkBreathForStone(board, column - 1, row, element);
+            visited[currentColumn][currentRow] = true;
 
-        // prawe pole
-        breath += checkBreathForStone(board, column + 1, row, element);
+            char checkedElement = getElement(board, currentColumn, currentRow);
+
+            if (checkedElement == ' ') {
+                breath++;
+            } else if (checkedElement == element) {
+                stack.push(new int[]{currentColumn, currentRow - 1});
+                stack.push(new int[]{currentColumn, currentRow + 1});
+                stack.push(new int[]{currentColumn - 1, currentRow});
+                stack.push(new int[]{currentColumn + 1, currentRow});
+            }
+        }
 
         return breath;
     }
@@ -40,14 +56,4 @@ public class DefaultLogicStrategy implements  LogicStrategy{
         return (char) board[x][y];
     }
 
-    private int checkBreathForStone(int[][] board, int column, int row, char color) {
-        int boardSize = board.length;
-        if (column < 0 || column >= boardSize || row < 0 || row >= boardSize) return 0;
-
-        char checkedElement = getElement(board, column, row);
-
-        if (checkedElement == ' ') return 1;
-        else if (checkedElement == color) return countBreath(board, column, row);
-        else return 0;
-    }
 }

@@ -5,12 +5,18 @@ import java.awt.*;
 
 public class Logic {
     private static final int boardSize = 19;
-    public static int[][] board = new int[boardSize][boardSize]; // int[][] zamiast char[][], dla jednolitości
+    public static int[][] board = new int[boardSize][boardSize];
 
     private static LogicStrategy logicStrategy;
 
     public Logic(LogicStrategy logicStrategy) {
         this.logicStrategy = logicStrategy;
+
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++){
+                board[i][j] = ' ';
+            }
+        }
     }
 
     // Metoda do ustawiania strategii
@@ -33,7 +39,7 @@ public class Logic {
     public static void counter() {
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
-                // countBreath(j, i); // Ta linia może być przeniesiona do implementacji strategii, jeśli to potrzebne
+                // countBreath(j, i);
             }
         }
     }

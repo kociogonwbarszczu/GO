@@ -135,7 +135,7 @@ public class GameFrame extends JFrame {
 
                     // Aktualizacja tekstu w JTextPane
                     String currentText = text.getText();
-                    String newText = currentText + String.format("Stone added at coordinates (%d, %d)\nOpponent's turn.\n\n", x, y);
+                    String newText = currentText + String.format("Stone added at coordinates (%d, %d)\nOpponent's turn.\n\n", x, y) + String.format("Breath: %d", logic.countBreath(x, y));
                     text.setText(newText);
 
 
@@ -216,6 +216,7 @@ public class GameFrame extends JFrame {
         yourTurn = true;
         String currentText = text.getText();
         String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
+
         text.setText(newText);
     }
 }
