@@ -30,7 +30,6 @@ public class GameFrame extends JFrame {
     private static boolean yourTurn;
     private static boolean skip = false;
 
-    private static char[][] currentBoard = new char[boardSize][boardSize];
 
     public GameFrame(Color color, Client client) {
         playerColor = color;
@@ -65,13 +64,24 @@ public class GameFrame extends JFrame {
         skipButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                yourTurn = false;
-                skip = true;
+                setRowSelected(20);
+                setColumnSelected(20);
                 setMove(true);
+                client.updateMove(rowSelected, columnSelected);
+                yourTurn = false;
+                String currentText = text.getText();
+                String newText = currentText + String.format("You skipped move.\nOpponent's turn.\n\n");
+                text.setText(newText);
             }
         });
 
         JButton surrenderButton = new JButton("surrender");
+        surrenderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.surrenderPlayer(playerColor);
+            }
+        });
 
         text = new JTextPane();
         text.setText("GO game started                                  \n");
@@ -188,6 +198,13 @@ public class GameFrame extends JFrame {
 
     private void setColumnSelected(int y) {
         columnSelected = y;
+    }
+
+    public static void setYourTurn() {
+        yourTurn = true;
+        String currentText = text.getText();
+        String newText = currentText + String.format("Opponent skipped move.\nYour turn\n\n");
+        text.setText(newText);
     }
 
     public static void addOpponentsMove(int x, int y, Color playerColor) {

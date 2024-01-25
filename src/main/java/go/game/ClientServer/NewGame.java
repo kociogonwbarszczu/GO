@@ -40,14 +40,14 @@ public class NewGame implements Runnable {
             while (true) {
                 int row = inputFirstPlayer.readInt();
                 int column = inputFirstPlayer.readInt();
-                board[row][column] = 'B';
+                if (row != 20 && column != 20) board[row][column] = 'B';
 
                 //outputSecondPlayer.writeInt(CONTINUE);
                 sendMove(outputSecondPlayer, row, column);
 
                 row = inputSecondPlayer.readInt();
                 column = inputSecondPlayer.readInt();
-                board[row][column] = 'W';
+                if (row != 20 && column != 20) board[row][column] = 'W';
 
                 //outputFirstPlayer.writeInt(CONTINUE);
                 sendMove(outputFirstPlayer, row, column);
@@ -67,4 +67,6 @@ public class NewGame implements Runnable {
         out.writeInt(row);
         out.writeInt(column);
     }
+
+
 }
