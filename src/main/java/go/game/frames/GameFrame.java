@@ -1,4 +1,4 @@
-package go.game;
+package go.game.frames;
 
 import go.game.ClientServer.Client;
 import go.game.ClientServer.DefaultLogicStrategy;
@@ -82,6 +82,7 @@ public class GameFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 client.surrenderPlayer(playerColor);
+                new GameOverFrame(playerColor);
             }
         });
 

@@ -1,10 +1,8 @@
 package go.game.ClientServer;
 
-import go.game.FirstFrame;
-import go.game.GameFrame;
-import go.game.SecondFrame;
+import go.game.frames.FirstFrame;
+import go.game.frames.SecondFrame;
 
-import java.awt.*;
 import java.io.*;
 import java.net.*;
 

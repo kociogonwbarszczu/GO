@@ -1,8 +1,5 @@
 package go.game.ClientServer;
 
-import go.game.GameFrame;
-import go.game.SecondFrame;
-
 import java.io.*;
 import java.net.*;
 import java.util.Arrays;
