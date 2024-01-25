@@ -1,6 +1,6 @@
 package go.game.ClientServer;
 
-import go.game.GameFrame;
+import go.game.frames.GameFrame;
 
 import java.awt.*;
 import java.net.*;

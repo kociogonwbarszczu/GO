@@ -1,4 +1,4 @@
-package go.game;
+package go.game.frames;
 
 import go.game.ClientServer.Client;
 import go.game.ClientServer.Logic;
@@ -72,6 +72,13 @@ public class GameFrame extends JFrame {
         });
 
         JButton surrenderButton = new JButton("surrender");
+        surrenderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameOverFrame(playerColor);
+
+            }
+        });
 
         text = new JTextPane();
         text.setText("GO game started                                  \n");        //do not touch the spaces

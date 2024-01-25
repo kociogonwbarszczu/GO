@@ -1,7 +1,5 @@
 package go.game.drawing;
 
-import go.game.SecondFrame;
-
 import java.awt.*;
 
 public class Board implements DrawableElement {

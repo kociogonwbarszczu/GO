@@ -1,4 +1,4 @@
-package go.game;
+package go.game.frames;
 
 import javax.swing.*;
 import java.awt.*;
