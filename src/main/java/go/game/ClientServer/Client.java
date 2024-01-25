@@ -10,7 +10,6 @@ public class Client implements Runnable {
     public static final int PLAYER1 = 1;
     public static final int PLAYER2 = 2;
     private boolean myTurn = false;
-    public boolean skipMove = false;
     private static final int boardSize = 19;
     public static char[][] board = new char[boardSize][boardSize];
 
