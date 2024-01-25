@@ -10,6 +10,7 @@ public class Client implements Runnable {
     public static final int PLAYER1 = 1;
     public static final int PLAYER2 = 2;
     private boolean myTurn = false;
+    public boolean skipMove = false;
     private static final int boardSize = 19;
     public static char[][] board = new char[boardSize][boardSize];
 
@@ -93,10 +94,6 @@ public class Client implements Runnable {
             Thread.sleep(100);
         }
         gameFrame.setMove(false);
-        //System.out.println(columnSelected);
-        //System.out.println(rowSelected);
-
-        //System.out.println("Waiting for opponent's move.");
         myTurn = false;
     }
 
@@ -106,13 +103,15 @@ public class Client implements Runnable {
     }
 
     private void receiveMove() throws IOException {
-        Color color;
         int row = fromServer.readInt();
         int column = fromServer.readInt();
-        if (otherColor == 'B') color = Color.BLACK;
-        else color = Color.WHITE;
-        GameFrame.addOpponentsMove(column, row, color);
-        gameFrame.repaint();
+
+        if (row != -1 && column != -1) {
+            Color color = (otherColor == 'B') ? Color.BLACK : Color.WHITE;
+            GameFrame.addOpponentsMove(column, row, color);
+            gameFrame.repaint();
+        }
+        else GameFrame.setYourTurn();
     }
 
     private void receiveInfoFromServer() throws IOException {
@@ -125,5 +124,10 @@ public class Client implements Runnable {
     public void updateMove(int x, int y) {
         columnSelected = x;
         rowSelected = y;
+    }
+
+    public void surrenderPlayer(Color color) {
+        continueToPlay = false;
+        System.out.println(color);
     }
 }
