@@ -59,8 +59,7 @@ public class GameFrame extends JFrame {
         DrawingPanel drawingPanel = new DrawingPanel();
         add(drawingPanel, BorderLayout.CENTER);
 
-        //elements.put(new Point(2, 2), Stone.addStone(playerColor));
-        //elements.put(new Point(2, 2), Stone.addStone(playerColor));
+        //elements.remove(new Point(3,3));
 
         drawingPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -213,6 +212,10 @@ public class GameFrame extends JFrame {
         }
     }
 
+    private void removeStone(int x, int y) {
+        elements.remove(new Point(x, y));
+        logic.updateBoard(x, y, null);
+    }
     public void setMove(boolean b) {
         sendMove = b;
     }
