@@ -27,6 +27,10 @@ public class Logic {
         return logicStrategy.countBreath(board, column, row);
     }
 
+    public int countBreathHypothetical(int column, int row, Color color) {
+        return logicStrategy.countBreathHypothetical(board, column, row, color);
+    }
+
     public static boolean ifAlreadyOccupied(int x, int y) {
         return logicStrategy.ifAlreadyOccupied(board, x, y);
     }

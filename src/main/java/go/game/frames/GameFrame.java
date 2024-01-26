@@ -135,7 +135,7 @@ public class GameFrame extends JFrame {
                 int x = e.getX() / cellSize;
                 int y = e.getY() / cellSize;
 
-                if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn){
+                if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn && ifHasBreath(x, y)){
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
                     logic.updateBoard(x, y, color);
@@ -232,5 +232,9 @@ public class GameFrame extends JFrame {
         String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
 
         text.setText(newText);
+    }
+
+    public boolean ifHasBreath(int x,int y) {
+        return logic.countBreathHypothetical(x, y, playerColor) != 0 ;
     }
 }

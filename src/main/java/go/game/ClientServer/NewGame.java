@@ -8,6 +8,7 @@ public class NewGame implements Runnable {
     public static int PLAYER1_WON = 1;
     public static int PLAYER2_WON = 2;
     public static int CONTINUE = 3;
+    public static int countSkip = 0;
 
     private static int boardSize = 19;
     private static char[][] board = new char[boardSize][boardSize];
@@ -36,14 +37,24 @@ public class NewGame implements Runnable {
             while (true) {
                 int row = inputFirstPlayer.readInt();
                 int column = inputFirstPlayer.readInt();
-                if (row != -1 && column != -1) board[row][column] = 'B';
+                if (row != -1 && column != -1) {
+                    board[row][column] = 'B';
+                    countSkip = 0;
+                } else countSkip += 1;
+
+                if (countSkip == 2) skipTwice();
 
                 //outputSecondPlayer.writeInt(CONTINUE);
                 sendMove(outputSecondPlayer, row, column);
 
                 row = inputSecondPlayer.readInt();
                 column = inputSecondPlayer.readInt();
-                if (row != -1 && column != -1) board[row][column] = 'W';
+                if (row != -1 && column != -1) {
+                    board[row][column] = 'W';
+                    countSkip = 0;
+                } else countSkip += 1;
+
+                if (countSkip == 2) skipTwice();
 
                 //outputFirstPlayer.writeInt(CONTINUE);
                 sendMove(outputFirstPlayer, row, column);
@@ -61,5 +72,7 @@ public class NewGame implements Runnable {
         out.writeInt(column);
     }
 
+    public void skipTwice() {
 
+    }
 }

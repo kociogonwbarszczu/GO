@@ -40,6 +40,14 @@ public class DefaultLogicStrategy implements  LogicStrategy{
     }
 
     @Override
+    public int countBreathHypothetical(int[][] board, int column, int row, Color color) {
+        int[][] boardHypothetical = board;
+        if (color == Color.BLACK) boardHypothetical[column][row] = 'B';
+        else boardHypothetical[column][row] = 'W';
+        return countBreath(boardHypothetical, column, row);
+    }
+
+    @Override
     public boolean ifAlreadyOccupied(int[][] board, int x, int y) {
         System.out.println(board[x][y]);
         return !(board[x][y] == 'W' || board[x][y] == 'B');
