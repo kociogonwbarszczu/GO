@@ -19,7 +19,7 @@ public class SecondFrame extends JFrame {
         setSize(700, 600);
 
         //title
-        setTitle("GO");
+        setTitle("GO - choose game mode");
 
         //main components panel
         JPanel componentsPanel = new JPanel();

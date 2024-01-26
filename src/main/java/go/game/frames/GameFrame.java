@@ -30,6 +30,7 @@ public class GameFrame extends JFrame {
     private static boolean yourTurn;
     private static boolean skip = false;
     private int gameId = 1;
+    private int captivesCount = 0;
     static Logic logic = new Logic(new DefaultLogicStrategy());
 
 
@@ -54,80 +55,13 @@ public class GameFrame extends JFrame {
         // set content pane
         setLayout(new BorderLayout());
 
-        // Create the DrawingPanel and add it to the center
+        // drawing panel with board
         DrawingPanel drawingPanel = new DrawingPanel();
         add(drawingPanel, BorderLayout.CENTER);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-        add(mainPanel, BorderLayout.EAST);
+        //elements.put(new Point(2, 2), Stone.addStone(playerColor));
+        //elements.put(new Point(2, 2), Stone.addStone(playerColor));
 
-        JLabel gameIdLabel = new JLabel("GAME ID: " + gameId);
-        gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        MyButton skipButton = new MyButton("skip your move");
-        skipButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setRowSelected(-1);
-                setColumnSelected(-1);
-                setMove(true);
-                client.updateMove(rowSelected, columnSelected);
-                yourTurn = false;
-                String currentText = text.getText();
-                String newText = currentText + "You skipped move.\nOpponent's turn.\n\n";
-                text.setText(newText);
-            }
-        });
-
-        skipButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
-        MyButton surrenderButton = new MyButton("surrender");
-        surrenderButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                client.surrenderPlayer(playerColor);
-                new GameOverFrame(playerColor);
-                new AfterSkipFrame();
-            }
-        });
-
-        surrenderButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
-        text = new JTextPane();
-        text.setText("GO game started                                  \n");        //do not touch the spaces
-        text.setEditable(false);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
-        mainPanel.add(Box.createVerticalStrut(5));
-        mainPanel.add(gameIdLabel);
-        //buttonPanel.add(Box.createVerticalStrut(10));
-        //buttonPanel.add(gameIdLabel);
-        buttonPanel.add(Box.createVerticalStrut(5));
-        buttonPanel.add(skipButton);
-        buttonPanel.add(Box.createVerticalStrut(10));
-        buttonPanel.add(surrenderButton);
-
-
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.PAGE_AXIS));
-        textPanel.add(text);
-
-        mainPanel.add(buttonPanel, BorderLayout.CENTER);
-        mainPanel.add(Box.createVerticalStrut(10));
-        mainPanel.add(textPanel);
-        // Create the JTextPane and add it to the right side
-
-        // Set up a JScrollPane for the JTextPane (optional)
-        JScrollPane scrollPane = new JScrollPane(text);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        textPanel.add(scrollPane, BorderLayout.EAST);
-
-        // Add a mouse listener to the drawing panel
         drawingPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -161,6 +95,84 @@ public class GameFrame extends JFrame {
                 }
             }
         });
+
+        // game id label
+        JLabel gameIdLabel = new JLabel("GAME ID: " + gameId);
+        gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // skip move button
+        MyButton skipButton = new MyButton("skip your move");
+        skipButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setRowSelected(-1);
+                setColumnSelected(-1);
+                setMove(true);
+                client.updateMove(rowSelected, columnSelected);
+                yourTurn = false;
+                String currentText = text.getText();
+                String newText = currentText + "You skipped move.\nOpponent's turn.\n\n";
+                text.setText(newText);
+            }
+        });
+
+        skipButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        // surrender button
+        MyButton surrenderButton = new MyButton("surrender");
+        surrenderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.surrenderPlayer(playerColor);
+                new GameOverFrame(playerColor);
+                new AfterSkipFrame();
+            }
+        });
+
+        surrenderButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // captives counter
+        JLabel captivesCountLabel = new JLabel("CAPTIVES COUNT: " + captivesCount);
+        captivesCountLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        captivesCountLabel.setFont(new Font(captivesCountLabel.getFont().getName(), Font.PLAIN, 12));
+
+
+        // text pane
+        text = new JTextPane();
+        text.setText("GO game started                                  \n");        //do not touch the spaces
+        text.setEditable(false);
+
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.PAGE_AXIS));
+        textPanel.add(text);
+
+        // scroll pane
+        JScrollPane scrollPane = new JScrollPane(text);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        textPanel.add(scrollPane, BorderLayout.EAST);
+
+        // button panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        buttonPanel.add(Box.createVerticalStrut(5));
+        buttonPanel.add(skipButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
+        buttonPanel.add(surrenderButton);
+
+        //main panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        add(mainPanel, BorderLayout.EAST);
+
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(gameIdLabel);
+        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(captivesCountLabel);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(textPanel);
 
         int xPosition = 0;
         if(playerColor == Color.BLACK){

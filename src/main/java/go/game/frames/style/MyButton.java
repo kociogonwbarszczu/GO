@@ -11,6 +11,7 @@ public class MyButton extends JButton {
 
         setText(text);
         Font boldFont = new Font(getFont().getName(), Font.BOLD, 12);
+        //Font boldFont = new Font(Font.DIALOG_INPUT, Font.BOLD, 12);
         setFont(boldFont);
 
         setColor(new Color(180, 240, 215));
