@@ -14,7 +14,7 @@ public class AfterSkipFrame extends JFrame {
         setSize(500, 400);
 
         //title
-        setTitle("GO");
+        setTitle("GO - resume or end game");
 
         //main components panel
         JPanel componentsPanel = new JPanel();
@@ -24,6 +24,14 @@ public class AfterSkipFrame extends JFrame {
         MyButton resumeGameButton = new MyButton("resume game");
         resumeGameButton.setFont(new Font(resumeGameButton.getFont().getName(), Font.BOLD, 15));
         resumeGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        resumeGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ResumeGameFrame();
+            }
+        });
+
 
         //end game button
         MyButton endGameButton = new MyButton("end game");

@@ -25,6 +25,7 @@ public class FirstFrame extends JFrame {
 
         //label
         JLabel titleLabel = new JLabel("GO");
+        titleLabel.setFont(new Font(Font.SERIF, Font.BOLD, 80));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //buttons
