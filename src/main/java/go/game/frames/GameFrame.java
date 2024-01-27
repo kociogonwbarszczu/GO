@@ -23,7 +23,8 @@ public class GameFrame extends JFrame {
     private static JTextPane text;
     private static int boardSize = 19;
     private int cellSize = 30;
-    private static Color playerColor;
+    private final Color playerColor;
+    private static Color thisColor;
     public int rowSelected = -1;
     public int columnSelected = -1;
     private static boolean sendMove = false;
@@ -36,13 +37,14 @@ public class GameFrame extends JFrame {
     private static int captivesCountForWhite = 0;
 
 
-    public GameFrame(Color playerColor, Client client) {
-        this.playerColor = playerColor;
+    public GameFrame(Color color, Client client) {
+        playerColor = color;
+        thisColor = color;
         // size
         setSize(815, 607);
 
         // title
-        if(GameFrame.playerColor == Color.BLACK){
+        if(playerColor == Color.BLACK){
             setTitle("GO - player 1");
             yourTurn = true;
         }
@@ -72,10 +74,10 @@ public class GameFrame extends JFrame {
 
                 if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn && ifHasBreath(x, y)){
                     // Add a stone at the clicked position
-                    elements.put(new Point(x, y), Stone.addStone(GameFrame.playerColor));
-                    logic.updateBoard(x, y, playerColor);
+                    elements.put(new Point(x, y), Stone.addStone(playerColor));
+                    logic.updateBoard(x, y, color);
                     logic.removeStonesWithoutBreath();
-                    logic.updateBoard(x, y, playerColor);
+                    logic.updateBoard(x, y, color);
 
                     //adding coordinates to client
                     setRowSelected(x);
@@ -127,8 +129,8 @@ public class GameFrame extends JFrame {
         surrenderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.surrenderPlayer(GameFrame.playerColor);
-                new GameOverFrame(GameFrame.playerColor);
+                client.surrenderPlayer(playerColor);
+                new GameOverFrame(playerColor);
             }
         });
 
@@ -136,13 +138,13 @@ public class GameFrame extends JFrame {
 
         // captives label
         captivesLabel = new JLabel();
-        if(playerColor == Color.BLACK) {
+        if(color == Color.BLACK) {
             captivesLabel.setText("     captives: " + captivesCountForBlack);
         }
-        else if (playerColor == Color.WHITE) {
+        else if (color == Color.WHITE) {
             captivesLabel.setText("     captives: " + captivesCountForWhite);
         }
-        gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        captivesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // text pane
         text = new JTextPane();
@@ -188,7 +190,7 @@ public class GameFrame extends JFrame {
         mainPanel.add(Box.createVerticalStrut(5));
 
         int xPosition = 0;
-        if(GameFrame.playerColor == Color.BLACK){
+        if(playerColor == Color.BLACK){
             xPosition = 0;
         }
         else {
@@ -247,7 +249,7 @@ public class GameFrame extends JFrame {
 
 
     private static Color getPlayerColor() {
-        return playerColor;
+        return thisColor;
     }
     public void setMove(boolean b) {
         sendMove = b;
