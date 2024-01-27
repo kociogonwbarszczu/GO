@@ -1,6 +1,5 @@
 package go.game.ClientServer;
 
-import go.game.Database.SQLSaveGame;
 import go.game.frames.GameFrame;
 
 import java.awt.*;
