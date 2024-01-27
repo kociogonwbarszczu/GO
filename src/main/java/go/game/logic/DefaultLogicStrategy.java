@@ -3,6 +3,7 @@ package go.game.logic;
 import go.game.frames.GameFrame;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class DefaultLogicStrategy implements  LogicStrategy{
@@ -69,13 +70,24 @@ public class DefaultLogicStrategy implements  LogicStrategy{
 
     @Override
     public void removeStonesWithoutBreath(int[][] board) {
+        ArrayList<Integer> x = new ArrayList<>();
+        ArrayList<Integer> y = new ArrayList<>();
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
                 if(countBreath(board, i, j) == 0) {
-                    GameFrame.removeStone(i, j);
-                    updateBoard(board, i, j, null);
+                    //GameFrame.removeStone(i, j);
+                    //updateBoard(board, i, j, null);
+                    x.add(i);
+                    y.add(j);
                 }
             }
+        }
+
+        for (int k = 0; k < x.size(); k++){
+            int xToDelete = x.get(k);
+            int yToDelete = y.get(k);
+            GameFrame.removeStone(xToDelete, yToDelete);
+            updateBoard(board, xToDelete, yToDelete, null);
         }
     }
 }
