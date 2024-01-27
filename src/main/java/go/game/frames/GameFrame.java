@@ -1,7 +1,6 @@
 package go.game.frames;
 
 import go.game.ClientServer.Client;
-import go.game.ClientServer.NewGame;
 import go.game.Database.AddingMoveHandle;
 import go.game.Database.Move;
 import go.game.Database.SQLSaveGame;
@@ -28,6 +27,7 @@ public class GameFrame extends JFrame {
     private static final int boardSize = 19;
     private final int cellSize = 30;
     private final Color playerColor;
+    private static Color thisColor;
     public int rowSelected = -1;
     public int columnSelected = -1;
     private static boolean sendMove = false;
@@ -37,11 +37,15 @@ public class GameFrame extends JFrame {
     private int gameId;
     private int captivesCount = 0;
     static Logic logic = new Logic(new DefaultLogicStrategy());
+    private static JLabel captivesLabel;
+    private static int captivesCountForBlack = 0;
+    private static int captivesCountForWhite = 0;
     private static int skipCount = 0;
 
 
     public GameFrame(Color color, Client client) {
         playerColor = color;
+        thisColor = color;
         // size
         setSize(815, 607);
 
@@ -92,6 +96,8 @@ public class GameFrame extends JFrame {
                 if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn && ifHasBreath(x, y)){
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
+                    logic.updateBoard(x, y, color);
+                    logic.removeStonesWithoutBreath();
                     logic.updateBoard(x, y, color);
 
                     //adding coordinates to client
@@ -146,11 +152,15 @@ public class GameFrame extends JFrame {
 
         surrenderButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // captives counter
-        JLabel captivesCountLabel = new JLabel("CAPTIVES COUNT: " + captivesCount);
-        captivesCountLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        captivesCountLabel.setFont(new Font(captivesCountLabel.getFont().getName(), Font.PLAIN, 12));
-
+        // captives label
+        captivesLabel = new JLabel();
+        if(color == Color.BLACK) {
+            captivesLabel.setText("     captives: " + captivesCountForBlack);
+        }
+        else if (color == Color.WHITE) {
+            captivesLabel.setText("     captives: " + captivesCountForWhite);
+        }
+        captivesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // text pane
         text = new JTextPane();
@@ -175,18 +185,25 @@ public class GameFrame extends JFrame {
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(surrenderButton);
 
+        //captives panel
+        JPanel captivesPanel = new JPanel();
+        captivesPanel.setLayout(new BoxLayout(captivesPanel, BoxLayout.Y_AXIS));
+
+        captivesPanel.add(Box.createVerticalStrut(5));
+        captivesPanel.add(captivesLabel);
+        captivesPanel.add(Box.createVerticalStrut(5));
+
         //main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         add(mainPanel, BorderLayout.EAST);
 
         mainPanel.add(Box.createVerticalStrut(5));
-        mainPanel.add(gameIdLabel);
+        mainPanel.add(gameIdLabel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
-        mainPanel.add(Box.createVerticalStrut(5));
-        mainPanel.add(captivesCountLabel);
-        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(captivesPanel);
         mainPanel.add(textPanel);
+        mainPanel.add(Box.createVerticalStrut(5));
 
         int xPosition = 0;
         if(playerColor == Color.BLACK){
@@ -240,6 +257,25 @@ public class GameFrame extends JFrame {
         addingMoveHandle.handle(move);
     }
 
+    public static void removeStone(int x, int y) {
+        char color = logic.getElement(x, y);
+        elements.remove(new Point(x, y));
+        if (color == 'B') {
+            captivesCountForWhite++;
+        }
+        else if (color == 'W') {
+            captivesCountForBlack++;
+        }
+
+        Color playerColor = getPlayerColor();
+        if(playerColor == Color.BLACK) {
+            captivesLabel.setText("      captives: " + captivesCountForBlack + "\n");
+        }
+        else if (playerColor == Color.WHITE) {
+            captivesLabel.setText(("     captives: " + captivesCountForWhite + "\n"));
+        }
+    }
+
     public void skipMove(Client client) {
         if (yourTurn) {
             setRowSelected(-1);
@@ -253,9 +289,8 @@ public class GameFrame extends JFrame {
         }
     }
 
-    private void removeStone(int x, int y) {
-        elements.remove(new Point(x, y));
-        logic.updateBoard(x, y, null);
+    private static Color getPlayerColor() {
+        return thisColor;
     }
     public void setMove(boolean b) {
         sendMove = b;

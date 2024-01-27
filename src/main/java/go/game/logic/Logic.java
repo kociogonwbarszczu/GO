@@ -31,6 +31,10 @@ public class Logic {
         return logicStrategy.countBreathHypothetical(board, column, row, color);
     }
 
+    public void removeStonesWithoutBreath() {
+        logicStrategy.removeStonesWithoutBreath(board);
+    }
+
     public static boolean ifAlreadyOccupied(int x, int y) {
         return logicStrategy.ifAlreadyOccupied(board, x, y);
     }
@@ -49,4 +53,5 @@ public class Logic {
     public char getElement(int x, int y) {
         return (char) logicStrategy.getElement(board, x, y);
     }
+
 }
