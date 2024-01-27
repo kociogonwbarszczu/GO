@@ -2,6 +2,9 @@ package go.game.frames;
 
 import go.game.ClientServer.Client;
 import go.game.ClientServer.NewGame;
+import go.game.Database.AddingMoveHandle;
+import go.game.Database.Move;
+import go.game.Database.SQLSaveGame;
 import go.game.logic.DefaultLogicStrategy;
 import go.game.logic.Logic;
 import go.game.drawing.Board;
@@ -31,7 +34,7 @@ public class GameFrame extends JFrame {
     private static boolean yourTurn;
     public static int playerWhoStart = 0;
     public static boolean stop = false;
-    private int gameId = 1;
+    private int gameId;
     private int captivesCount = 0;
     static Logic logic = new Logic(new DefaultLogicStrategy());
     private static int skipCount = 0;
@@ -42,9 +45,13 @@ public class GameFrame extends JFrame {
         // size
         setSize(815, 607);
 
+        SQLSaveGame sqlSaveGame = new SQLSaveGame();
+        gameId = sqlSaveGame.getIDGame();
+
         // title
         if(playerColor == Color.BLACK){
             setTitle("GO - player 1");
+            gameId += 1;
             yourTurn = true;
         }
         else{
@@ -92,6 +99,7 @@ public class GameFrame extends JFrame {
                     setColumnSelected(y);
                     setMove(true);
                     client.updateMove(rowSelected, columnSelected);
+                    addMoveToDatabase(gameId, x, y);
                     yourTurn = false;
 
                     // Aktualizacja tekstu w JTextPane
@@ -219,6 +227,19 @@ public class GameFrame extends JFrame {
         }
     }
 
+    public void addMoveToDatabase(int gameId, int x, int y) {
+        SQLSaveGame sqlSaveGame = new SQLSaveGame();
+        Move move = new Move.Builder(gameId, sqlSaveGame.getIDMove(gameId))
+                .typeOfMove("add")
+                .x(x)
+                .y(y)
+                .color((playerColor == Color.BLACK) ? "BLACK" : "WHITE")
+                .build();
+
+        AddingMoveHandle addingMoveHandle = new AddingMoveHandle(sqlSaveGame);
+        addingMoveHandle.handle(move);
+    }
+
     public void skipMove(Client client) {
         if (yourTurn) {
             setRowSelected(-1);
@@ -280,11 +301,5 @@ public class GameFrame extends JFrame {
 
     public static void setStop(boolean b) {
         stop = b;
-    }
-
-    private void waitForResumeOrEnd() throws InterruptedException {
-        while (!(ResumeGameFrame.getResume() || AfterSkipFrame.getEnd())) {
-            Thread.sleep(100);
-        }
     }
 }
