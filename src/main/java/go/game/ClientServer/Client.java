@@ -24,6 +24,7 @@ public class Client implements Runnable {
     public char otherColor = ' ';
     private static Client client;
     private GameFrame gameFrame;
+    private static boolean skip = false;
 
     public static void main(String[] args) {
         client = new Client();
@@ -89,11 +90,22 @@ public class Client implements Runnable {
     }
 
     private void waitForMove() throws InterruptedException {
-        while (!gameFrame.getMove()) {
+        while (!(gameFrame.getMove() || skip)) {
             Thread.sleep(100);
         }
-        gameFrame.setMove(false);
-        myTurn = false;
+        if (gameFrame.getMove()) {
+            gameFrame.setMove(false);
+            myTurn = false;
+        } else {
+            gameFrame.setMove(false);
+            GameFrame.setTurn(false);
+            updateMove(-1, -1);
+            myTurn = false;
+        }
+    }
+
+    public static void setSkip(boolean b) {
+        skip = b;
     }
 
     private void sendMove() throws IOException {

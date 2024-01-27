@@ -1,6 +1,7 @@
 package go.game.frames;
 
 import go.game.ClientServer.Client;
+import go.game.ClientServer.NewGame;
 import go.game.logic.DefaultLogicStrategy;
 import go.game.logic.Logic;
 import go.game.drawing.Board;
@@ -21,17 +22,19 @@ public class GameFrame extends JFrame {
 
     private static Map<Point, DrawableElement> elements;
     private static JTextPane text;
-    private static int boardSize = 19;
-    private int cellSize = 30;
-    private Color playerColor;
+    private static final int boardSize = 19;
+    private final int cellSize = 30;
+    private final Color playerColor;
     public int rowSelected = -1;
     public int columnSelected = -1;
     private static boolean sendMove = false;
     private static boolean yourTurn;
-    private static boolean skip = false;
+    public static int playerWhoStart = 0;
+    public static boolean stop = false;
     private int gameId = 1;
     private int captivesCount = 0;
     static Logic logic = new Logic(new DefaultLogicStrategy());
+    private static int skipCount = 0;
 
 
     public GameFrame(Color color, Client client) {
@@ -59,8 +62,17 @@ public class GameFrame extends JFrame {
         DrawingPanel drawingPanel = new DrawingPanel();
         add(drawingPanel, BorderLayout.CENTER);
 
-        //elements.put(new Point(2, 2), Stone.addStone(playerColor));
-        //elements.put(new Point(2, 2), Stone.addStone(playerColor));
+        /*while (stop) {
+            playerWhoStart = NewGame.getChosenPlayer();
+            if ((playerWhoStart == 1 && playerColor == Color.BLACK) || (playerWhoStart == 2 && playerColor == Color.WHITE)) {
+                playerWhoStart = 0;
+                stop = false;
+            } else if (playerWhoStart != 0) {
+                skipMove(client);
+                playerWhoStart = 0;
+                stop = false;
+            }
+        }*/
 
         drawingPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -105,14 +117,7 @@ public class GameFrame extends JFrame {
         skipButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setRowSelected(-1);
-                setColumnSelected(-1);
-                setMove(true);
-                client.updateMove(rowSelected, columnSelected);
-                yourTurn = false;
-                String currentText = text.getText();
-                String newText = currentText + "You skipped move.\nOpponent's turn.\n\n";
-                text.setText(newText);
+                skipMove(client);
             }
         });
 
@@ -126,7 +131,6 @@ public class GameFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 client.surrenderPlayer(playerColor);
                 new GameOverFrame(playerColor);
-                new AfterSkipFrame();
             }
         });
 
@@ -213,6 +217,19 @@ public class GameFrame extends JFrame {
         }
     }
 
+    public void skipMove(Client client) {
+        if (yourTurn) {
+            setRowSelected(-1);
+            setColumnSelected(-1);
+            setMove(true);
+            client.updateMove(rowSelected, columnSelected);
+            yourTurn = false;
+            String currentText = text.getText();
+            String newText = currentText + "You skipped move.\nOpponent's turn.\n\n";
+            text.setText(newText);
+        }
+    }
+
     public void setMove(boolean b) {
         sendMove = b;
     }
@@ -234,6 +251,11 @@ public class GameFrame extends JFrame {
         String currentText = text.getText();
         String newText = currentText + "Opponent skipped move.\nYour turn\n\n";
         text.setText(newText);
+        skipCount += 1;
+    }
+
+    public static void setTurn(boolean b) {
+        yourTurn = b;
     }
 
     public static void addOpponentsMove(int x, int y, Color playerColor) {
@@ -242,11 +264,21 @@ public class GameFrame extends JFrame {
         yourTurn = true;
         String currentText = text.getText();
         String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
-
         text.setText(newText);
+        skipCount = 0;
     }
 
     public boolean ifHasBreath(int x,int y) {
         return logic.countBreathHypothetical(x, y, playerColor) != 0 ;
+    }
+
+    public static void setStop(boolean b) {
+        stop = b;
+    }
+
+    private void waitForResumeOrEnd() throws InterruptedException {
+        while (!(ResumeGameFrame.getResume() || AfterSkipFrame.getEnd())) {
+            Thread.sleep(100);
+        }
     }
 }

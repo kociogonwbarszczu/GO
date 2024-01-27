@@ -56,7 +56,8 @@ public class DefaultLogicStrategy implements  LogicStrategy{
     @Override
     public void updateBoard(int[][] board, int x, int y, Color color) {
         if (color == Color.BLACK) board[x][y] = 'B';
-        else board[x][y] = 'W';
+        else if (color == Color.WHITE) board[x][y] = 'W';
+        else board[x][y] = ' ';
     }
 
     @Override
