@@ -44,7 +44,7 @@ public class GameFrame extends JFrame {
         playerColor = color;
         thisColor = color;
         // size
-        setSize(815, 607);
+        setSize(848, 607);
 
         // title
         if(playerColor == Color.BLACK){
@@ -145,17 +145,18 @@ public class GameFrame extends JFrame {
 
         // captives label
         captivesLabel = new JLabel();
-        if(color == Color.BLACK) {
+        /*if(color == Color.BLACK) {
             captivesLabel.setText("     captives: " + captivesCountForBlack);
         }
         else if (color == Color.WHITE) {
             captivesLabel.setText("     captives: " + captivesCountForWhite);
-        }
+        }*/
+        captivesLabel.setText(updateCaptivesCount(0));
         captivesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // text pane
         text = new JTextPane();
-        text.setText("GO game started                                  \n");        //do not touch the spaces
+        text.setText("GO game started                                               \n");        //do not touch the spaces
         text.setEditable(false);
 
         JPanel textPanel = new JPanel();
@@ -192,7 +193,7 @@ public class GameFrame extends JFrame {
         mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(gameIdLabel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
-        mainPanel.add(captivesPanel);
+        mainPanel.add(captivesPanel, BorderLayout.CENTER);
         mainPanel.add(textPanel);
         mainPanel.add(Box.createVerticalStrut(5));
 
@@ -247,11 +248,27 @@ public class GameFrame extends JFrame {
 
         Color playerColor = getPlayerColor();
         if(playerColor == Color.BLACK) {
-            captivesLabel.setText("      captives: " + captivesCountForBlack + "\n");
+            //captivesLabel.setText("      captives: " + captivesCountForBlack + "\n");
+            captivesLabel.setText(updateCaptivesCount(captivesCountForBlack));
         }
         else if (playerColor == Color.WHITE) {
-            captivesLabel.setText(("     captives: " + captivesCountForWhite + "\n"));
+            //captivesLabel.setText(("     captives: " + captivesCountForWhite + "\n"));
+            captivesLabel.setText(updateCaptivesCount(captivesCountForWhite));
         }
+    }
+
+    private static String updateCaptivesCount(int count) {
+        String text;
+        if (count < 10) {
+            text = "captives: " + String.valueOf(count) + "                                ";
+        }
+        else if (count < 100) {
+            text = "captives: " + String.valueOf(count) + "                               ";
+        }
+        else {
+            text = "captives: " + String.valueOf(count) + "                              ";
+        }
+        return text;
     }
 
     public void skipMove(Client client) {
