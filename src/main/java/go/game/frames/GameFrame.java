@@ -73,6 +73,7 @@ public class GameFrame extends JFrame {
                 stop = false;
             }
         }*/
+        //elements.remove(new Point(3,3));
 
         drawingPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -131,6 +132,7 @@ public class GameFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 client.surrenderPlayer(playerColor);
                 new GameOverFrame(playerColor);
+                new AfterSkipFrame();
             }
         });
 
@@ -230,6 +232,10 @@ public class GameFrame extends JFrame {
         }
     }
 
+    private void removeStone(int x, int y) {
+        elements.remove(new Point(x, y));
+        logic.updateBoard(x, y, null);
+    }
     public void setMove(boolean b) {
         sendMove = b;
     }
