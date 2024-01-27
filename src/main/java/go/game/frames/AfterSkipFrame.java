@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AfterSkipFrame extends JFrame {
+    public static boolean resume = false;
+    private static boolean end = false;
     public AfterSkipFrame() {
 
         //size
@@ -28,6 +30,7 @@ public class AfterSkipFrame extends JFrame {
         resumeGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                resume = true;
                 new ResumeGameFrame();
             }
         });
@@ -37,6 +40,13 @@ public class AfterSkipFrame extends JFrame {
         MyButton endGameButton = new MyButton("end game");
         endGameButton.setFont(new Font(endGameButton.getFont().getName(), Font.BOLD, 15));
         endGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        endGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end = true;
+            }
+        });
 
         componentsPanel.add(Box.createVerticalGlue());
         componentsPanel.add(resumeGameButton);
@@ -54,4 +64,19 @@ public class AfterSkipFrame extends JFrame {
         setResizable(false);
     }
 
+    public static boolean getResume() {
+        return resume;
+    }
+
+    public static void setResume() {
+        resume = false;
+    }
+
+    public static boolean getEnd() {
+        return end;
+    }
+
+    public static void setEnd() {
+        end = false;
+    }
 }

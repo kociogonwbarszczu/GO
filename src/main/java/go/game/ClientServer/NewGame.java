@@ -1,20 +1,23 @@
 package go.game.ClientServer;
 
+import go.game.frames.AfterSkipFrame;
+import go.game.frames.GameFrame;
+import go.game.frames.ResumeGameFrame;
+
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
 
 public class NewGame implements Runnable {
-    public static int PLAYER1_WON = 1;
-    public static int PLAYER2_WON = 2;
-    public static int CONTINUE = 3;
     public static int countSkip = 0;
+    private static boolean stop = false;
+    private static boolean end = false;
+    static int chosenPlayer = 0;
 
-    private static int boardSize = 19;
-    private static char[][] board = new char[boardSize][boardSize];
+    private static final int boardSize = 19;
+    private static final char[][] board = new char[boardSize][boardSize];
 
-    private Socket firstPlayer;
-    private Socket secondPlayer;
+    private final Socket firstPlayer;
+    private final Socket secondPlayer;
 
     public NewGame(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
@@ -34,36 +37,43 @@ public class NewGame implements Runnable {
             DataInputStream inputSecondPlayer = new DataInputStream(secondPlayer.getInputStream());
             DataOutputStream outputSecondPlayer = new DataOutputStream(secondPlayer.getOutputStream());
             // starting game
-            while (true) {
-                int row = inputFirstPlayer.readInt();
-                int column = inputFirstPlayer.readInt();
-                if (row != -1 && column != -1) {
-                    board[row][column] = 'B';
-                    countSkip = 0;
-                } else countSkip += 1;
+            while (!end) {
+                int row;
+                int column;
 
+                if (!stop) {
+                    row = inputFirstPlayer.readInt();
+                    column = inputFirstPlayer.readInt();
+                    sendMove(outputSecondPlayer, row, column);
+
+                    if (row != -1 && column != -1) {
+                        board[row][column] = 'B';
+                        countSkip = 0;
+                    } else countSkip += 1;
+                }
+                System.out.println(countSkip);
                 if (countSkip == 2) skipTwice();
 
-                //outputSecondPlayer.writeInt(CONTINUE);
-                sendMove(outputSecondPlayer, row, column);
 
-                row = inputSecondPlayer.readInt();
-                column = inputSecondPlayer.readInt();
-                if (row != -1 && column != -1) {
-                    board[row][column] = 'W';
-                    countSkip = 0;
-                } else countSkip += 1;
-
+                if (!stop) {
+                    row = inputSecondPlayer.readInt();
+                    column = inputSecondPlayer.readInt();
+                    sendMove(outputFirstPlayer, row, column);
+                    if (row != -1 && column != -1) {
+                        board[row][column] = 'W';
+                        countSkip = 0;
+                    } else countSkip += 1;
+                }
+                System.out.println(countSkip);
                 if (countSkip == 2) skipTwice();
 
-                //outputFirstPlayer.writeInt(CONTINUE);
-                sendMove(outputFirstPlayer, row, column);
-
-                System.out.println(Arrays.deepToString(board));
+                //System.out.println(Arrays.deepToString(board));
             }
 
         } catch (IOException ex) {
             System.err.println("ex");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -72,7 +82,28 @@ public class NewGame implements Runnable {
         out.writeInt(column);
     }
 
-    public void skipTwice() {
+    public static void skipTwice() throws InterruptedException {
+        countSkip = 0;
+        stop = true;
+        new AfterSkipFrame();
+        GameFrame.setStop(true);
+        waitForResumeOrEnd();
 
+        if (ResumeGameFrame.getResume()) {
+            chosenPlayer = ResumeGameFrame.getPlayerWhoStarts();
+            stop = false;
+        } else if (AfterSkipFrame.getEnd()) {
+            AfterSkipFrame.setEnd();
+            end = true;
+        }
+    }
+    public static int getChosenPlayer() {
+        return chosenPlayer;
+    }
+
+    private static void waitForResumeOrEnd() throws InterruptedException {
+        while (!(ResumeGameFrame.getResume() || AfterSkipFrame.getEnd())) {
+            Thread.sleep(100);
+        }
     }
 }

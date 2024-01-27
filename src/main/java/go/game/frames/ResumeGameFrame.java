@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ResumeGameFrame extends JFrame {
-
-    private int playerWhoStarts;
+    public static boolean resume = false;
+    private static int playerWhoStarts;
 
     public ResumeGameFrame() {
         //size
@@ -48,6 +48,7 @@ public class ResumeGameFrame extends JFrame {
         resumeGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                resume = true;
             }
         });
 
@@ -91,7 +92,11 @@ public class ResumeGameFrame extends JFrame {
         setResizable(false);
     }
 
-    public int getPlayerWhoStarts() {
+    public static int getPlayerWhoStarts() {
         return playerWhoStarts;
     }
+
+    public static boolean getResume() { return resume; }
+
+    public static void setResume() { resume = false; }
 }
