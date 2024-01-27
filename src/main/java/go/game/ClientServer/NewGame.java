@@ -1,5 +1,7 @@
 package go.game.ClientServer;
 
+import go.game.Database.AddingGameHandle;
+import go.game.Database.SQLAddGame;
 import go.game.frames.AfterSkipFrame;
 import go.game.frames.GameFrame;
 import go.game.frames.ResumeGameFrame;
@@ -28,6 +30,10 @@ public class NewGame implements Runnable {
                 board[i][j] = ' ';
             }
         }
+
+        SQLAddGame sqlAddGame = new SQLAddGame();
+        AddingGameHandle addingGameHandle = new AddingGameHandle(sqlAddGame);
+        addingGameHandle.handle();
     }
     @Override
     public void run() {

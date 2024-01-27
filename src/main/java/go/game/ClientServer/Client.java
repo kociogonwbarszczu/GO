@@ -26,6 +26,7 @@ public class Client implements Runnable {
     private GameFrame gameFrame;
     private static boolean skip = false;
 
+
     public static void main(String[] args) {
         client = new Client();
         client.connectToServer();
