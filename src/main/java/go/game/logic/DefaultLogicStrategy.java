@@ -1,5 +1,7 @@
 package go.game.logic;
 
+import go.game.frames.GameFrame;
+
 import java.awt.*;
 import java.util.Stack;
 
@@ -56,11 +58,24 @@ public class DefaultLogicStrategy implements  LogicStrategy{
     @Override
     public void updateBoard(int[][] board, int x, int y, Color color) {
         if (color == Color.BLACK) board[x][y] = 'B';
-        else board[x][y] = 'W';
+        else if (color == Color.WHITE) board[x][y] = 'W';
+        else board[x][y] = ' ';
     }
 
     @Override
     public char getElement(int[][] board, int x, int y) {
         return (char) board[x][y];
+    }
+
+    @Override
+    public void removeStonesWithoutBreath(int[][] board) {
+        for (int i = 0; i < 19; i++) {
+            for (int j = 0; j < 19; j++) {
+                if(countBreath(board, i, j) == 0) {
+                    GameFrame.removeStone(i, j);
+                    updateBoard(board, i, j, null);
+                }
+            }
+        }
     }
 }

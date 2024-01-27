@@ -23,24 +23,26 @@ public class GameFrame extends JFrame {
     private static JTextPane text;
     private static int boardSize = 19;
     private int cellSize = 30;
-    private Color playerColor;
+    private static Color playerColor;
     public int rowSelected = -1;
     public int columnSelected = -1;
     private static boolean sendMove = false;
     private static boolean yourTurn;
     private static boolean skip = false;
     private int gameId = 1;
-    private int captivesCount = 0;
     static Logic logic = new Logic(new DefaultLogicStrategy());
+    private static JLabel captivesLabel;
+    private static int captivesCountForBlack = 0;
+    private static int captivesCountForWhite = 0;
 
 
-    public GameFrame(Color color, Client client) {
-        playerColor = color;
+    public GameFrame(Color playerColor, Client client) {
+        this.playerColor = playerColor;
         // size
         setSize(815, 607);
 
         // title
-        if(playerColor == Color.BLACK){
+        if(GameFrame.playerColor == Color.BLACK){
             setTitle("GO - player 1");
             yourTurn = true;
         }
@@ -70,8 +72,10 @@ public class GameFrame extends JFrame {
 
                 if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn && ifHasBreath(x, y)){
                     // Add a stone at the clicked position
-                    elements.put(new Point(x, y), Stone.addStone(playerColor));
-                    logic.updateBoard(x, y, color);
+                    elements.put(new Point(x, y), Stone.addStone(GameFrame.playerColor));
+                    logic.updateBoard(x, y, playerColor);
+                    logic.removeStonesWithoutBreath();
+                    logic.updateBoard(x, y, playerColor);
 
                     //adding coordinates to client
                     setRowSelected(x);
@@ -123,19 +127,22 @@ public class GameFrame extends JFrame {
         surrenderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.surrenderPlayer(playerColor);
-                new GameOverFrame(playerColor);
-                new AfterSkipFrame();
+                client.surrenderPlayer(GameFrame.playerColor);
+                new GameOverFrame(GameFrame.playerColor);
             }
         });
 
         surrenderButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // captives counter
-        JLabel captivesCountLabel = new JLabel("CAPTIVES COUNT: " + captivesCount);
-        captivesCountLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        captivesCountLabel.setFont(new Font(captivesCountLabel.getFont().getName(), Font.PLAIN, 12));
-
+        // captives label
+        captivesLabel = new JLabel();
+        if(playerColor == Color.BLACK) {
+            captivesLabel.setText("     captives: " + captivesCountForBlack);
+        }
+        else if (playerColor == Color.WHITE) {
+            captivesLabel.setText("     captives: " + captivesCountForWhite);
+        }
+        gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // text pane
         text = new JTextPane();
@@ -160,21 +167,28 @@ public class GameFrame extends JFrame {
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(surrenderButton);
 
+        //captives panel
+        JPanel captivesPanel = new JPanel();
+        captivesPanel.setLayout(new BoxLayout(captivesPanel, BoxLayout.Y_AXIS));
+
+        captivesPanel.add(Box.createVerticalStrut(5));
+        captivesPanel.add(captivesLabel);
+        captivesPanel.add(Box.createVerticalStrut(5));
+
         //main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         add(mainPanel, BorderLayout.EAST);
 
         mainPanel.add(Box.createVerticalStrut(5));
-        mainPanel.add(gameIdLabel);
+        mainPanel.add(gameIdLabel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
-        mainPanel.add(Box.createVerticalStrut(5));
-        mainPanel.add(captivesCountLabel);
-        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(captivesPanel);
         mainPanel.add(textPanel);
+        mainPanel.add(Box.createVerticalStrut(5));
 
         int xPosition = 0;
-        if(playerColor == Color.BLACK){
+        if(GameFrame.playerColor == Color.BLACK){
             xPosition = 0;
         }
         else {
@@ -212,9 +226,28 @@ public class GameFrame extends JFrame {
         }
     }
 
-    private void removeStone(int x, int y) {
+    public static void removeStone(int x, int y) {
+        char color = logic.getElement(x, y);
         elements.remove(new Point(x, y));
-        logic.updateBoard(x, y, null);
+        if (color == 'B') {
+            captivesCountForWhite++;
+        }
+        else if (color == 'W') {
+            captivesCountForBlack++;
+        }
+
+        Color playerColor = getPlayerColor();
+        if(playerColor == Color.BLACK) {
+            captivesLabel.setText("      captives: " + captivesCountForBlack + "\n");
+        }
+        else if (playerColor == Color.WHITE) {
+            captivesLabel.setText(("     captives: " + captivesCountForWhite + "\n"));
+        }
+    }
+
+
+    private static Color getPlayerColor() {
+        return playerColor;
     }
     public void setMove(boolean b) {
         sendMove = b;
@@ -252,4 +285,6 @@ public class GameFrame extends JFrame {
     public boolean ifHasBreath(int x,int y) {
         return logic.countBreathHypothetical(x, y, playerColor) != 0 ;
     }
+
+
 }
