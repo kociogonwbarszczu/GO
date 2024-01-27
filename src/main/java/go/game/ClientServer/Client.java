@@ -1,5 +1,6 @@
 package go.game.ClientServer;
 
+import go.game.Database.SQLSaveGame;
 import go.game.frames.GameFrame;
 
 import java.awt.*;
@@ -25,6 +26,7 @@ public class Client implements Runnable {
     private static Client client;
     private GameFrame gameFrame;
     private static boolean skip = false;
+
 
     public static void main(String[] args) {
         client = new Client();
