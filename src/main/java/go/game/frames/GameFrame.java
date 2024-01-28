@@ -148,6 +148,7 @@ public class GameFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 client.surrenderPlayer(playerColor);
                 new GameOverFrame(playerColor);
+                sqlSaveGame.setWinner((Color.BLACK == playerColor) ? Color.WHITE : Color.BLACK ,gameId);
             }
         });
 
@@ -289,17 +290,6 @@ public class GameFrame extends JFrame {
     }
 
     private static String updateCaptivesCount(int count) {
-        //String text;
-        /*if (count < 10) {
-            text = "captives: " + String.valueOf(count) + "                                ";
-        }
-        else if (count < 100) {
-            text = "captives: " + String.valueOf(count) + "                               ";
-        }
-        else {
-            text = "captives: " + String.valueOf(count) + "                              ";
-        }*/
-        //return text;
         return "captives: " + count;
     }
 

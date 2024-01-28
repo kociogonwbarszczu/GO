@@ -32,14 +32,14 @@ public class SecondFrame extends JFrame {
         button2PlayerGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameMode = 0;
+                setGameMode(0);
                 setGameMode = true;
             }
         });
         buttonGameWithBot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameMode = 1;
+                setGameMode(1);
                 setGameMode = true;
             }
         });
@@ -115,5 +115,9 @@ public class SecondFrame extends JFrame {
 
     public static boolean getStartGame() {
         return startGame;
+    }
+
+    public static void setGameMode(int value) {
+        gameMode = value;
     }
 }

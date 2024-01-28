@@ -1,5 +1,6 @@
 package go.game.Database;
 
+import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
 
@@ -72,5 +73,24 @@ public class SQLSaveGame {
             JDBConnector.release(null, null, connection);
         }
         return ID + 1;
+    }
+
+    public void setWinner(Color color, int idGame) {
+        try {
+            // Uzyskaj połączenie z bazą danych
+            connection = JDBConnector.getConnection();
+            String winner = (color == Color.BLACK) ? "BLACK" : "WHITE";
+            String query = "UPDATE games SET winner = ? WHERE id = ?;";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, winner);
+                preparedStatement.setInt(2, idGame);
+
+                preparedStatement.executeUpdate();
+            }
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            JDBConnector.release(null, null, connection);
+        }
     }
 }

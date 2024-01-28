@@ -11,7 +11,9 @@ public class GO {
     public NewGame currentGame;
     public static boolean startGame = false;
     public int boardSize = 19;
-    boolean player2Joined = false;
+    public boolean player2Joined = false;
+    public boolean serverRunning = true;
+    public FirstFrame firstFrame;
 
     public static void main(String[] args) {
         new GO();
@@ -21,8 +23,8 @@ public class GO {
         try (ServerSocket serverSocket = new ServerSocket(666)){
             System.out.println("Starting server on port 666.");
 
-            while (true) {
-                FirstFrame firstFrame = new FirstFrame();
+            while (serverRunning) {
+                firstFrame = new FirstFrame();
                 waitForNewOrLoadGame(firstFrame);
 
                 if (firstFrame.getNewGame()) {
@@ -94,5 +96,13 @@ public class GO {
 
     private void initalizeGameWithBot() {
         FirstFrame.startGame = true;
+    }
+
+    public void setServerRunning(boolean value) {
+        firstFrame.dispose();
+        serverRunning = value;
+    }
+    public boolean isServerRunning() {
+        return serverRunning;
     }
 }
