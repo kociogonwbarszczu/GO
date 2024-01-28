@@ -148,7 +148,6 @@ public class GameFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 client.surrenderPlayer(playerColor);
                 new GameOverFrame(playerColor);
-                new AfterSkipFrame();
             }
         });
 

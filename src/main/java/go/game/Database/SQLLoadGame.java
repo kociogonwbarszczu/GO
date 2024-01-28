@@ -41,4 +41,30 @@ public class SQLLoadGame {
         }
         return null;
     }
+
+    public String getWinner(int idGame) {
+        String winner;
+        try {
+            // Uzyskaj połączenie z bazą danych
+            connection = JDBConnector.getConnection();
+
+
+            String query = "SELECT winner FROM gamess WHERE id_game = ?;";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, idGame);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    winner = resultSet.getString(1);
+                    return winner;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            JDBConnector.release(null, null, connection);
+        }
+        return null;
+    }
 }

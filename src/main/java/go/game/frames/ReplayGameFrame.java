@@ -1,5 +1,7 @@
 package go.game.frames;
 
+import go.game.Database.Move;
+import go.game.Database.SQLLoadGame;
 import go.game.Database.SQLSaveGame;
 import go.game.drawing.Board;
 import go.game.drawing.Stone;
@@ -12,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ReplayGameFrame extends JFrame {
 
@@ -19,16 +22,41 @@ public class ReplayGameFrame extends JFrame {
     private static final int boardSize = 19;
     private final int cellSize = 30;
     private static int gameId;
+    private int maxMoveId;
+    private int iterator = 0;
 
 
-    public ReplayGameFrame(int gameNumber) {
-        gameId = gameNumber;
+    public ReplayGameFrame(int gameId) {
+        this.gameId = gameId;
+
+        SQLSaveGame sqlSaveGame = new SQLSaveGame();
+        SQLLoadGame sqlLoadGame = new SQLLoadGame();
+        Move move;
+        maxMoveId = sqlSaveGame.getIDMove(gameId);
+        String[] typeOfMove = new String[maxMoveId-1];
+        int[] xOfMove = new int[maxMoveId-1];
+        int[] yOfMove = new int[maxMoveId-1];
+        String[] colorOfMove = new String[maxMoveId-1];
+        String winner;
+
+        int x;
+        int y;
+        String colorString;
+        Color color;
+
+
+
+
+        for (int i = 1; i < maxMoveId; i++) {
+            move = sqlLoadGame.getMove(gameId, i);
+            typeOfMove[i-1] = move.getTypeOfMove();
+            xOfMove[i-1] = move.getX();
+            yOfMove[i-1] = move.getY();
+            colorOfMove[i-1] = move.getColor();
+        }
 
         // size
         setSize(700, 607);
-
-        SQLSaveGame sqlSaveGame = new SQLSaveGame();
-        gameId = sqlSaveGame.getIDGame();
 
         // title
         setTitle("GO - replay game " + gameId);
@@ -52,6 +80,31 @@ public class ReplayGameFrame extends JFrame {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(iterator < maxMoveId-1){
+                    int x = xOfMove[iterator];
+                    int y = yOfMove[iterator];
+                    String colorString = colorOfMove[iterator];
+                    Color color = null;
+                    if (Objects.equals(colorString, "WHITE")) {
+                        color = Color.WHITE;
+                    }
+                    else if (Objects.equals(colorString, "BLACK")) {
+                        color = Color.BLACK;
+                    }
+
+                    if(Objects.equals(typeOfMove[iterator], "add")) {
+                        addStone(x, y, color);
+                        drawingPanel.repaint();
+                    }
+                    else if (Objects.equals(typeOfMove[iterator], "delete")) {
+                        removeStone(x, y);
+                    }
+                    drawingPanel.repaint();
+                    iterator++;
+                }
+                else if (iterator == maxMoveId) {
+
+                }
             }
         });
 
@@ -75,9 +128,6 @@ public class ReplayGameFrame extends JFrame {
         mainPanel.add(gameIdLabel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
         mainPanel.add(Box.createVerticalStrut(5));
-
-        addStone(2, 3, Color.BLACK);
-        addStone(15, 10, Color.WHITE);
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
