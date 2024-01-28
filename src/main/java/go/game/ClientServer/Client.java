@@ -38,7 +38,7 @@ public class Client implements Runnable {
         }
     }
 
-    private void connectToServer() {
+    public void connectToServer() {
         try {
             Socket socket = new Socket("localhost", 666);
             fromServer = new DataInputStream(socket.getInputStream());
