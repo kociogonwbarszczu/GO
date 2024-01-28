@@ -37,13 +37,19 @@ public class ReplayGameFrame extends JFrame {
         int[] xOfMove = new int[maxMoveId-1];
         int[] yOfMove = new int[maxMoveId-1];
         String[] colorOfMove = new String[maxMoveId-1];
-        String winner;
-
+        String winner = sqlLoadGame.getWinner(gameId);
+        Color loserColor;
         int x;
         int y;
         String colorString;
         Color color;
 
+        if(Objects.equals(winner, "BLACK")) {
+            loserColor = Color.WHITE;
+        }
+        else {
+            loserColor = Color.BLACK;
+        }
 
 
 
@@ -102,8 +108,8 @@ public class ReplayGameFrame extends JFrame {
                     drawingPanel.repaint();
                     iterator++;
                 }
-                else if (iterator == maxMoveId) {
-
+                else if (iterator == maxMoveId-1) {
+                    new GameOverFrame(loserColor);
                 }
             }
         });

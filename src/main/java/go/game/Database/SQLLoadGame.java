@@ -49,7 +49,7 @@ public class SQLLoadGame {
             connection = JDBConnector.getConnection();
 
 
-            String query = "SELECT winner FROM gamess WHERE id_game = ?;";
+            String query = "SELECT winner FROM games WHERE id = ?;";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, idGame);
 
