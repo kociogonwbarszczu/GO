@@ -26,15 +26,15 @@ public class GameFrame extends JFrame {
     private static JTextPane text;
     private static final int boardSize = 19;
     private final int cellSize = 30;
-    private final Color playerColor;
+    private static Color playerColor = null;
     private static Color thisColor;
-    public int rowSelected = -1;
-    public int columnSelected = -1;
+    public static int rowSelected = -1;
+    public static int columnSelected = -1;
     private static boolean sendMove = false;
     private static boolean yourTurn;
     public static int playerWhoStart = 0;
     public static boolean stop = false;
-    private int gameId;
+    private static int gameId;
     private int captivesCount = 0;
     static Logic logic = new Logic(new DefaultLogicStrategy());
     private static JLabel captivesLabel;
@@ -97,7 +97,8 @@ public class GameFrame extends JFrame {
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
                     logic.updateBoard(x, y, color);
-                    logic.removeStonesWithoutBreath();
+                    if (playerColor == Color.WHITE) logic.removeStonesWithoutBreath(Color.BLACK);
+                    else logic.removeStonesWithoutBreath(Color.WHITE);
                     logic.updateBoard(x, y, color);
 
                     //adding coordinates to client
@@ -105,7 +106,7 @@ public class GameFrame extends JFrame {
                     setColumnSelected(y);
                     setMove(true);
                     client.updateMove(rowSelected, columnSelected);
-                    addMoveToDatabase(gameId, x, y);
+                    addStoneToDatabase(gameId, x, y);
                     yourTurn = false;
 
                     // Aktualizacja tekstu w JTextPane
@@ -244,7 +245,7 @@ public class GameFrame extends JFrame {
         }
     }
 
-    public void addMoveToDatabase(int gameId, int x, int y) {
+    public void addStoneToDatabase(int gameId, int x, int y) {
         SQLSaveGame sqlSaveGame = new SQLSaveGame();
         Move move = new Move.Builder(gameId, sqlSaveGame.getIDMove(gameId))
                 .typeOfMove("add")
@@ -257,9 +258,23 @@ public class GameFrame extends JFrame {
         addingMoveHandle.handle(move);
     }
 
+    public static void addDeleteToDatabase(int gameId, int x, int y) {
+        SQLSaveGame sqlSaveGame = new SQLSaveGame();
+        Move move = new Move.Builder(gameId, sqlSaveGame.getIDMove(gameId))
+                .typeOfMove("delete")
+                .x(x)
+                .y(y)
+                .color((playerColor != Color.BLACK) ? "BLACK" : "WHITE")
+                .build();
+
+        AddingMoveHandle addingMoveHandle = new AddingMoveHandle(sqlSaveGame);
+        addingMoveHandle.handle(move);
+    }
+
     public static void removeStone(int x, int y) {
         char color = logic.getElement(x, y);
         elements.remove(new Point(x, y));
+        if (!String.valueOf(color).equals((playerColor == Color.BLACK) ? "B" : "W")) addDeleteToDatabase(gameId ,x ,y);
         if (color == 'B') {
             captivesCountForWhite++;
         }
@@ -323,6 +338,8 @@ public class GameFrame extends JFrame {
     public static void addOpponentsMove(int x, int y, Color playerColor) {
         elements.put(new Point(x, y), Stone.addStone(playerColor));
         logic.updateBoard(x, y, playerColor);
+        if (playerColor == Color.WHITE) logic.removeStonesWithoutBreath(Color.BLACK);
+        else logic.removeStonesWithoutBreath(Color.WHITE);
         yourTurn = true;
         String currentText = text.getText();
         String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
@@ -331,7 +348,7 @@ public class GameFrame extends JFrame {
     }
 
     public boolean ifHasBreath(int x,int y) {
-        return logic.countBreathHypothetical(x, y, playerColor) != 0 ;
+        return (logic.countBreathHypothetical(x, y, playerColor) != 0 || logic.checkRemoveStones());
     }
 
     public static void setStop(boolean b) {
