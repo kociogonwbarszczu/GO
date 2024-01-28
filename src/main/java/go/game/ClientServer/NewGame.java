@@ -20,6 +20,7 @@ public class NewGame implements Runnable {
 
     private final Socket firstPlayer;
     private final Socket secondPlayer;
+    public static AfterSkipFrame afterSkipFrame;
 
     public NewGame(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
@@ -88,10 +89,10 @@ public class NewGame implements Runnable {
         out.writeInt(column);
     }
 
-    public static void skipTwice() throws InterruptedException {
+    public void skipTwice() throws InterruptedException {
         countSkip = 0;
         stop = true;
-        new AfterSkipFrame();
+        afterSkipFrame = new AfterSkipFrame();
         GameFrame.setStop(true);
         waitForResumeOrEnd();
 

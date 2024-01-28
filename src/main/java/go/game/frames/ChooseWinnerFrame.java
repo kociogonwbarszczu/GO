@@ -8,57 +8,58 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ResumeGameFrame extends JFrame {
+public class ChooseWinnerFrame extends JFrame {
     public static boolean resume = false;
-    private static int playerWhoStarts;
+    private static Color loser;
 
-    public ResumeGameFrame() {
-        NewGame.afterSkipFrame.dispose();
+    public ChooseWinnerFrame() {
         //size
         setSize(500, 400);
 
         //title
-        setTitle("GO - resume game");
+        setTitle("GO - choose winner");
+
+        NewGame.afterSkipFrame.dispose();
 
         //main components panel
         JPanel componentsPanel = new JPanel();
         componentsPanel.setLayout(new BoxLayout(componentsPanel, BoxLayout.PAGE_AXIS));
 
-        JLabel choosePlayerLabel = new JLabel("Choose player who starts:");
-        choosePlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel chooseWinnerLabel = new JLabel("Choose winner:");
+        chooseWinnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //game mode buttons
+        //who wins buttons
         MyButton player1Button = new MyButton("player 1");
 
         MyButton player2Button = new MyButton("player 2");
         player1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                playerWhoStarts = 1;
+                loser = Color.WHITE;
             }
         });
         player2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                playerWhoStarts = 2;
+                loser = Color.BLACK;
             }
         });
 
         //button start
-        MyButton resumeGameButton = new MyButton("resume game");
+        MyButton endGameButton = new MyButton("end game");
 
-        resumeGameButton.addActionListener(new ActionListener() {
+        endGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resume = true;
+                new GameOverFrame(loser);
             }
         });
 
-        //choose player label panel
-        JPanel choosePlayerLabelPanel = new JPanel();
-        choosePlayerLabelPanel.setLayout(new BoxLayout(choosePlayerLabelPanel, BoxLayout.X_AXIS));
+        //choose winner label panel
+        JPanel chooseWinnerLabelPanel = new JPanel();
+        chooseWinnerLabelPanel.setLayout(new BoxLayout(chooseWinnerLabelPanel, BoxLayout.X_AXIS));
 
-        choosePlayerLabelPanel.add(choosePlayerLabel);
+        chooseWinnerLabelPanel.add(chooseWinnerLabel);
 
         //choose player panel
         JPanel choosePlayerPanel = new JPanel();
@@ -69,19 +70,19 @@ public class ResumeGameFrame extends JFrame {
         choosePlayerPanel.add(player2Button);
 
 
-        //resume game button panel
-        JPanel resumeGamePanel = new JPanel();
-        resumeGamePanel.setLayout(new BoxLayout(resumeGamePanel, BoxLayout.X_AXIS));
+        //end game button panel
+        JPanel endGamePanel = new JPanel();
+        endGamePanel.setLayout(new BoxLayout(endGamePanel, BoxLayout.X_AXIS));
 
-        resumeGamePanel.add(resumeGameButton);
+        endGamePanel.add(endGameButton);
 
 
         componentsPanel.add(Box.createVerticalGlue());
-        componentsPanel.add(choosePlayerLabelPanel);
+        componentsPanel.add(chooseWinnerLabelPanel);
         componentsPanel.add(Box.createVerticalStrut(10));
         componentsPanel.add(choosePlayerPanel);
         componentsPanel.add(Box.createVerticalStrut(10));
-        componentsPanel.add(resumeGamePanel);
+        componentsPanel.add(endGamePanel);
         componentsPanel.add(Box.createVerticalGlue());
 
         // Center the panel on the frame
@@ -93,12 +94,4 @@ public class ResumeGameFrame extends JFrame {
         setVisible(true);
         setResizable(false);
     }
-
-    public static int getPlayerWhoStarts() {
-        return playerWhoStarts;
-    }
-
-    public static boolean getResume() { return resume; }
-
-    public static void setResume() { resume = false; }
 }

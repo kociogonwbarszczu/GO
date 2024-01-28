@@ -2,6 +2,7 @@ package go.game.logic;
 
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Logic {
     private static final int boardSize = 19;
