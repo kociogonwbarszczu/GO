@@ -93,10 +93,10 @@ public class GameFrame extends JFrame {
 
                 if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn && ifHasBreath(x, y)){
                     Point currentMove = new Point(x, y);
-                    //if (lastMove != null && lastMove.equals(currentMove)) {
-                    //    return; // Invalid move, exit the method
-                    //}
-                    // Update lastMove
+                    if (lastMove != null && lastMove.equals(currentMove)) {
+                        return; // Invalid move, exit the method
+                    }
+
                     lastMove = new Point(x, y);
 
                     // Add a stone at the clicked position
