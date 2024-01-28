@@ -1,6 +1,8 @@
 package go.game.frames;
 
 import go.game.ClientServer.NewGame;
+import go.game.Database.SQLAddGame;
+import go.game.Database.SQLSaveGame;
 import go.game.frames.style.MyButton;
 
 import javax.swing.*;
@@ -36,12 +38,14 @@ public class ChooseWinnerFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loser = Color.WHITE;
+                setWinner(Color.BLACK);
             }
         });
         player2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loser = Color.BLACK;
+                setWinner(Color.WHITE);
             }
         });
 
@@ -95,5 +99,10 @@ public class ChooseWinnerFrame extends JFrame {
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
         setResizable(false);
+    }
+
+    public void setWinner(Color winner) {
+        SQLSaveGame sqlSaveGame = new SQLSaveGame();
+        sqlSaveGame.setWinner(winner ,sqlSaveGame.getIDGame());
     }
 }
