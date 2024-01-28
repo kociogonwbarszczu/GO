@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -43,6 +44,8 @@ public class ReplayGameFrame extends JFrame {
         int y;
         String colorString;
         Color color;
+        ArrayList<Integer> xToDelete = new ArrayList<Integer>();
+        ArrayList<Integer> yToDelete = new ArrayList<Integer>();
 
         if(Objects.equals(winner, "BLACK")) {
             loserColor = Color.WHITE;
@@ -89,6 +92,7 @@ public class ReplayGameFrame extends JFrame {
                 if(iterator < maxMoveId-1){
                     int x = xOfMove[iterator];
                     int y = yOfMove[iterator];
+
                     String colorString = colorOfMove[iterator];
                     Color color = null;
                     if (Objects.equals(colorString, "WHITE")) {
@@ -100,10 +104,16 @@ public class ReplayGameFrame extends JFrame {
 
                     if(Objects.equals(typeOfMove[iterator], "add")) {
                         addStone(x, y, color);
+                        for(int i = 0; i < xToDelete.size(); i++){
+                            removeStone(xToDelete.get(i), yToDelete.get(i));
+                        }
+                        xToDelete.clear();
+                        yToDelete.clear();
                         drawingPanel.repaint();
                     }
                     else if (Objects.equals(typeOfMove[iterator], "delete")) {
-                        removeStone(x, y);
+                        xToDelete.add(x);
+                        yToDelete.add(y);
                     }
                     drawingPanel.repaint();
                     iterator++;
