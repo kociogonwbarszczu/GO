@@ -42,7 +42,7 @@ public class Logic {
         return (char) logicStrategy.getElement(board, x, y);
     }
 
-    public boolean checkRemoveStones(Color color) { return logicStrategy.checkRemoveStones(board, color);}
+    public boolean checkRemoveStones(Color color, int x, int y) { return logicStrategy.checkRemoveStones(board, color, x, y);}
 
     public int[] moveBot() { return logicStrategy.moveBot(board); }
 }

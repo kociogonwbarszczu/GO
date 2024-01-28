@@ -93,9 +93,9 @@ public class GameFrame extends JFrame {
 
                 if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn && ifHasBreath(x, y)){
                     Point currentMove = new Point(x, y);
-                    if (lastMove != null && lastMove.equals(currentMove)) {
-                        return; // Invalid move, exit the method
-                    }
+                    //if (lastMove != null && lastMove.equals(currentMove)) {
+                    //    return; // Invalid move, exit the method
+                    //}
                     // Update lastMove
                     lastMove = new Point(x, y);
 
@@ -358,7 +358,7 @@ public class GameFrame extends JFrame {
 
     public boolean ifHasBreath(int x,int y) {
         Color color = (playerColor == Color.WHITE) ? Color.BLACK : Color.WHITE;
-        return (logic.countBreathHypothetical(x, y, playerColor) != 0 || logic.checkRemoveStones(color));
+        return (logic.countBreathHypothetical(x, y, playerColor) != 0 || logic.checkRemoveStones(color, x, y));
     }
 
     public static void setStop(boolean b) {

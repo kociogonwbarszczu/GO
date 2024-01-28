@@ -94,17 +94,21 @@ public class DefaultLogicStrategy implements  LogicStrategy{
     }
 
     @Override
-    public boolean checkRemoveStones(int[][] board, Color color) {
+    public boolean checkRemoveStones(int[][] board, Color color, int x, int y) {
+        if (color == Color.BLACK) board[x][y] = 'B';
+        else board[x][y] = 'W';
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
                 if(countBreath(board, i, j) == 0) {
-                    char colorPlayer = (color == Color.BLACK) ? 'B' : 'W';
+                    char colorPlayer = (color == Color.BLACK) ? 'W' : 'B';
                     if (colorPlayer == getElement(board ,i, j)) {
+                        board[x][y] = ' ';
                         return true;
                     }
                 }
             }
         }
+        board[x][y] = ' ';
         return false;
     }
 

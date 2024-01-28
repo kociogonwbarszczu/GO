@@ -97,9 +97,9 @@ public class GO {
     }
 
     private void initializeGameWithBot(Socket firstPlayerSocket, Socket bot) throws IOException {
-        BotClient botClient = new BotClient();  // Utwórz instancję BotClient
+        BotClient botClient = new BotClient();
 
-        currentGame = new NewGame(firstPlayerSocket, bot);  // Utwórz instancję gry z botem
+        currentGame = new NewGame(firstPlayerSocket, bot);
         Thread thread = new Thread(currentGame);
         thread.start();
         startGame = false;
