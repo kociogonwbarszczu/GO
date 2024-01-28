@@ -44,10 +44,16 @@ public class DefaultLogicStrategy implements  LogicStrategy{
 
     @Override
     public int countBreathHypothetical(int[][] board, int column, int row, Color color) {
-        int[][] boardHypothetical = board;
-        if (color == Color.BLACK) boardHypothetical[column][row] = 'B';
-        else boardHypothetical[column][row] = 'W';
-        return countBreath(boardHypothetical, column, row);
+        //int[][] boardHypothetical = board;
+        int breath = 0;
+        //if (color == Color.BLACK) boardHypothetical[column][row] = 'B';
+        //else boardHypothetical[column][row] = 'W';
+        //return countBreath(boardHypothetical, column, row);
+        if (color == Color.BLACK) board[column][row] = 'B';
+        else board[column][row] = 'W';
+        breath = countBreath(board, column, row);
+        board[column][row] = ' ';
+        return breath;
     }
 
     @Override
@@ -69,32 +75,16 @@ public class DefaultLogicStrategy implements  LogicStrategy{
     }
 
     @Override
-    public void removeStonesWithoutBreath(int[][] board) {
-        /*ArrayList<Integer> x = new ArrayList<>();
-        ArrayList<Integer> y = new ArrayList<>();
-        for (int i = 0; i < 19; i++) {
-            for (int j = 0; j < 19; j++) {
-                if(countBreath(board, i, j) == 0) {
-                    //GameFrame.removeStone(i, j);
-                    //updateBoard(board, i, j, null);
-                    x.add(i);
-                    y.add(j);
-                }
-            }
-        }
-
-        for (int k = 0; k < x.size(); k++){
-            int xToDelete = x.get(k);
-            int yToDelete = y.get(k);
-            GameFrame.removeStone(xToDelete, yToDelete);
-            updateBoard(board, xToDelete, yToDelete, null);
-        }*/
+    public void removeStonesWithoutBreath(int[][] board, Color color) {
         ArrayList<Integer> coordinatesToDelete = new ArrayList<>();
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
                 if(countBreath(board, i, j) == 0) {
-                    coordinatesToDelete.add(i);
-                    coordinatesToDelete.add(j);
+                    char colorPlayer = (color == Color.BLACK) ? 'B' : 'W';
+                    if (colorPlayer == getElement(board ,i, j)) {
+                        coordinatesToDelete.add(i);
+                        coordinatesToDelete.add(j);
+                    }
                 }
             }
         }
@@ -105,5 +95,20 @@ public class DefaultLogicStrategy implements  LogicStrategy{
             GameFrame.removeStone(xToDelete, yToDelete);
             updateBoard(board, xToDelete, yToDelete, null);
         }
+    }
+
+    @Override
+    public boolean checkRemoveStones(int[][] board, Color color) {
+        for (int i = 0; i < 19; i++) {
+            for (int j = 0; j < 19; j++) {
+                if(countBreath(board, i, j) == 0) {
+                    char colorPlayer = (color == Color.BLACK) ? 'B' : 'W';
+                    if (colorPlayer == getElement(board ,i, j)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

@@ -65,12 +65,12 @@ public class GO {
         }
     }
 
-    private void waitForNewOrLoadGame(FirstFrame firstFrame) throws InterruptedException {
+    public void waitForNewOrLoadGame(FirstFrame firstFrame) throws InterruptedException {
         while (!(firstFrame.getNewGame() || firstFrame.getLoadGame())){
             Thread.sleep(100);
         }
     }
-    private void waitForStartGame() throws InterruptedException {
+    public void waitForStartGame() throws InterruptedException {
         System.out.println("Player one is setting mode of games...");
 
         while (!(SecondFrame.getStartGame())){
