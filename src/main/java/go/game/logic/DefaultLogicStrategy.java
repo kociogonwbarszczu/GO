@@ -45,11 +45,7 @@ public class DefaultLogicStrategy implements  LogicStrategy{
 
     @Override
     public int countBreathHypothetical(int[][] board, int column, int row, Color color) {
-        //int[][] boardHypothetical = board;
         int breath = 0;
-        //if (color == Color.BLACK) boardHypothetical[column][row] = 'B';
-        //else boardHypothetical[column][row] = 'W';
-        //return countBreath(boardHypothetical, column, row);
         if (color == Color.BLACK) board[column][row] = 'B';
         else board[column][row] = 'W';
         breath = countBreath(board, column, row);
@@ -112,4 +108,43 @@ public class DefaultLogicStrategy implements  LogicStrategy{
         }
         return false;
     }
+
+    @Override
+    public int[] moveBot(int[][] board) {
+        int[] move = new int[2];
+        char colorPlayer = 'B';
+
+        for (int i = 1; i < 18; i++) {
+            for (int j = 1; j < 18; j++) {
+                if(countBreath(board, i, j) == 1) {
+                    if (colorPlayer == getElement(board ,i, j)) {
+                        move[0] = i;
+                        move[1] = j;
+                        if (getElement(board,move[0] + 1, move[1]) == ' ') move[0] += 1;
+                        else if (getElement(board,move[0] - 1, move[1]) == ' ')  move[0] -= 1;
+                        else if (getElement(board,move[0], move[1] + 1) == ' ')  move[1] += 1;
+                        else if ((getElement(board,move[0], move[1] - 1) == ' '))  move[1] -= 1;
+                        return move;
+                    }
+                }
+            }
+        }
+
+        for (int i = 1; i < 18; i++) {
+            for (int j = 1; j < 18; j++) {
+                if (colorPlayer == getElement(board ,i, j)) {
+                    move[0] = i;
+                    move[1] = j;
+                    if (getElement(board,move[0] + 1, move[1]) == ' ') move[0] += 1;
+                    else if (getElement(board,move[0] - 1, move[1]) == ' ')  move[0] -= 1;
+                    else if (getElement(board,move[0], move[1] + 1) == ' ')  move[1] += 1;
+                    else if ((getElement(board,move[0], move[1] - 1) == ' '))  move[1] -= 1;
+                    return move;
+                }
+
+            }
+        }
+        return null;
+    }
+
 }

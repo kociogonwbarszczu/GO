@@ -33,17 +33,17 @@ public class GameFrame extends JFrame {
     public static int columnSelected = -1;
     private static boolean sendMove = false;
     private static boolean yourTurn;
-    public static int playerWhoStart = 0;
     public static boolean stop = false;
     private static int gameId;
     static Logic logic = new Logic(new DefaultLogicStrategy());
     private static JLabel captivesLabel;
     private static int captivesCountForBlack = 0;
     private static int captivesCountForWhite = 0;
-    private static int skipCount = 0;
+    private static Point lastMove = null;
 
 
     public GameFrame(Color color, Client client) {
+
         playerColor = color;
         thisColor = color;
         // size
@@ -57,10 +57,8 @@ public class GameFrame extends JFrame {
             setTitle("GO - player 1");
             gameId += 1;
             yourTurn = true;
-        }
-        else{
+        } else {
             setTitle("GO - player 2");
-            //gameId += 1;
             yourTurn = false;
         }
 
@@ -85,7 +83,6 @@ public class GameFrame extends JFrame {
                 stop = false;
             }
         }*/
-        //elements.remove(new Point(3,3));
 
         drawingPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -95,6 +92,13 @@ public class GameFrame extends JFrame {
                 int y = e.getY() / cellSize;
 
                 if((x < boardSize) && (y < boardSize) && Logic.ifAlreadyOccupied(x, y) && yourTurn && ifHasBreath(x, y)){
+                    Point currentMove = new Point(x, y);
+                    if (lastMove != null && lastMove.equals(currentMove)) {
+                        return; // Invalid move, exit the method
+                    }
+                    // Update lastMove
+                    lastMove = new Point(x, y);
+
                     // Add a stone at the clicked position
                     elements.put(new Point(x, y), Stone.addStone(playerColor));
                     logic.updateBoard(x, y, color);
@@ -339,11 +343,14 @@ public class GameFrame extends JFrame {
         String currentText = text.getText();
         String newText = currentText + "Opponent skipped move.\nYour turn\n\n";
         text.setText(newText);
-        skipCount += 1;
+        //skipCount += 1;
     }
 
     public static void setTurn(boolean b) {
         yourTurn = b;
+    }
+    public static boolean getTurn() {
+        return yourTurn;
     }
 
     public static void addOpponentsMove(int x, int y, Color playerColor) {
@@ -355,7 +362,7 @@ public class GameFrame extends JFrame {
         String currentText = text.getText();
         String newText = currentText + String.format("Stone added at coordinates (%d, %d).\nYour turn. \n\n", x, y);
         text.setText(newText);
-        skipCount = 0;
+        //skipCount = 0;
     }
 
     public boolean ifHasBreath(int x,int y) {

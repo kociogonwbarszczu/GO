@@ -19,13 +19,8 @@ public class Logic {
         }
     }
 
-    // Metoda do ustawiania strategii
-    public void setLogicStrategy(LogicStrategy logicStrategy) {
-        this.logicStrategy = logicStrategy;
-    }
-
-    public int countBreath(int column, int row) {
-        return logicStrategy.countBreath(board, column, row);
+    public int[][] getBoard() {
+        return board;
     }
 
     public int countBreathHypothetical(int column, int row, Color color) {
@@ -49,4 +44,6 @@ public class Logic {
     }
 
     public boolean checkRemoveStones(Color color) { return logicStrategy.checkRemoveStones(board, color);}
+
+    public int[] moveBot() { return logicStrategy.moveBot(board); }
 }

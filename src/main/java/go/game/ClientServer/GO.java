@@ -53,8 +53,10 @@ public class GO {
                         initializeGame(firstPlayer, secondPlayer);
                         secondFrame.dispose();
                     } else {
+                        Socket bot = serverSocket.accept();
+                        new DataOutputStream(bot.getOutputStream()).writeInt(2);
                         System.out.println("Bot connected.");
-                        initalizeGameWithBot();
+                        initializeGameWithBot(firstPlayer, bot);
                         secondFrame.dispose();
                     }
                 }
@@ -94,9 +96,15 @@ public class GO {
         startGame = false;
     }
 
-    private void initalizeGameWithBot() {
-        FirstFrame.startGame = true;
+    private void initializeGameWithBot(Socket firstPlayerSocket, Socket bot) throws IOException {
+        BotClient botClient = new BotClient();  // Utwórz instancję BotClient
+
+        currentGame = new NewGame(firstPlayerSocket, bot);  // Utwórz instancję gry z botem
+        Thread thread = new Thread(currentGame);
+        thread.start();
+        startGame = false;
     }
+
 
     public void setServerRunning(boolean value) {
         firstFrame.dispose();

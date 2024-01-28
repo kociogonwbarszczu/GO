@@ -10,4 +10,5 @@ public interface LogicStrategy {
     char getElement(int[][] board, int x, int y);
     void removeStonesWithoutBreath(int[][] board, Color color);
     boolean checkRemoveStones(int[][] board, Color color);
+    int[] moveBot(int[][] board);
 }
