@@ -31,6 +31,7 @@ public class AfterSkipFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 resume = true;
+                setAlwaysOnTop(false);
                 new ResumeGameFrame();
             }
         });
@@ -45,6 +46,7 @@ public class AfterSkipFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 end = true;
+                new ChooseWinnerFrame();
             }
         });
 
@@ -62,6 +64,7 @@ public class AfterSkipFrame extends JFrame {
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
         setResizable(false);
+        setAlwaysOnTop(true);
     }
 
     public static boolean getResume() {

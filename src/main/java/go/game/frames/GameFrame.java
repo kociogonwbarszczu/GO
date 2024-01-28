@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameFrame extends JFrame {
 
@@ -34,7 +35,6 @@ public class GameFrame extends JFrame {
     private static boolean yourTurn;
     public static boolean stop = false;
     private static int gameId;
-    private int captivesCount = 0;
     static Logic logic = new Logic(new DefaultLogicStrategy());
     private static JLabel captivesLabel;
     private static int captivesCountForBlack = 0;
@@ -129,6 +129,17 @@ public class GameFrame extends JFrame {
             }
         });
 
+        /*elements.put(new Point(3, 2), Stone.addStone(Color.BLACK));
+        elements.put(new Point(7, 8), Stone.addStone(Color.WHITE));
+        elements.put(new Point(10, 2), Stone.addStone(Color.BLACK));
+        elements.put(new Point(7, 10), Stone.addStone(Color.WHITE));
+        elements.put(new Point(15, 2), Stone.addStone(Color.BLACK));
+        elements.put(new Point(7, 18), Stone.addStone(Color.WHITE));
+        elements.put(new Point(13, 2), Stone.addStone(Color.BLACK));
+        elements.put(new Point(7, 14), Stone.addStone(Color.WHITE));
+        elements.put(new Point(0, 0), Stone.addStone(Color.BLACK));*/
+
+
         // game id label
         JLabel gameIdLabel = new JLabel("GAME ID: " + gameId);
         gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -206,7 +217,7 @@ public class GameFrame extends JFrame {
         mainPanel.add(textPanel);
         mainPanel.add(Box.createVerticalStrut(5));
 
-        int xPosition = 0;
+        int xPosition;
         if(playerColor == Color.BLACK){
             xPosition = 0;
         }
@@ -284,11 +295,9 @@ public class GameFrame extends JFrame {
 
         Color playerColor = getPlayerColor();
         if(playerColor == Color.BLACK) {
-            //captivesLabel.setText("      captives: " + captivesCountForBlack + "\n");
             captivesLabel.setText(updateCaptivesCount(captivesCountForBlack));
         }
         else if (playerColor == Color.WHITE) {
-            //captivesLabel.setText(("     captives: " + captivesCountForWhite + "\n"));
             captivesLabel.setText(updateCaptivesCount(captivesCountForWhite));
         }
     }
@@ -364,4 +373,5 @@ public class GameFrame extends JFrame {
     public static void setStop(boolean b) {
         stop = b;
     }
+
 }
