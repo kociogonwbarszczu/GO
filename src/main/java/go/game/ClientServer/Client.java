@@ -23,7 +23,7 @@ public class Client implements Runnable {
     public char myColor = ' ';
     public char otherColor = ' ';
     private static Client client;
-    private GameFrame gameFrame;
+    public GameFrame gameFrame;
     private static boolean skip = false;
 
 

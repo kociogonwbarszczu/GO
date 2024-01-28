@@ -52,6 +52,8 @@ public class ChooseWinnerFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new GameOverFrame(loser);
+                //setVisible(false);
+                dispose();
             }
         });
 

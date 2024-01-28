@@ -129,16 +129,6 @@ public class GameFrame extends JFrame {
             }
         });
 
-        /*elements.put(new Point(3, 2), Stone.addStone(Color.BLACK));
-        elements.put(new Point(7, 8), Stone.addStone(Color.WHITE));
-        elements.put(new Point(10, 2), Stone.addStone(Color.BLACK));
-        elements.put(new Point(7, 10), Stone.addStone(Color.WHITE));
-        elements.put(new Point(15, 2), Stone.addStone(Color.BLACK));
-        elements.put(new Point(7, 18), Stone.addStone(Color.WHITE));
-        elements.put(new Point(13, 2), Stone.addStone(Color.BLACK));
-        elements.put(new Point(7, 14), Stone.addStone(Color.WHITE));
-        elements.put(new Point(0, 0), Stone.addStone(Color.BLACK));*/
-
 
         // game id label
         JLabel gameIdLabel = new JLabel("GAME ID: " + gameId);
