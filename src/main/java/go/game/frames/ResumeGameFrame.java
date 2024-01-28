@@ -51,6 +51,7 @@ public class ResumeGameFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 resume = true;
+                dispose();
             }
         });
 
