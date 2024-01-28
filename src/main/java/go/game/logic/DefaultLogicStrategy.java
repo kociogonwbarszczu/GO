@@ -44,10 +44,16 @@ public class DefaultLogicStrategy implements  LogicStrategy{
 
     @Override
     public int countBreathHypothetical(int[][] board, int column, int row, Color color) {
-        int[][] boardHypothetical = board;
-        if (color == Color.BLACK) boardHypothetical[column][row] = 'B';
-        else boardHypothetical[column][row] = 'W';
-        return countBreath(boardHypothetical, column, row);
+        //int[][] boardHypothetical = board;
+        int breath = 0;
+        //if (color == Color.BLACK) boardHypothetical[column][row] = 'B';
+        //else boardHypothetical[column][row] = 'W';
+        //return countBreath(boardHypothetical, column, row);
+        if (color == Color.BLACK) board[column][row] = 'B';
+        else board[column][row] = 'W';
+        breath = countBreath(board, column, row);
+        board[column][row] = ' ';
+        return breath;
     }
 
     @Override
@@ -92,13 +98,14 @@ public class DefaultLogicStrategy implements  LogicStrategy{
     }
 
     @Override
-    public boolean checkRemoveStones(int[][] board) {
-        ArrayList<Integer> x = new ArrayList<>();
-        ArrayList<Integer> y = new ArrayList<>();
+    public boolean checkRemoveStones(int[][] board, Color color) {
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
                 if(countBreath(board, i, j) == 0) {
-                    return true;
+                    char colorPlayer = (color == Color.BLACK) ? 'B' : 'W';
+                    if (colorPlayer == getElement(board ,i, j)) {
+                        return true;
+                    }
                 }
             }
         }

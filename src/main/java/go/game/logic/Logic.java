@@ -43,16 +43,9 @@ public class Logic {
         logicStrategy.updateBoard(board, x, y, color);
     }
 
-    public static void counter() {
-        for (int i = 0; i < 19; i++) {
-            for (int j = 0; j < 19; j++) {
-            }
-        }
-    }
-
     public char getElement(int x, int y) {
         return (char) logicStrategy.getElement(board, x, y);
     }
 
-    public boolean checkRemoveStones() { return logicStrategy.checkRemoveStones(board);}
+    public boolean checkRemoveStones(Color color) { return logicStrategy.checkRemoveStones(board, color);}
 }
