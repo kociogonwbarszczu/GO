@@ -366,7 +366,7 @@ public class GameFrame extends JFrame {
     }
 
     public boolean ifHasBreath(int x,int y) {
-        Color color = (playerColor == Color.WHITE) ? Color.BLACK : Color.WHITE;
+        Color color = (playerColor == Color.WHITE) ? Color.WHITE : Color.BLACK;
         return (logic.countBreathHypothetical(x, y, playerColor) != 0 || logic.checkRemoveStones(color, x, y));
     }
 
