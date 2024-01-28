@@ -60,6 +60,7 @@ public class GameFrame extends JFrame {
         }
         else{
             setTitle("GO - player 2");
+            //gameId += 1;
             yourTurn = false;
         }
 
@@ -155,18 +156,12 @@ public class GameFrame extends JFrame {
 
         // captives label
         captivesLabel = new JLabel();
-        /*if(color == Color.BLACK) {
-            captivesLabel.setText("     captives: " + captivesCountForBlack);
-        }
-        else if (color == Color.WHITE) {
-            captivesLabel.setText("     captives: " + captivesCountForWhite);
-        }*/
         captivesLabel.setText(updateCaptivesCount(0));
         captivesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // text pane
+        // text panel
         text = new JTextPane();
-        text.setText("GO game started                                               \n");        //do not touch the spaces
+        text.setText("GO game started                                               \n");        //do not touch the spaces, they are very important
         text.setEditable(false);
 
         JPanel textPanel = new JPanel();
@@ -295,8 +290,8 @@ public class GameFrame extends JFrame {
     }
 
     private static String updateCaptivesCount(int count) {
-        String text;
-        if (count < 10) {
+        //String text;
+        /*if (count < 10) {
             text = "captives: " + String.valueOf(count) + "                                ";
         }
         else if (count < 100) {
@@ -304,8 +299,9 @@ public class GameFrame extends JFrame {
         }
         else {
             text = "captives: " + String.valueOf(count) + "                              ";
-        }
-        return text;
+        }*/
+        //return text;
+        return "captives: " + count;
     }
 
     public void skipMove(Client client) {
