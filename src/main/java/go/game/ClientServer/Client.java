@@ -64,7 +64,6 @@ public class Client implements Runnable {
                 myColor = 'B';
                 otherColor = 'W';
                 gameFrame = new GameFrame(Color.BLACK, client);
-                //System.out.println("Your move.");
 
                 myTurn = true;
             } else if (player == PLAYER2) {
@@ -105,9 +104,6 @@ public class Client implements Runnable {
         }
     }
 
-    public static void setSkip(boolean b) {
-        skip = b;
-    }
 
     private void sendMove() throws IOException {
         toServer.writeInt(rowSelected);
@@ -141,6 +137,10 @@ public class Client implements Runnable {
     public void surrenderPlayer(Color color) {
         continueToPlay = false;
         System.out.println(color);
+    }
+
+    public void setYourTurn() {
+        myTurn = true;
     }
 
 }
