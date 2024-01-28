@@ -70,25 +70,22 @@ public class DefaultLogicStrategy implements  LogicStrategy{
 
     @Override
     public void removeStonesWithoutBreath(int[][] board, Color color) {
-        ArrayList<Integer> x = new ArrayList<>();
-        ArrayList<Integer> y = new ArrayList<>();
+        ArrayList<Integer> coordinatesToDelete = new ArrayList<>();
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
                 if(countBreath(board, i, j) == 0) {
-                    //GameFrame.removeStone(i, j);
-                    //updateBoard(board, i, j, null);
                     char colorPlayer = (color == Color.BLACK) ? 'B' : 'W';
                     if (colorPlayer == getElement(board ,i, j)) {
-                        x.add(i);
-                        y.add(j);
+                        coordinatesToDelete.add(i);
+                        coordinatesToDelete.add(j);
                     }
                 }
             }
         }
 
-        for (int k = 0; k < x.size(); k++){
-            int xToDelete = x.get(k);
-            int yToDelete = y.get(k);
+        for (int i = 0; i < coordinatesToDelete.size(); i=i+2){
+            int xToDelete = coordinatesToDelete.get(i);
+            int yToDelete = coordinatesToDelete.get(i+1);
             GameFrame.removeStone(xToDelete, yToDelete);
             updateBoard(board, xToDelete, yToDelete, null);
         }
