@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 public class LoadGameFrame extends JFrame {
     private int maxGameID;
+    private int selectedGameNumber;
     public LoadGameFrame() {
         // size
         setSize(700, 600);
@@ -39,6 +40,14 @@ public class LoadGameFrame extends JFrame {
         JComboBox<String> gameDropdown = new JComboBox<>(gameNumbers);
         //gameDropdown.setSize(new Dimension(300, 30));
         gameDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gameDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedGame = (String) gameDropdown.getSelectedItem();
+                selectedGameNumber = Integer.parseInt(selectedGame.replaceAll("\\D", ""));
+            }
+        });
+
 
         //game dropdown panel
         JPanel gamePanel = new JPanel();
@@ -54,8 +63,10 @@ public class LoadGameFrame extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                new ReplayGameFrame(selectedGameNumber);
             }
+
+
         });
 
         // start label panel
