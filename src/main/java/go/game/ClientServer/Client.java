@@ -70,7 +70,6 @@ public class Client implements Runnable {
                 myColor = 'W';
                 otherColor = 'B';
                 gameFrame = new GameFrame(Color.WHITE, client);
-                //System.out.println("Waiting for the opponent's move");
             }
 
             while (continueToPlay) {
@@ -124,7 +123,6 @@ public class Client implements Runnable {
 
     private void receiveInfoFromServer() throws IOException {
         receiveMove();
-        //System.out.println("Your move.");
         myTurn = true;
         updateMove(rowSelected, columnSelected);
     }
@@ -138,9 +136,4 @@ public class Client implements Runnable {
         continueToPlay = false;
         System.out.println(color);
     }
-
-    public void setYourTurn() {
-        myTurn = true;
-    }
-
 }
