@@ -107,7 +107,7 @@ public class BotGameFrame extends JFrame {
         gameIdLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // black won button
-        MyButton blackButton = new MyButton("black button");
+        MyButton blackButton = new MyButton("black won");
         blackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
