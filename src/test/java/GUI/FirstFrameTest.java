@@ -1,4 +1,7 @@
 package GUI;
 
-public class FirstFrameTest{
+import go.game.frames.FirstFrame;
+import org.junit.jupiter.api.Test;
+
+public class FirstFrameTest {
 }
