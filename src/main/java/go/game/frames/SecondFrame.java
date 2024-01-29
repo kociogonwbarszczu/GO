@@ -13,6 +13,7 @@ public class SecondFrame extends JFrame {
     private boolean setBoardSize = false;
     public boolean setGameMode = false;
     public static boolean startGame = false;
+    private boolean gameWithBot = false;
 
     public SecondFrame() {
         //size
@@ -20,6 +21,8 @@ public class SecondFrame extends JFrame {
 
         //title
         setTitle("GO - choose game mode");
+
+
 
         //main components panel
         JPanel componentsPanel = new JPanel();
@@ -39,6 +42,7 @@ public class SecondFrame extends JFrame {
         buttonGameWithBot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gameWithBot = true;
                 setGameMode(1);
                 setGameMode = true;
             }
@@ -69,6 +73,9 @@ public class SecondFrame extends JFrame {
                     errorLabel.setText("Waiting for players to join.");
                 } else {
                     errorLabel.setText("You have to choose game mode!");
+                }
+                if (gameWithBot) {
+                    new BotGameFrame(Color.BLACK);
                 }
             }
         });
