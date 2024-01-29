@@ -27,6 +27,8 @@ public class Logic {
         return logicStrategy.countBreathHypothetical(board, column, row, color);
     }
 
+    public int countBreath(int x, int y){ return logicStrategy.countBreath(board, x, y); }
+
     public void removeStonesWithoutBreath(Color color) {
         logicStrategy.removeStonesWithoutBreath(board, color);
     }

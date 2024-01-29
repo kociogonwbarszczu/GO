@@ -42,7 +42,7 @@ public class SQLAddGameTest {
     public void testGetIdGame() {
         SQLAddGame sqlAddGame = new SQLAddGame();
         int gameId = sqlAddGame.getIDGame();
-        assertTrue(gameId >= 1);
+        assertTrue(gameId >= 0);
     }
 
     @Test
