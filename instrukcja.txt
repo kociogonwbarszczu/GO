@@ -20,12 +20,15 @@ CREATE TABLE moves (
 );
 
 
-PROSZE ODPALAĆ ZA POMOCĄ PRZYCISKU run
+PROSZE ODPALAĆ ZA POMOCĄ PRZYCISKU run lub za pomocą mavena (najpierw mvn clean install)
+komendy są podane dla Windowsa, komendy należy odpalać w oddzielnych terminalach
 
 aby odpalić grę:
 odpalamy plik GO.java
+    mvn exec:java -"Dexec.mainClass=go.game.ClientServer.GO"
 wybieramy rodzaj gry. 
 jesli wybierzemy load game odpali sie automatycznie
 jeśli wybierzemy new game, otwiera sie kolejny frame gdzie wybieramy tryb gry.
 jesli wybierzemy gre z botem to odpali sie automatycznie
 jeśli wybierzemy 2 player game to odpalamy Client.java dwukrotnie - każdy z nich jest jednym z graczy
+    mvn exec:java -"Dexec.mainClass=go.game.ClientServer.Client"
