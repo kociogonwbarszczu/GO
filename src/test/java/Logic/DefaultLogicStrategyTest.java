@@ -62,5 +62,40 @@ class DefaultLogicStrategyTest {
         assertFalse(logic.ifAlreadyOccupied(1, 2));
         assertTrue(logic.ifAlreadyOccupied(2, 3));
     }
+
+    @Test
+    void getElementTest() {
+        Logic logic = new Logic(new DefaultLogicStrategy());
+        logic.updateBoard(1, 1,Color.WHITE);
+        logic.updateBoard(2, 2, Color.BLACK);
+
+        assertEquals('W', logic.getElement(1, 1));
+        assertEquals('B', logic.getElement(2,2));
+        assertEquals(' ', logic.getElement(3,3));
+    }
+
+    @Test
+    void checkRemoveStonesTest() {
+        Logic logic = new Logic(new DefaultLogicStrategy());
+        logic.updateBoard(1, 2,Color.WHITE);
+        logic.updateBoard(1, 1, Color.BLACK);
+        logic.updateBoard(2, 1, Color.WHITE);
+        logic.updateBoard( 1, 2, Color.WHITE);
+
+        assertFalse(logic.checkRemoveStones(Color.WHITE, 0, 1));
+    }
+
+    @Test
+    void moveBotTest() {
+        Logic logic = new Logic(new DefaultLogicStrategy());
+        logic.updateBoard(1, 2,Color.WHITE);
+        logic.updateBoard(1, 1, Color.BLACK);
+        logic.updateBoard(2, 1, Color.WHITE);
+        logic.updateBoard( 1, 2, Color.WHITE);
+
+        int[] move = logic.moveBot();
+        assertEquals(0, move[0]);
+        assertEquals(1, move[1]);
+    }
 }
 
