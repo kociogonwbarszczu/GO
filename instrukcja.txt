@@ -1,5 +1,5 @@
 do odpalenia programu potzrebny jest server mysql
-w pliku reseources/db.properties zmieniamy dane logowania na nasze dane i port servera jeśli jest inny niż 3307
+w pliku src/main/resources/db.properties zmieniamy dane logowania na nasze dane i port servera jeśli jest inny niż 3307
 
 tworzymy bazę danych:
 CREATE DATABASE go;
