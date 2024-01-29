@@ -100,6 +100,4 @@ public class ResumeGameFrame extends JFrame {
     }
 
     public static boolean getResume() { return resume; }
-
-    public static void setResume() { resume = false; }
 }

@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ChooseWinnerFrame extends JFrame {
-    public static boolean resume = false;
     private static Color loser;
 
     public ChooseWinnerFrame() {

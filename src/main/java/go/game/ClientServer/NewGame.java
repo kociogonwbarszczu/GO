@@ -14,10 +14,6 @@ public class NewGame implements Runnable {
     private static boolean stop = false;
     private static boolean end = false;
     static int chosenPlayer = 0;
-
-    private static final int boardSize = 19;
-    private static final char[][] board = new char[boardSize][boardSize];
-
     private final Socket firstPlayer;
     private final Socket secondPlayer;
     public static AfterSkipFrame afterSkipFrame;
@@ -25,12 +21,6 @@ public class NewGame implements Runnable {
     public NewGame(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
-
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++){
-                board[i][j] = ' ';
-            }
-        }
 
         SQLAddGame sqlAddGame = new SQLAddGame();
         AddingGameHandle addingGameHandle = new AddingGameHandle(sqlAddGame);
@@ -54,7 +44,6 @@ public class NewGame implements Runnable {
                     sendMove(outputSecondPlayer, row, column);
 
                     if (row != -1 && column != -1) {
-                        board[row][column] = 'B';
                         countSkip = 0;
                     } else countSkip += 1;
                 }
@@ -67,14 +56,11 @@ public class NewGame implements Runnable {
                     column = inputSecondPlayer.readInt();
                     sendMove(outputFirstPlayer, row, column);
                     if (row != -1 && column != -1) {
-                        board[row][column] = 'W';
                         countSkip = 0;
                     } else countSkip += 1;
                 }
                 System.out.println(countSkip);
                 if (countSkip == 2) skipTwice();
-
-                //System.out.println(Arrays.deepToString(board));
             }
 
         } catch (IOException ex) {
@@ -103,9 +89,6 @@ public class NewGame implements Runnable {
             AfterSkipFrame.setEnd();
             end = true;
         }
-    }
-    public static int getChosenPlayer() {
-        return chosenPlayer;
     }
 
     private static void waitForResumeOrEnd() throws InterruptedException {

@@ -67,14 +67,6 @@ public class AfterSkipFrame extends JFrame {
         setAlwaysOnTop(true);
     }
 
-    public static boolean getResume() {
-        return resume;
-    }
-
-    public static void setResume() {
-        resume = false;
-    }
-
     public static boolean getEnd() {
         return end;
     }

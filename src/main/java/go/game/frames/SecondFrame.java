@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 public class SecondFrame extends JFrame {
     public static int gameMode = -1; // 0 - 2 player game, 1 - game with bot
     public static int boardSize = 19;
-    private boolean setBoardSize = false;
     public boolean setGameMode = false;
     public static boolean startGame = false;
 
@@ -54,7 +53,6 @@ public class SecondFrame extends JFrame {
         modeButtonsPanel.add(buttonGameWithBot);
 
         boardSize = 19;
-        setBoardSize = true;
 
         //button start
         MyButton startButton = new MyButton("start game");
