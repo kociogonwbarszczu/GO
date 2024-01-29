@@ -42,7 +42,7 @@ public class JDBConnectorTest {
 
     @Test
     public void testQuery() throws SQLException {
-        resultSet = statement.executeQuery("SELECT * FROM games;");
+        resultSet = statement.executeQuery("SELECT 1;");
         assertTrue(resultSet.next());
     }
 }

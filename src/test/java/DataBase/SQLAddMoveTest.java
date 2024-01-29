@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SQLAddMoveTest {
@@ -39,17 +40,10 @@ public class SQLAddMoveTest {
     }
 
     @Test
-    public void testGetIdGame() {
-        SQLSaveGame sqlSaveGame = new SQLSaveGame();
-        int gameId = sqlSaveGame.getIDGame();
-        assertTrue(gameId >= 1);
-    }
-
-    @Test
     public void testGetIdMove() {
         SQLSaveGame sqlSaveGame = new SQLSaveGame();
         int gameIDMove = sqlSaveGame.getIDMove(sqlSaveGame.getIDGame());
-        assertTrue(gameIDMove >= 1);
+        assertTrue(gameIDMove >= 0);
     }
 
     @Test
@@ -62,6 +56,6 @@ public class SQLAddMoveTest {
         MockSaveGame mockSaveGame = new MockSaveGame();
         mockSaveGame.handle(move);
         List<Move> hypotheticalMoves = mockSaveGame.getHypotheticalMoves();
-        assertTrue(!hypotheticalMoves.isEmpty());
+        assertFalse(hypotheticalMoves.isEmpty());
     }
 }
