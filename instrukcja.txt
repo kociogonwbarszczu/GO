@@ -3,6 +3,7 @@ w pliku reseources/db.properties zmieniamy dane logowania na nasze dane i port s
 
 tworzymy bazę danych:
 CREATE DATABASE go;
+USE go;
 
 CREATE TABLE games (
 	id INT PRIMARY KEY,
@@ -18,6 +19,8 @@ CREATE TABLE moves (
 	FOREIGN KEY (id_game) REFERENCES games(id)
 );
 
+
+PROSZE ODPALAĆ ZA POMOCĄ PRZYCISKU run
 
 aby odpalić grę:
 odpalamy plik GO.java
